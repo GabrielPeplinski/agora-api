@@ -1,0 +1,39 @@
+version: '3'
+
+volumes:
+  app-postgres-data:
+    driver: local
+
+services:
+  app:
+    user: 1000:1000
+    container_name: agora-back-app
+    image: webdevops/php-nginx:8.2-alpine
+    volumes:
+      - ./project:/app
+    working_dir: /app
+    environment:
+      - WEB_DOCUMENT_ROOT=/app/public
+      - PHP_MEMORY_LIMIT=256M
+      - php.opcache.enable_cli=1
+
+  postgres:
+    container_name: agora-back-postgres
+    image: postgres:16-alpine
+    volumes:
+      - app-postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=app_dev
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=appdev123
+
+  redis:
+    container_name: agora-back-redis
+    image: redis:5.0
+    command: --appendonly no
+
+  mailcatcher:
+    container_name: agora-back-mailcatcher
+    image: schickling/mailcatcher
+    ports:
+      - 1080:1080
