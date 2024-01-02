@@ -16,16 +16,20 @@ services:
       - WEB_DOCUMENT_ROOT=/app/public
       - PHP_MEMORY_LIMIT=256M
       - php.opcache.enable_cli=1
+    ports:
+      - 8081:80
 
   postgres:
     container_name: agora-back-postgres
-    image: postgres:16-alpine
+    image: postgres:15-alpine
     volumes:
       - app-postgres-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=app_dev
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=appdev123
+      - POSTGRES_PASSWORD=laraveldocker
+    ports:
+      - 5433:5432
 
   redis:
     container_name: agora-back-redis
