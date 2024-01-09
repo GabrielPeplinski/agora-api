@@ -1,0 +1,58 @@
+name: Tests (PHP)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    paths:
+      - '**.php'
+      - 'phpunit.xml'
+      - '.github/workflows/tests.yml'
+      - 'composer.lock'
+
+jobs:
+  tests:
+    name: Run tests
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: app_dev
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: laraveldocker
+        ports:
+          - 5432/tcp
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache composer dependencies
+        uses: actions/cache@v3
+        id: composer-cache
+        with:
+          path: ./project/vendor
+          key: ${{ runner.os }}-build-${{ hashFiles('**/composer.lock') }}
+
+      - name: Run composer install
+        if: steps.composer-cache.outputs.cache-hit != 'true'
+        run: composer install -n --prefer-dist --no-progress --no-interaction --optimize-autoloader
+        working-directory: ./project
+
+      - name: Prepare Laravel Application
+        working-directory: ./project
+        run: |
+          cp .env.testing .env
+          php artisan key:generate
+
+      - name: Run tests (Unit)
+        working-directory: ./project
+        run: php artisan test --parallel --testsuite Unit
+
+      - name: Run tests (Feature)
+        working-directory: ./project
+        run: php artisan test --parallel --testsuite Feature
+        env:
+          DB_HOST: localhost
+          DB_PORT: ${{ job.services.postgres.ports[5432] }}
