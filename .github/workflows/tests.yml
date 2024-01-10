@@ -79,10 +79,14 @@ jobs:
           php artisan key:generate
 
       - name: Clear Config
-        run: php artisan config:clear
+        run: |
+          cd project/
+          php artisan config:clear
 
       - name: Run Migration
-        run: php artisan migrate -v
+        run: |
+          cd project/
+          php artisan migrate -v
         env:
           DB_PORT: ${{ job.services.postgres.ports[5432] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
