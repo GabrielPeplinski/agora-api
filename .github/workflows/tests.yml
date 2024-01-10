@@ -70,7 +70,7 @@ jobs:
       - name: Install Composer dependencies
         run: |
           cd project/
-          && composer install --no-progress --prefer-dist --optimize-autoloader
+          composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: Prepare the application
         run: |
