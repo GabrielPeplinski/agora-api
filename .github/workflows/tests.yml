@@ -67,14 +67,14 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
-      - name: Set working directory
-        run: cd project/
-
       - name: Install Composer dependencies
-        run: composer install --no-progress --prefer-dist --optimize-autoloader
+        run: |
+          cd project/
+          composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: Prepare the application
         run: |
+          cd project/
           php -r "file_exists('.env') || copy('.env.example', '.env');"
           php artisan key:generate
 
