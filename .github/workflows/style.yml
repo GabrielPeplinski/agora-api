@@ -10,6 +10,7 @@ on:
       - 'phpunit.xml'
       - '.github/workflows/style.yml'
       - 'composer.lock'
+  workflow_dispatch:
 
 jobs:
   style:
