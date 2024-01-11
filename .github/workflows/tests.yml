@@ -1,12 +1,12 @@
 # GitHub Action for Laravel with PostgreSQL and Redis
 name: Testing Laravel with PostgreSQL
-on: [push, pull_request]
+on: [pull_request]
 jobs:
   laravel:
     name: Laravel (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-latest
     env:
-      REDIS_HOST: redis
+      REDIS_HOST: localhost
       REDIS_PORT: 6379
       BROADCAST_DRIVER: log
       CACHE_DRIVER: redis
