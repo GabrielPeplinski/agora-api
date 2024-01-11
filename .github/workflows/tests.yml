@@ -1,11 +1,13 @@
 # GitHub Action for Laravel with PostgreSQL and Redis
 name: Testing Laravel with PostgreSQL
-on: [push, pull_request, workflow_dispatch]
+on: [push, pull_request]
 jobs:
   laravel:
     name: Laravel (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-latest
     env:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
       BROADCAST_DRIVER: log
       CACHE_DRIVER: redis
       QUEUE_CONNECTION: redis
@@ -51,8 +53,8 @@ jobs:
 
       # Local PostgreSQL service in GitHub hosted environments is disabled by default.
       # If you are using it instead of service containers, make sure you start it.
-      - name: Start postgresql service
-        run: sudo systemctl start postgresql.service
+#      - name: Start postgresql service
+#        run: sudo systemctl start postgresql.service
 
       - name: Get composer cache directory
         id: composer-cache
