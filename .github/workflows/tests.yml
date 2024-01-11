@@ -5,36 +5,28 @@ jobs:
   laravel:
     name: Laravel (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-latest
-    env:
-      REDIS_HOST: localhost
-      REDIS_PORT: 6379
-      BROADCAST_DRIVER: log
-      CACHE_DRIVER: redis
-      QUEUE_CONNECTION: redis
-      SESSION_DRIVER: redis
-      DB_CONNECTION: pgsql
-      DB_HOST: localhost
-      DB_PASSWORD: postgres
-      DB_USERNAME: postgres
-      DB_DATABASE: postgres
 
     # Docs: https://docs.github.com/en/actions/using-containerized-services
     services:
       postgres:
-        image: postgres:latest
+        image: postgres:15-alpine
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: laraveldocker
+          POSTGRES_DB: app_dev
         ports:
-          - 5432/tcp
+          - 5433:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
 
       redis:
-        image: redis
+        image: "redis:5.0"
         ports:
-          - 6379/tcp
-        options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 3
     strategy:
       fail-fast: false
       matrix:
@@ -78,6 +70,7 @@ jobs:
         run: |
           cd project/
           php -r "file_exists('.env') || copy('.env.example', '.env');"
+          php -r "file_exists('.env.testing') || copy('.env.testing.example', '.env');"
           php artisan key:generate
 
       - name: Clear Config
@@ -89,9 +82,6 @@ jobs:
         run: |
           cd project/
           php artisan migrate -v
-        env:
-          DB_PORT: ${{ job.services.postgres.ports[5432] }}
-          REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
 
       - name: Run tests (Unit)
         working-directory: ./project
@@ -100,6 +90,3 @@ jobs:
       - name: Run tests (Feature)
         working-directory: ./project
         run: php artisan test --parallel --testsuite Feature
-        env:
-          DB_HOST: localhost
-          DB_PORT: ${{ job.services.postgres.ports[5432] }}
