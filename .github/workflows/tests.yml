@@ -11,9 +11,9 @@ jobs:
       postgres:
         image: postgres:15-alpine
         env:
+          POSTGRES_DB: app_dev
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: laraveldocker
-          POSTGRES_DB: app_dev
         ports:
           - 5433:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
@@ -82,6 +82,9 @@ jobs:
         run: |
           cd project/
           php artisan migrate -v
+        env:
+          DB_HOST: localhost
+          DB_PORT: ${{ job.services.postgres.ports[5432] }}
 
       - name: Run tests (Unit)
         working-directory: ./project
@@ -90,3 +93,8 @@ jobs:
       - name: Run tests (Feature)
         working-directory: ./project
         run: php artisan test --parallel --testsuite Feature
+        env:
+          DB_HOST: localhost
+          DB_PORT: ${{ job.services.postgres.ports[5432] }}
+          REDIS_HOST: localhost
+          REDIS_PORT: ${{ job.services.redis.ports[6379] }}
