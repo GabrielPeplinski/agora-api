@@ -13,7 +13,15 @@ class RegisterTest extends TestCaseFeature
         $this->useActionsFromController(RegisterController::class);
     }
 
-    public function test_should_register_new_user_when_data_is_valid()
+    private function getRegisterStructure(): array
+    {
+        return [
+            'message',
+            'name',
+        ];
+    }
+
+    public function test_should_register_new_user_when_data_is_valid(): void
     {
         $data = [
             'name' => 'New User',
@@ -23,6 +31,30 @@ class RegisterTest extends TestCaseFeature
         ];
 
         $this->postJson($this->controllerAction(), $data)
-            ->assertCreated();
+            ->assertCreated()
+            ->assertJsonStructure($this->getRegisterStructure());
+
+        $this->assertDatabaseHas('users', [
+            'name' => $data['name'],
+            'email' => $data['email'],
+        ]);
+    }
+
+    public function test_should_not_register_new_user_when_data_is_invalid(): void
+    {
+        $data = [
+            'name' => 'New User',
+            'email' => 'user@gmail.com',
+            'password' => '12345678',
+        ];
+
+        $this->postJson($this->controllerAction(), $data)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('password');
+
+        $this->assertDatabaseMissing('users', [
+            'name' => $data['name'],
+            'email' => $data['email'],
+        ]);
     }
 }
