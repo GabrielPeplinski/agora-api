@@ -8,15 +8,18 @@ class LogoutController
 {
     public function __invoke(): JsonResponse
     {
-        auth()->user()->currentAccessToken()->delete();
+        $currentUser = auth()->user();
 
-        return response()
-            ->json([
-                'data' => [
-                    'message' => 'User successfully logged out',
-                    'name' => auth()->user()->name,
-                    'status' => 200,
-                ],
+        if ($currentUser) {
+            $currentUser->currentAccessToken()->delete();
+
+            return response()->json([
+                'message' => 'Usuário deslogado com sucesso.',
             ]);
+        }
+
+        return response()->json([
+            'error' => 'Não foi possível realizar o logout.',
+        ], 401);
     }
 }

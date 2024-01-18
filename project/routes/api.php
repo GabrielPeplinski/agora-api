@@ -3,7 +3,6 @@
 use App\Http\Api\Controllers\Auth\LoginController;
 use App\Http\Api\Controllers\Auth\LogoutController;
 use App\Http\Api\Controllers\Auth\RegisterController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('health-check', function () {
+    return response()->json('working...');
 });
 
 Route::prefix('auth')->group(function () {

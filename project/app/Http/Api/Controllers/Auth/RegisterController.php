@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-    public function __invoke(Request $request, User $user): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
         $userData = $request->validate([
             'email' => 'required|string',
@@ -20,17 +20,15 @@ class RegisterController extends Controller
 
         $userData['password'] = Hash::make($userData['password']);
 
-        if (! $user = $user->create($userData)) {
-            abort(500, 'Error to create a new user');
+        if (! $user = User::create($userData)) {
+            abort(500, 'Não foi possível cadastrar o usuário.');
         }
 
         return response()
             ->json([
-                'data' => [
-                    'message' => 'User successfully registered',
-                    'name' => $user->name,
-                    'status' => 201,
-                ],
+                'message' => 'Usuário criado com sucesso.',
+                'name' => $user->name,
+                'status' => 201,
             ], 201);
     }
 }
