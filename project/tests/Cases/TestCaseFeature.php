@@ -2,8 +2,10 @@
 
 namespace Tests\Cases;
 
+use App\Domains\Account\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Laravel\Sanctum\Sanctum;
 use Tests\CreatesApplication;
 
 abstract class TestCaseFeature extends BaseTestCase
@@ -37,5 +39,15 @@ abstract class TestCaseFeature extends BaseTestCase
         }
 
         return action([$this->currentController, $action], $params);
+    }
+
+    protected function loginAsClient()
+    {
+        $user = User::factory()
+            ->create();
+
+        $this->actingAs($user);
+        Sanctum::actingAs($user);
+
     }
 }

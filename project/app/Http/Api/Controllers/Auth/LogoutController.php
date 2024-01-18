@@ -15,7 +15,7 @@ class LogoutController
 
             return response()->json([
                 'message' => 'Usuário deslogado com sucesso.',
-            ]);
+            ], 204);
         }
 
         return response()->json([
