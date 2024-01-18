@@ -29,6 +29,6 @@ class LoginController extends Controller
                     'name' => auth()->user()->name,
                     'status' => 201,
                 ],
-            ]);
+            ], 201);
     }
 }

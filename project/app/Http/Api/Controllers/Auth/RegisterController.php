@@ -31,6 +31,6 @@ class RegisterController extends Controller
                     'name' => $user->name,
                     'status' => 201,
                 ],
-            ]);
+            ], 201);
     }
 }
