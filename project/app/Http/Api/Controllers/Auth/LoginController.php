@@ -16,7 +16,7 @@ class LoginController extends Controller
         ]);
 
         if (! auth()->attempt($credentials)) {
-            abort(401, 'Invalid credentials');
+            abort(401, 'Credenciais inválidas');
         }
 
         $token = auth()->user()->createToken('auth_token');
@@ -24,9 +24,8 @@ class LoginController extends Controller
         return response()
             ->json([
                 'message' => 'User successfully logged',
+                'tokenType' => 'Bearer',
                 'token' => $token->plainTextToken,
-                'name' => auth()->user()->name,
-                'status' => 201,
             ], 201);
     }
 }

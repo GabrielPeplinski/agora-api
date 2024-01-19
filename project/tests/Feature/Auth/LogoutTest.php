@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Auth;
+namespace Tests\Feature\Auth;
 
 use App\Http\Api\Controllers\Auth\LogoutController;
 use Tests\Cases\TestCaseFeature;
