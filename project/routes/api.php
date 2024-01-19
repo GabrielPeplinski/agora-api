@@ -2,6 +2,7 @@
 
 use App\Http\Api\Controllers\Auth\LoginController;
 use App\Http\Api\Controllers\Auth\LogoutController;
+use App\Http\Api\Controllers\Auth\MeController;
 use App\Http\Api\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,8 @@ Route::prefix('auth')->group(function () {
     Route::post('register', RegisterController::class);
     Route::post('login', LoginController::class);
 
-    Route::delete('logout', LogoutController::class)
-        ->middleware('auth:sanctum');
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('me', MeController::class);
+        Route::delete('logout', LogoutController::class);
+    });
 });
