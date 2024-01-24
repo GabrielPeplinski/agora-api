@@ -2,48 +2,35 @@
 
 namespace App\Http\Api\Controllers\Client;
 
+use App\Domains\Account\Dtos\AddressData;
+use App\Domains\Account\Strategies\CreateAddressStrategy;
+use App\Http\Api\Request\Client\AddressRequest;
+use App\Http\Api\Resources\Client\AddressResource;
 use App\Http\Shared\Controllers\Controller;
 
 class AddressController extends Controller
 {
-public function index()
+    public function index()
     {
         current_user()->load('addresses.city.state');
 
-        $addresses = auth()->user()->addresses()->with('city.state')->get();
+        $address = current_user()->address;
 
-        return response()->json($addresses);
+        return AddressResource::make($address);
     }
 
-    public function store()
+    public function createOrUpdate(AddressRequest $request)
     {
-        $address = auth()->user()->addresses()->create(request()->all());
+        $data = AddressData::validateAndCreate([
+            ...$request->validated(),
+            'userId' => current_user()->id
+        ]);
 
-        return response()->json($address);
-    }
-
-    public function show($id)
-    {
-        $address = auth()->user()->addresses()->with('city.state')->findOrFail($id);
-
-        return response()->json($address);
-    }
-
-    public function update($id)
-    {
-        $address = auth()->user()->addresses()->findOrFail($id);
+        $address = (new CreateAddressStrategy($data))
+            ->execute();
 
         $address->update(request()->all());
 
-        return response()->json($address);
-    }
-
-    public function destroy($id)
-    {
-        $address = auth()->user()->addresses()->findOrFail($id);
-
-        $address->delete();
-
-        return response()->json($address);
+        return AddressResource::make($address);
     }
 }

@@ -22,3 +22,24 @@ if (! function_exists('current_user')) {
         return auth()->user();
     }
 }
+
+if (! function_exists('array_keys_as')) {
+    /**
+     * Rename the keys from an array
+     *
+     * @param  array  $data  Array to be renamed
+     * @param  array  $keysFromTo  The keys to be renamed
+     * @return array The renamed array
+     */
+    function array_keys_as(array $data, array $keysFromTo): array
+    {
+        foreach ($keysFromTo as $oldKey => $newKey) {
+            if (array_key_exists($oldKey, $data)) {
+                $data[$newKey] = $data[$oldKey];
+                unset($data[$oldKey]);
+            }
+        }
+
+        return $data;
+    }
+}
