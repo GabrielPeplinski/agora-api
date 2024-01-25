@@ -29,10 +29,10 @@ class AddressTest extends TestCaseFeature
     public function test_should_create_address(): void
     {
         $data = [
-            'neighborhood' => 'Test Neighborhood',
-            'cityName' => 'Test City',
-            'stateName' => 'Test State',
-            'stateAbbreviation' => 'TS',
+            'neighborhood' => 'Centro',
+            'cityName' => 'Guarapuava',
+            'stateName' => 'Paraná',
+            'stateAbbreviation' => 'PR',
             'zipCode' => '12345678',
         ];
 

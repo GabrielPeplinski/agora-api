@@ -4,7 +4,7 @@ namespace App\Domains\Account\Strategies;
 
 use App\Domains\Account\Actions\Address\CreateAddressAction;
 use App\Domains\Account\Actions\AddressCity\CreateAddressCityAction;
-use App\Domains\Account\Actions\AddressState\CreateAddressStateAction;
+use App\Domains\Account\Actions\AddressState\GetAddressStateIdByAbbreviationAction;
 use App\Domains\Account\Dtos\AddressData;
 use App\Domains\Account\Models\Address;
 use Illuminate\Support\Facades\DB;
@@ -43,10 +43,10 @@ class CreateAddressStrategy
 
     private function createAddressState(AddressData $data): void
     {
-        $state = app(CreateAddressStateAction::class)
-            ->execute($data);
+        $stateId = app(GetAddressStateIdByAbbreviationAction::class)
+            ->execute($data->stateAbbreviation);
 
-        $this->data->addressStateId = $state->id;
+        $this->data->addressStateId = $stateId;
     }
 
     private function createAddressCity(AddressData $data): void
