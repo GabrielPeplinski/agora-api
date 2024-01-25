@@ -16,8 +16,6 @@ class CreateAddressAction
             'userId' => 'user_id',
         ]);
 
-
-
         return Address::create($data);
     }
 }

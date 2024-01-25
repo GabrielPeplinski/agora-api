@@ -37,7 +37,9 @@ class AddressTest extends TestCaseFeature
         ];
 
         $this->putJson($this->controllerAction('createOrUpdate'), $data)
-            ->assertOk()
-            ->assertJsonStructure($this->getResponseStructure());
+            ->assertCreated()
+            ->assertJsonStructure([
+                'data' => $this->getResponseStructure(),
+            ]);
     }
 }

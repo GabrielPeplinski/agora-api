@@ -14,6 +14,6 @@ class CreateAddressStateAction
             'stateAbbreviation' => 'name_abbreviation',
         ]);
 
-       return AddressState::create($data);
+        return AddressState::create($data);
     }
 }

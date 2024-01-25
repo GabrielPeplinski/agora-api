@@ -12,7 +12,7 @@ class AddressController extends Controller
 {
     public function index()
     {
-        current_user()->load('addresses.city.state');
+        current_user()->load('address.city.state');
 
         $address = current_user()->address;
 
@@ -23,13 +23,11 @@ class AddressController extends Controller
     {
         $data = AddressData::validateAndCreate([
             ...$request->validated(),
-            'userId' => current_user()->id
+            'userId' => current_user()->id,
         ]);
 
         $address = (new CreateAddressStrategy($data))
             ->execute();
-
-        $address->update(request()->all());
 
         return AddressResource::make($address);
     }
