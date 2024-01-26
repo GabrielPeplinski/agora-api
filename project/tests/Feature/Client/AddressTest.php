@@ -83,4 +83,27 @@ class AddressTest extends TestCaseFeature
         $this->assertEquals($data['stateAbbreviation'], $address->city->state->name_abbreviation);
         $this->assertEquals($data['zipCode'], $address->zip_code);
     }
+
+    public function test_should_not_create_address_when_data_is_invalid(): void
+    {
+        $data = [
+            'neighborhood' => 'Vila Carli',
+        ];
+
+        $this->putJson($this->controllerAction('createOrUpdate'), $data)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'cityName',
+                'stateName',
+                'stateAbbreviation',
+                'zipCode',
+            ]);
+
+        $this->assertFalse(current_user()->address()->exists());
+
+        $this->assertDatabaseMissing('addresses', [
+            'user_id' => current_user()->id,
+            'neighborhood' => 'Vila Carli',
+        ]);
+    }
 }
