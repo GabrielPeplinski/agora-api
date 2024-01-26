@@ -2,6 +2,7 @@
 
 namespace Tests\Cases;
 
+use App\Domains\Account\Models\Address;
 use App\Domains\Account\Models\User;
 use Database\Seeders\AddressStatesSeeder;
 use Illuminate\Database\Events\MigrationsEnded;
@@ -61,6 +62,13 @@ abstract class TestCaseFeature extends BaseTestCase
 
         $this->actingAs($user);
         Sanctum::actingAs($user);
+    }
 
+    protected function createClientUserAddress(): Address
+    {
+        return Address::factory()
+            ->create([
+                'user_id' => current_user()->id,
+            ]);
     }
 }

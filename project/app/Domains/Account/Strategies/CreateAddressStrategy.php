@@ -2,8 +2,8 @@
 
 namespace App\Domains\Account\Strategies;
 
-use App\Domains\Account\Actions\Address\CreateAddressAction;
-use App\Domains\Account\Actions\AddressCity\CreateAddressCityAction;
+use App\Domains\Account\Actions\Address\CreateOrUpdateAddressAction;
+use App\Domains\Account\Actions\AddressCity\FirstOrCreateAddressCityAction;
 use App\Domains\Account\Actions\AddressState\GetAddressStateIdByAbbreviationAction;
 use App\Domains\Account\Dtos\AddressData;
 use App\Domains\Account\Models\Address;
@@ -23,11 +23,11 @@ class CreateAddressStrategy
         try {
             DB::beginTransaction();
 
-            $this->createAddressState($this->data);
+            $this->getAddressStateId($this->data);
 
-            $this->createAddressCity($this->data);
+            $this->getAddressCity($this->data);
 
-            $address = app(CreateAddressAction::class)
+            $address = app(CreateOrUpdateAddressAction::class)
                 ->execute($this->data);
 
             DB::commit();
@@ -41,7 +41,7 @@ class CreateAddressStrategy
         return null;
     }
 
-    private function createAddressState(AddressData $data): void
+    private function getAddressStateId(AddressData $data): void
     {
         $stateId = app(GetAddressStateIdByAbbreviationAction::class)
             ->execute($data->stateAbbreviation);
@@ -49,9 +49,9 @@ class CreateAddressStrategy
         $this->data->addressStateId = $stateId;
     }
 
-    private function createAddressCity(AddressData $data): void
+    private function getAddressCity(AddressData $data): void
     {
-        $city = app(CreateAddressCityAction::class)
+        $city = app(FirstOrCreateAddressCityAction::class)
             ->execute($data);
 
         $this->data->addressCityId = $city->id;

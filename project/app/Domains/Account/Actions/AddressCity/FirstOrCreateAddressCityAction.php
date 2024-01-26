@@ -5,7 +5,7 @@ namespace App\Domains\Account\Actions\AddressCity;
 use App\Domains\Account\Dtos\AddressData;
 use App\Domains\Account\Models\AddressCity;
 
-class CreateAddressCityAction
+class FirstOrCreateAddressCityAction
 {
     public function execute(AddressData $data): AddressCity
     {
@@ -14,6 +14,9 @@ class CreateAddressCityAction
             'addressStateId' => 'state_id',
         ]);
 
-        return AddressCity::create($data);
+        return AddressCity::firstOrCreate([
+            'state_id' => $data['state_id'],
+            'name' => $data['name'],
+        ], $data);
     }
 }

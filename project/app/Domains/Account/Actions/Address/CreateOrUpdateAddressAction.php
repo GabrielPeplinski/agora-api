@@ -5,7 +5,7 @@ namespace App\Domains\Account\Actions\Address;
 use App\Domains\Account\Dtos\AddressData;
 use App\Domains\Account\Models\Address;
 
-class CreateAddressAction
+class CreateOrUpdateAddressAction
 {
     public function execute(AddressData $data): Address
     {
@@ -16,6 +16,8 @@ class CreateAddressAction
             'userId' => 'user_id',
         ]);
 
-        return Address::create($data);
+        return Address::updateOrCreate([
+            'user_id' => $data['user_id'],
+        ], $data);
     }
 }
