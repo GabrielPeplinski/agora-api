@@ -106,4 +106,26 @@ class AddressTest extends TestCaseFeature
             'neighborhood' => 'Vila Carli',
         ]);
     }
+
+    public function test_should_not_create_address_when_using_not_valid_state_abbreviation(): void
+    {
+        $data = [
+            'neighborhood' => 'Centro',
+            'cityName' => 'Guarapuava',
+            'stateName' => 'Paraná',
+            'stateAbbreviation' => 'TS',
+            'zipCode' => '12345678',
+        ];
+
+        $this->putJson($this->controllerAction('createOrUpdate'), $data)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('stateAbbreviation');
+
+        $this->assertFalse(current_user()->address()->exists());
+
+        $this->assertDatabaseMissing('addresses', [
+            'user_id' => current_user()->id,
+            'neighborhood' => 'Vila Carli',
+        ]);
+    }
 }
