@@ -4,6 +4,7 @@ use App\Http\Api\Controllers\Auth\LoginController;
 use App\Http\Api\Controllers\Auth\LogoutController;
 use App\Http\Api\Controllers\Auth\MeController;
 use App\Http\Api\Controllers\Auth\RegisterController;
+use App\Http\Api\Controllers\Auth\UpdatePersonalDataController;
 use App\Http\Api\Controllers\Client\AddressController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,8 @@ Route::prefix('auth')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('me', MeController::class);
         Route::delete('logout', LogoutController::class);
+
+        Route::post('personal-data', UpdatePersonalDataController::class);
     });
 });
 
