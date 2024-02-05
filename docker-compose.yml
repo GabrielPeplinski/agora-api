@@ -17,7 +17,7 @@ services:
       - PHP_MEMORY_LIMIT=256M
       - php.opcache.enable_cli=1
     ports:
-      - 8081:80
+      - 8080:80
 
   postgres:
     container_name: agora-back-postgres

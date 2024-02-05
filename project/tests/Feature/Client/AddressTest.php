@@ -20,7 +20,6 @@ class AddressTest extends TestCaseFeature
             'id',
             'neighborhood',
             'cityName',
-            'stateName',
             'stateAbbreviation',
             'zipCode',
         ];
@@ -31,7 +30,6 @@ class AddressTest extends TestCaseFeature
         $data = [
             'neighborhood' => 'Centro',
             'cityName' => 'Guarapuava',
-            'stateName' => 'Paraná',
             'stateAbbreviation' => 'PR',
             'zipCode' => '12345678',
         ];
@@ -48,7 +46,7 @@ class AddressTest extends TestCaseFeature
 
         $this->assertEquals($data['neighborhood'], $address->neighborhood);
         $this->assertEquals($data['cityName'], $address->city->name);
-        $this->assertEquals($data['stateName'], $address->city->state->name);
+        $this->assertEquals('Paraná', $address->city->state->name);
         $this->assertEquals($data['stateAbbreviation'], $address->city->state->name_abbreviation);
         $this->assertEquals($data['zipCode'], $address->zip_code);
     }
@@ -62,7 +60,6 @@ class AddressTest extends TestCaseFeature
         $data = [
             'neighborhood' => 'Morro Alto',
             'cityName' => 'Guarapuava',
-            'stateName' => 'Paraná',
             'stateAbbreviation' => 'PR',
             'zipCode' => '12345678',
         ];
@@ -79,7 +76,7 @@ class AddressTest extends TestCaseFeature
 
         $this->assertEquals($data['neighborhood'], $address->neighborhood);
         $this->assertEquals($data['cityName'], $address->city->name);
-        $this->assertEquals($data['stateName'], $address->city->state->name);
+        $this->assertEquals('Paraná', $address->city->state->name);
         $this->assertEquals($data['stateAbbreviation'], $address->city->state->name_abbreviation);
         $this->assertEquals($data['zipCode'], $address->zip_code);
     }
@@ -94,7 +91,6 @@ class AddressTest extends TestCaseFeature
             ->assertStatus(422)
             ->assertJsonValidationErrors([
                 'cityName',
-                'stateName',
                 'stateAbbreviation',
                 'zipCode',
             ]);
@@ -112,7 +108,6 @@ class AddressTest extends TestCaseFeature
         $data = [
             'neighborhood' => 'Centro',
             'cityName' => 'Guarapuava',
-            'stateName' => 'Paraná',
             'stateAbbreviation' => 'TS',
             'zipCode' => '12345678',
         ];

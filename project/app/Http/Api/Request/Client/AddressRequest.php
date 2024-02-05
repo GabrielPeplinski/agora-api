@@ -26,7 +26,6 @@ class AddressRequest extends FormRequest
             'zipCode' => 'required|string|min:8|max:8',
             'neighborhood' => 'required|string|min:3|max:255',
             'cityName' => 'required|string|min:3|max:255',
-            'stateName' => 'required|string|min:3|max:255',
             'stateAbbreviation' => 'required|string|min:2|max:2|exists:address_states,name_abbreviation',
         ];
     }
