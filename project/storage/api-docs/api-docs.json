@@ -98,6 +98,53 @@
                 }
             }
         },
+        "/api/client/logout": {
+            "delete": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout]",
+                "description": "Logout current user",
+                "operationId": "Logout",
+                "responses": {
+                    "204": {
+                        "description": "Successfully logged out user"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Não foi possível realizar o logout."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/auth/me": {
             "get": {
                 "tags": [
@@ -207,6 +254,284 @@
                                         "name": {
                                             "type": "string",
                                             "example": "New User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/personal-data": {
+            "put": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Update Current User",
+                "description": "Update current user personal data",
+                "operationId": "Personal Data",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "New user name",
+                                        "type": "string",
+                                        "default": "New User"
+                                    },
+                                    "email": {
+                                        "description": "A valid email address",
+                                        "type": "string",
+                                        "default": "example@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated current user personal data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Suas informações foram atualizadas com sucesso"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/client/address": {
+            "get": {
+                "tags": [
+                    "Address"
+                ],
+                "summary": "Current User Address",
+                "description": "Get current user address data",
+                "operationId": "Get Address",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved current user address data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "example": "1"
+                                        },
+                                        "neighborhood": {
+                                            "type": "string",
+                                            "example": "Centro"
+                                        },
+                                        "cityName": {
+                                            "type": "string",
+                                            "example": "Guarapuava"
+                                        },
+                                        "stateAbbreviation": {
+                                            "type": "string",
+                                            "example": "PR"
+                                        },
+                                        "zipCode": {
+                                            "type": "string",
+                                            "example": "85010180"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Address"
+                ],
+                "summary": "Update or Create Current User Address",
+                "description": "Update or create current user address data",
+                "operationId": "Update or Create Address",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "neighborhood": {
+                                        "description": "Current user neighborhood name",
+                                        "type": "string",
+                                        "default": "Centro"
+                                    },
+                                    "cityName": {
+                                        "description": "Current user city name",
+                                        "type": "string",
+                                        "default": "Guarapuava"
+                                    },
+                                    "stateAbbreviation": {
+                                        "description": "Current user state abbreviation",
+                                        "type": "string",
+                                        "default": "PR"
+                                    },
+                                    "zipCode": {
+                                        "description": "Current user zip code",
+                                        "type": "string",
+                                        "default": "85010180"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully registered user address",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "example": "1"
+                                        },
+                                        "neighborhood": {
+                                            "type": "string",
+                                            "example": "Centro"
+                                        },
+                                        "cityName": {
+                                            "type": "string",
+                                            "example": "Guarapuava"
+                                        },
+                                        "stateAbbreviation": {
+                                            "type": "string",
+                                            "example": "PR"
+                                        },
+                                        "zipCode": {
+                                            "type": "string",
+                                            "example": "85010180"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successfully updated user address",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "example": "1"
+                                        },
+                                        "neighborhood": {
+                                            "type": "string",
+                                            "example": "Centro"
+                                        },
+                                        "cityName": {
+                                            "type": "string",
+                                            "example": "Guarapuava"
+                                        },
+                                        "stateAbbreviation": {
+                                            "type": "string",
+                                            "example": "PR"
+                                        },
+                                        "zipCode": {
+                                            "type": "string",
+                                            "example": "85010180"
                                         }
                                     },
                                     "type": "object"
