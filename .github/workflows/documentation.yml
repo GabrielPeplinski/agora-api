@@ -1,0 +1,17 @@
+name: Documentation Check (Swagger)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  style:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run php artisan l5:generate
+        run: |
+          cd project/
+          php artisan l5:generate
