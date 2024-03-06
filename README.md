@@ -43,3 +43,8 @@ docker-compose exec app composer pint
 ```
 docker-compose exec app php artisan test
 ```
+
+* Atualizar Documentação
+```
+docker-compose exec app php l5:generate
+```
