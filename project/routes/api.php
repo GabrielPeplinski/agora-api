@@ -31,7 +31,7 @@ Route::prefix('auth')->group(function () {
         Route::get('me', MeController::class);
         Route::delete('logout', LogoutController::class);
 
-        Route::post('personal-data', UpdatePersonalDataController::class);
+        Route::put('personal-data', UpdatePersonalDataController::class);
     });
 });
 

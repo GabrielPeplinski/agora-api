@@ -1,0 +1,32 @@
+name: Validate Swagger Documentation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  swagger-validation:
+    name: Validate Swagger Documentation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, dom
+
+      - name: Install Composer dependencies
+        run: |
+          cd project/
+          composer install --no-progress --prefer-dist --optimize-autoloader\
+
+      - name: Generate Swagger Documentation
+        run: |
+          cd project/
+          php artisan l5:generate

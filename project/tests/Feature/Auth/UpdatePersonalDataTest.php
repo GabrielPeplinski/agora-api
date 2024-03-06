@@ -21,7 +21,7 @@ class UpdatePersonalDataTest extends TestCaseFeature
             'email' => 'newemail@gmail.com',
         ];
 
-        $this->postJson($this->controllerAction(), $data)
+        $this->putJson($this->controllerAction(), $data)
             ->assertOk()
             ->assertJson([
                 'message' => 'Suas informações foram atualizadas com sucesso',
