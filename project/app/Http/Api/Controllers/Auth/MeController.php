@@ -14,6 +14,7 @@ class MeController extends Controller
      *     tags={"Auth"},
      *     summary="Current user data",
      *     description="Current user data",
+     *     security={{"sanctum":{}}},
      *
      *      @OA\Response(
      *          response=200,

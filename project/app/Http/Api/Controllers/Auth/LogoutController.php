@@ -8,11 +8,12 @@ class LogoutController
 {
     /**
      * @OA\Delete(
-     *     path="/api/client/logout",
+     *     path="/api/auth/logout",
      *     operationId="Logout",
      *     tags={"Auth"},
-     *     summary="Logout]",
+     *     summary="Logout",
      *     description="Logout current user",
+     *     security={{"sanctum":{}}},
      *
      *      @OA\Response(
      *          response=204,

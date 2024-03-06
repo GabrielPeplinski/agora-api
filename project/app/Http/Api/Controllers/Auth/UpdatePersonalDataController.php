@@ -11,6 +11,7 @@ class UpdatePersonalDataController
      *     tags={"Auth"},
      *     summary="Update Current User",
      *     description="Update current user personal data",
+     *     security={{"sanctum":{}}},
      *
      *     @OA\RequestBody(
      *

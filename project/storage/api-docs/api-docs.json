@@ -39,7 +39,7 @@
                     }
                 },
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Login Successfully",
                         "content": {
                             "application/json": {
@@ -98,12 +98,12 @@
                 }
             }
         },
-        "/api/client/logout": {
+        "/api/auth/logout": {
             "delete": {
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Logout]",
+                "summary": "Logout",
                 "description": "Logout current user",
                 "operationId": "Logout",
                 "responses": {
@@ -142,7 +142,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/auth/me": {
@@ -198,7 +203,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/auth/register": {
@@ -374,7 +384,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/client/address": {
@@ -434,7 +449,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -571,7 +591,22 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "description": "Enter token in format (Bearer <token>)"
             }
         }
     }

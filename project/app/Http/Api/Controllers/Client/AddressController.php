@@ -17,6 +17,7 @@ class AddressController extends Controller
      *     tags={"Address"},
      *     summary="Current User Address",
      *     description="Get current user address data",
+     *     security={{"sanctum":{}}},
      *
      *      @OA\Response(
      *          response=200,
@@ -59,6 +60,7 @@ class AddressController extends Controller
      *     tags={"Address"},
      *     summary="Update or Create Current User Address",
      *     description="Update or create current user address data",
+     *     security={{"sanctum":{}}},
      *
      *     @OA\RequestBody(
      *

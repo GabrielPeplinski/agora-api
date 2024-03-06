@@ -37,7 +37,7 @@ class LoginController extends Controller
      *      ),
      *
      *      @OA\Response(
-     *          response=200,
+     *          response=201,
      *          description="Login Successfully",
      *
      *          @OA\JsonContent(
