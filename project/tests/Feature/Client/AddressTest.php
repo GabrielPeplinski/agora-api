@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Client;
 
+use App\Domains\Account\Actions\Address\CreateOrUpdateAddressAction;
 use App\Http\Api\Controllers\Client\AddressController;
 use Tests\Cases\TestCaseFeature;
 
@@ -130,6 +131,29 @@ class AddressTest extends TestCaseFeature
             ->assertOk()
             ->assertJson([
                 'message' => 'Este usuario não possui endereco cadastrado.',
+            ]);
+    }
+
+    public function test_should_throw_exception_when_error_occurs_during_address_creation_or_update(): void
+    {
+        $mockAction = $this->createMock(CreateOrUpdateAddressAction::class);
+
+        $mockAction->method('execute')
+            ->will($this->throwException(new \Exception('Simulated error')));
+
+        $this->app->instance(CreateOrUpdateAddressAction::class, $mockAction);
+
+        $data = [
+            'neighborhood' => 'Centro',
+            'cityName' => 'Guarapuava',
+            'stateAbbreviation' => 'PR',
+            'zipCode' => '12345678',
+        ];
+
+        $this->putJson($this->controllerAction('createOrUpdate'), $data)
+            ->assertStatus(422)
+            ->assertJson([
+                'message' => 'Ocorreu um erro ao tentar cadastrar seu endereço',
             ]);
     }
 }

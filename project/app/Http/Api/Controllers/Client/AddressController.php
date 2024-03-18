@@ -7,6 +7,7 @@ use App\Domains\Account\Strategies\CreateAddressStrategy;
 use App\Http\Api\Request\Client\AddressRequest;
 use App\Http\Api\Resources\Client\AddressResource;
 use App\Http\Shared\Controllers\Controller;
+use Illuminate\Validation\ValidationException;
 
 class AddressController extends Controller
 {
@@ -147,16 +148,20 @@ class AddressController extends Controller
      *      ),
      * )
      */
-    public function createOrUpdate(AddressRequest $request)
+    public function createOrUpdate(AddressRequest $request): AddressResource
     {
-        $data = AddressData::validateAndCreate([
-            ...$request->validated(),
-            'userId' => current_user()->id,
-        ]);
+        try {
+            $data = AddressData::validateAndCreate([
+                ...$request->validated(),
+                'userId' => current_user()->id,
+            ]);
 
-        $address = (new CreateAddressStrategy($data))
-            ->execute();
+            $address = (new CreateAddressStrategy($data))
+                ->execute();
 
-        return AddressResource::make($address);
+            return AddressResource::make($address);
+        } catch (\Exception $exception) {
+            throw ValidationException::withMessages([$exception->getMessage()]);
+        }
     }
 }

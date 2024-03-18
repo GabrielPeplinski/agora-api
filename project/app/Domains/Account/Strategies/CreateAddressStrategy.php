@@ -36,9 +36,8 @@ class CreateAddressStrategy
         } catch (\Exception $exception) {
             DB::rollBack();
             report($exception);
+            throw new \Exception('Ocorreu um erro ao tentar cadastrar seu endereço');
         }
-
-        return null;
     }
 
     private function getAddressStateId(AddressData $data): void
