@@ -123,4 +123,13 @@ class AddressTest extends TestCaseFeature
             'neighborhood' => 'Vila Carli',
         ]);
     }
+
+    public function test_should_return_json_response_when_user_does_not_have_an_address()
+    {
+        $this->getJson($this->controllerAction('index'))
+            ->assertOk()
+            ->assertJson([
+                'message' => 'Este usuario não possui endereco cadastrado.',
+            ]);
+    }
 }

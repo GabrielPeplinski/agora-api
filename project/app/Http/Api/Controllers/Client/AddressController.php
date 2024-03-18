@@ -46,11 +46,15 @@ class AddressController extends Controller
      */
     public function index()
     {
-        current_user()->load('address.city.state');
+        if ($address = current_user()->address) {
+            current_user()->load('address.city.state');
 
-        $address = current_user()->address;
-
-        return AddressResource::make($address);
+            return AddressResource::make($address);
+        } else {
+            return response()->json([
+                'message' => 'Este usuario não possui endereco cadastrado.',
+            ]);
+        }
     }
 
     /**
