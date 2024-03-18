@@ -7,7 +7,7 @@ use App\Domains\Account\Strategies\CreateAddressStrategy;
 use App\Http\Api\Request\Client\AddressRequest;
 use App\Http\Api\Resources\Client\AddressResource;
 use App\Http\Shared\Controllers\Controller;
-use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AddressController extends Controller
 {
@@ -161,7 +161,7 @@ class AddressController extends Controller
 
             return AddressResource::make($address);
         } catch (\Exception $exception) {
-            throw ValidationException::withMessages([$exception->getMessage()]);
+            throw new HttpException(500, $exception->getMessage());
         }
     }
 }

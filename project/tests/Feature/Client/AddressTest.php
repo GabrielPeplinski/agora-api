@@ -151,7 +151,7 @@ class AddressTest extends TestCaseFeature
         ];
 
         $this->putJson($this->controllerAction('createOrUpdate'), $data)
-            ->assertStatus(422)
+            ->assertStatus(500)
             ->assertJson([
                 'message' => 'Ocorreu um erro ao tentar cadastrar seu endereço',
             ]);
