@@ -19,7 +19,7 @@ class UpdateAppCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Update application permissions and roles.';
 
     /**
      * Execute the console command.
@@ -27,10 +27,20 @@ class UpdateAppCommand extends Command
     public function handle(): void
     {
         $this->info('Updating application!');
-        $this->info('Updating permissions and roles...');
 
+        $this->updatePermissionsAndRoles();
+    }
+
+    private function updatePermissionsAndRoles(): void
+    {
+        $this->info('Updating permissions...');
         Artisan::call('db:seed',
-            ['--class' => 'UpdateSeeder']
+            ['--class' => 'PermissionSeeder']
+        );
+
+        $this->info('Updating roles...');
+        Artisan::call('db:seed',
+            ['--class' => 'RoleSeeder']
         );
 
         $this->info('Permissions and roles updated!');
