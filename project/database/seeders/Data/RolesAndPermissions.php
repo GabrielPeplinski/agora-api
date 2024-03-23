@@ -29,7 +29,7 @@ abstract class RolesAndPermissions
         $permissions = self::getPermissions();
 
         return [
-            RolesEnum::CLIENT => [
+            'solicitations' => [
                $permissions['solicitations'],
             ],
         ];
