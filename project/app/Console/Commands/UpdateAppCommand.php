@@ -29,6 +29,7 @@ class UpdateAppCommand extends Command
         $this->info('Updating application!');
 
         $this->updatePermissionsAndRoles();
+        $this->updateSolicitationCategories();
     }
 
     private function updatePermissionsAndRoles(): void
@@ -44,5 +45,15 @@ class UpdateAppCommand extends Command
         );
 
         $this->info('Permissions and roles updated!');
+    }
+
+    private function updateSolicitationCategories(): void
+    {
+        $this->info('Updating solicitation categories...');
+        Artisan::call('db:seed',
+            ['--class' => 'SolicitationCategorySeeder']
+        );
+
+        $this->info('Solicitation categories updated!');
     }
 }
