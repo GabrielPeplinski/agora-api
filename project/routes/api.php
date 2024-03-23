@@ -6,6 +6,7 @@ use App\Http\Api\Controllers\Auth\MeController;
 use App\Http\Api\Controllers\Auth\RegisterController;
 use App\Http\Api\Controllers\Auth\UpdatePersonalDataController;
 use App\Http\Api\Controllers\Client\AddressController;
+use App\Http\Api\Controllers\Client\SolicitationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,8 +38,9 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('client')->group(function () {
-
         Route::get('address', [AddressController::class, 'index']);
         Route::put('address', [AddressController::class, 'createOrUpdate']);
+
+        Route::apiResource('solicitations', SolicitationController::class);
     });
 });

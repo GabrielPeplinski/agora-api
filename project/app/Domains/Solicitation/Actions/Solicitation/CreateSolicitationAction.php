@@ -13,6 +13,7 @@ class CreateSolicitationAction
             'latitudeCoordinate' => 'latitude_coordinate',
             'longitudeCoordinate' => 'longitude_coordinate',
             'solicitationCategoryId' => 'solicitation_category_id',
+            'userId' => 'user_id',
         ]);
 
         return app(Solicitation::class)
