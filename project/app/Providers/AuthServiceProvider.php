@@ -15,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        Solicitation::class => SolicitationPolicy::class
+        Solicitation::class => SolicitationPolicy::class,
     ];
 
     /**

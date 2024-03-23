@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class BasePolicy
 {
-   protected function checkIfModelBelongsToUser(User $user, Model $model): bool
-   {
-       return $user->id === $model->user_id;
-   }
+    protected function checkIfModelBelongsToUser(User $user, Model $model): bool
+    {
+        return $user->id === $model->user_id;
+    }
 }
