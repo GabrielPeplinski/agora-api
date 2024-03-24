@@ -82,10 +82,17 @@ jobs:
         env:
           DB_HOST: localhost
           DB_PORT: ${{ job.services.postgres.ports[5432] }}
+          REDIS_HOST: redis
+          REDIS_PORT: ${{ job.services.redis.ports[6379] }}
 
       - name: Run tests (Unit)
         working-directory: ./project
         run: php artisan test --parallel --testsuite Unit
+        env:
+          DB_HOST: localhost
+          DB_PORT: ${{ job.services.postgres.ports[5432] }}
+          REDIS_HOST: redis
+          REDIS_PORT: ${{ job.services.redis.ports[6379] }}
 
       - name: Run tests (Feature)
         working-directory: ./project
@@ -93,5 +100,5 @@ jobs:
         env:
           DB_HOST: localhost
           DB_PORT: ${{ job.services.postgres.ports[5432] }}
-          REDIS_HOST: localhost
+          REDIS_HOST: redis
           REDIS_PORT: ${{ job.services.redis.ports[6379] }}
