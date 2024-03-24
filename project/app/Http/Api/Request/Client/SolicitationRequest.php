@@ -2,6 +2,7 @@
 
 namespace App\Http\Api\Request\Client;
 
+use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -36,6 +37,7 @@ class SolicitationRequest extends FormRequest
                 'regex:/^[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/',
             ],
             'solicitationCategoryId' => 'required|exists:solicitation_categories,id',
+            'status' => 'sometimes|string|in:'.SolicitationStatusEnum::OPEN.','.SolicitationStatusEnum::IN_PROGRESS.','.SolicitationStatusEnum::RESOLVED,
         ];
     }
 }

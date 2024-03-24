@@ -3,12 +3,16 @@
 namespace App\Domains\Solicitation\Models;
 
 use App\Domains\Account\Models\User;
+use Database\Factories\SolicitationFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Solicitation extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'title',
         'report',
@@ -18,6 +22,11 @@ class Solicitation extends Model
         'user_id',
         'solicitation_category_id',
     ];
+
+    protected static function newFactory(): SolicitationFactory
+    {
+        return SolicitationFactory::new();
+    }
 
     public function user(): BelongsTo
     {
