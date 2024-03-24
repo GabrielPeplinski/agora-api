@@ -1,20 +1,16 @@
-name: Tests (PHP)
-
+# GitHub Action for Laravel with PostgreSQL and Redis
+name: Testing Laravel with PostgreSQL
 on:
+  pull_request:
   push:
     branches:
       - main
-  pull_request:
-    paths:
-      - '**.php'
-      - 'phpunit.xml'
-      - '.github/workflows/tests.yml'
-      - 'composer.lock'
-
 jobs:
-  tests:
-    name: Run tests
+  laravel:
+    name: Laravel (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-latest
+
+    # Docs: https://docs.github.com/en/actions/using-containerized-services
     services:
       postgres:
         image: postgres:15-alpine
@@ -23,41 +19,69 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: laraveldocker
         ports:
-          - 5432/tcp
+          - 5433:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
 
+      redis:
+        image: "redis:5.0"
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 3
+    strategy:
+      fail-fast: false
+      matrix:
+        php-versions: ['8.2']
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      # Setup PHP 8.2
+      # Docs: https://github.com/shivammathur/setup-php
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
-          extensions: mbstring, dom, fileinfo, pdo, pdo_pgsql
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, dom, fileinfo, pgsql
+          coverage: xdebug
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache composer dependencies
         uses: actions/cache@v3
-        id: composer-cache
         with:
-          path: ./project/vendor
-          key: ${{ runner.os }}-build-${{ hashFiles('**/composer.lock') }}
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
 
-      - name: Run composer install
-        if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer install -n --prefer-dist --no-progress --no-interaction --optimize-autoloader
-        working-directory: ./project
-
-      - name: Prepare Laravel Application
-        working-directory: ./project
+      - name: Install Composer dependencies
         run: |
-          cp .env.testing .env
+          cd project/
+          composer install --no-progress --prefer-dist --optimize-autoloader
+
+      - name: Prepare the application
+        run: |
+          cd project/
+          php -r "file_exists('.env') || copy('.env.example', '.env');"
+          php -r "file_exists('.env.testing') || copy('.env.testing.example', '.env');"
           php artisan key:generate
 
-      # Run migrations
-      - name: Run Migrations
-        working-directory: ./project
-        run: php artisan migrate --force
+      - name: Clear Config
+        run: |
+          cd project/
+          php artisan config:clear
+
+      - name: Run Migration
+        run: |
+          cd project/
+          php artisan migrate -v
+        env:
+          DB_HOST: localhost
+          DB_PORT: ${{ job.services.postgres.ports[5432] }}
 
       - name: Run tests (Unit)
         working-directory: ./project
@@ -69,10 +93,5 @@ jobs:
         env:
           DB_HOST: localhost
           DB_PORT: ${{ job.services.postgres.ports[5432] }}
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@master
-        if: failure()
-        with:
-          name: Logs
-          path: ./project/storage/logs
+          REDIS_HOST: localhost
+          REDIS_PORT: ${{ job.services.redis.ports[6379] }}

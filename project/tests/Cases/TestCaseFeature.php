@@ -61,7 +61,7 @@ abstract class TestCaseFeature extends BaseTestCase
         $user = User::factory()
             ->create();
 
-        $user->assignRole(RolesEnum::CLIENT);
+        //        $user->assignRole(RolesEnum::CLIENT);
 
         $this->actingAs($user);
         Sanctum::actingAs($user);

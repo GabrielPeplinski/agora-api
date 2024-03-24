@@ -24,7 +24,7 @@ class SolicitationTest extends TestCaseFeature
             'status',
             'latitudeCoordinate',
             'longitudeCoordinate',
-            'solicitation',
+            'solicitationCategory',
             'created_at',
             'updated_at',
         ];

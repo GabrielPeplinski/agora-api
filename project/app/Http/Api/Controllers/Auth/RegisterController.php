@@ -97,7 +97,7 @@ class RegisterController extends Controller
             abort(500, 'Não foi possível cadastrar o usuário.');
         }
 
-        $user->assignRole(RolesEnum::CLIENT);
+        //        $user->assignRole(RolesEnum::CLIENT);
 
         return response()
             ->json([
