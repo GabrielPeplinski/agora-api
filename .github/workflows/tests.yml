@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - develop
   pull_request:
     paths:
       - '**.php'
@@ -29,6 +28,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      # Setup PHP 8.2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: mbstring, dom, fileinfo, pdo, pdo_pgsql
+
       - name: Cache composer dependencies
         uses: actions/cache@v3
         id: composer-cache
@@ -46,6 +53,11 @@ jobs:
         run: |
           cp .env.testing .env
           php artisan key:generate
+
+      # Run migrations
+      - name: Run Migrations
+        working-directory: ./project
+        run: php artisan migrate --force
 
       - name: Run tests (Unit)
         working-directory: ./project
