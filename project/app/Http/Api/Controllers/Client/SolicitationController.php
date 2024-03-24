@@ -14,8 +14,6 @@ class SolicitationController extends Controller
 {
     public function show(Solicitation $solicitation): SolicitationResource
     {
-        $this->authorize('view', $solicitation);
-
         $solicitation->loadMissing('solicitationCategory');
 
         return SolicitationResource::make($solicitation);
@@ -23,8 +21,6 @@ class SolicitationController extends Controller
 
     public function store(SolicitationRequest $request): SolicitationResource
     {
-        $this->authorize('create', Solicitation::class);
-
         $data = SolicitationData::validateAndCreate([
             ...$request->validated(),
             'status' => SolicitationStatusEnum::OPEN,

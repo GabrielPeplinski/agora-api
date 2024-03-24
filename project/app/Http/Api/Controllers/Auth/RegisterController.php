@@ -3,6 +3,7 @@
 namespace App\Http\Api\Controllers\Auth;
 
 use App\Domains\Account\Models\User;
+use App\Domains\Shared\Enums\RolesEnum;
 use App\Http\Shared\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -95,6 +96,8 @@ class RegisterController extends Controller
         if (! $user = User::create($userData)) {
             abort(500, 'Não foi possível cadastrar o usuário.');
         }
+
+        $user->assignRole(RolesEnum::CLIENT);
 
         return response()
             ->json([
