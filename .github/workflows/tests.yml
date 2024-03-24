@@ -26,11 +26,7 @@ jobs:
         image: "redis:5.0"
         ports:
           - 6379:6379
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 3
+        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 3 --network host
     strategy:
       fail-fast: false
       matrix:
@@ -82,7 +78,7 @@ jobs:
         env:
           DB_HOST: localhost
           DB_PORT: ${{ job.services.postgres.ports[5432] }}
-          REDIS_HOST: redis
+          REDIS_HOST: 127.0.0.1
           REDIS_PORT: ${{ job.services.redis.ports[6379] }}
 
       - name: Run tests (Unit)
@@ -91,7 +87,7 @@ jobs:
         env:
           DB_HOST: localhost
           DB_PORT: ${{ job.services.postgres.ports[5432] }}
-          REDIS_HOST: redis
+          REDIS_HOST: 127.0.0.1
           REDIS_PORT: ${{ job.services.redis.ports[6379] }}
 
       - name: Run tests (Feature)
@@ -100,5 +96,5 @@ jobs:
         env:
           DB_HOST: localhost
           DB_PORT: ${{ job.services.postgres.ports[5432] }}
-          REDIS_HOST: redis
+          REDIS_HOST: 127.0.0.1
           REDIS_PORT: ${{ job.services.redis.ports[6379] }}
