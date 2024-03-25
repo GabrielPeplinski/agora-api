@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Documentation\Responses;
+namespace App\Documentation;
 
 /**
  * @OA\Schema(
- *      title="SolicitationResponse",
+ *      title="Solicitation",
  *      description="Solicitation information",
  *      type="object",
- *     required={"id", "status", "latitudeCoordinate", "longitudeCoordinate", "solicitationCategory", "createdAt", "updatedAt"}
+ *      required={"id", "status", "report", "latitudeCoordinate", "longitudeCoordinate", "solicitationCategoryId"}
  * )
  */
-
-class SolicitationResponse
+class Solicitation
 {
     /**
      * @OA\Property(
      *     title="id",
      *     description="Id of the solicitation",
      *     example="1",
+     *     readOnly=true
      * )
      */
     public string $id;
@@ -69,18 +69,20 @@ class SolicitationResponse
 
     /**
      * @OA\Property(
-     *     title="solicitationCategory",
+     *     title="solicitationCategoryId",
      *     description="Id of the solicitation category that best describes the solicitation",
      *     example="1",
+     *     writeOnly=true
      * )
      */
-    public string $solicitationCategory;
+    public string $solicitationCategoryId;
 
     /**
      * @OA\Property(
      *     title="createdAt",
      *     description="Date of creation",
      *     example="2021-09-01T00:00:00.000000Z",
+     *     readOnly=true
      * )
      */
     public string $createdAt;
@@ -90,6 +92,7 @@ class SolicitationResponse
      *     title="updatedAt",
      *     description="Date of last update",
      *     example="2021-09-01T00:00:00.000000Z",
+     *     readOnly=true
      * )
      */
     public string $updateAt;

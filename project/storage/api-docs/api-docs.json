@@ -624,7 +624,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/SolicitationResponse"
+                                    "$ref": "#/components/schemas/Solicitation"
                                 }
                             }
                         }
@@ -681,34 +681,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "properties": {
-                                    "title": {
-                                        "description": "The title that best describes the solicitation",
-                                        "type": "string",
-                                        "default": "Solicitação de teste"
-                                    },
-                                    "report": {
-                                        "description": "The report that describes the reason for the solicitation",
-                                        "type": "string",
-                                        "default": "Relato de teste"
-                                    },
-                                    "latitudeCoordinate": {
-                                        "description": "Latitude1 coordinate of the solicitation",
-                                        "type": "string",
-                                        "default": "-23.6486"
-                                    },
-                                    "longitudeCoordinate": {
-                                        "description": "Loongitude coordinate of the solicitation",
-                                        "type": "string",
-                                        "default": "71.6406"
-                                    },
-                                    "soliticationCategoryId": {
-                                        "description": "Id of the solicitation category that best describes the solicitation",
-                                        "type": "integer",
-                                        "default": "1"
-                                    }
-                                },
-                                "type": "object"
+                                "$ref": "#/components/schemas/Solicitation"
                             }
                         }
                     }
@@ -719,7 +692,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/SolicitationResponse"
+                                    "$ref": "#/components/schemas/Solicitation"
                                 }
                             }
                         }
@@ -767,23 +740,23 @@
     },
     "components": {
         "schemas": {
-            "SolicitationResponse": {
-                "title": "SolicitationResponse",
+            "Solicitation": {
+                "title": "Solicitation",
                 "description": "Solicitation information",
                 "required": [
                     "id",
                     "status",
+                    "report",
                     "latitudeCoordinate",
                     "longitudeCoordinate",
-                    "solicitationCategory",
-                    "createdAt",
-                    "updatedAt"
+                    "solicitationCategoryId"
                 ],
                 "properties": {
                     "id": {
                         "title": "id",
                         "description": "Id of the solicitation",
                         "type": "string",
+                        "readOnly": true,
                         "example": "1"
                     },
                     "title": {
@@ -816,22 +789,25 @@
                         "type": "string",
                         "example": "-49.271"
                     },
-                    "solicitationCategory": {
-                        "title": "solicitationCategory",
+                    "solicitationCategoryId": {
+                        "title": "solicitationCategoryId",
                         "description": "Id of the solicitation category that best describes the solicitation",
                         "type": "string",
+                        "writeOnly": true,
                         "example": "1"
                     },
                     "createdAt": {
                         "title": "createdAt",
                         "description": "Date of creation",
                         "type": "string",
+                        "readOnly": true,
                         "example": "2021-09-01T00:00:00.000000Z"
                     },
                     "updateAt": {
                         "title": "updatedAt",
                         "description": "Date of last update",
                         "type": "string",
+                        "readOnly": true,
                         "example": "2021-09-01T00:00:00.000000Z"
                     }
                 },

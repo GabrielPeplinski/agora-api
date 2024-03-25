@@ -29,6 +29,7 @@ class SolicitationController extends Controller
      *          in="path",
      *          description="The id of the solicitation",
      *          required=true,
+     *
      *          @OA\Schema (type="integer")
      *       ),
      *
@@ -36,7 +37,7 @@ class SolicitationController extends Controller
      *          response=200,
      *          description="Successfully retrieve a solicitation data",
      *
-     *         @OA\JsonContent(ref="#/components/schemas/SolicitationResponse")
+     *         @OA\JsonContent(ref="#/components/schemas/Solicitation")
      *      ),
      *
      *      @OA\Response(
@@ -78,47 +79,14 @@ class SolicitationController extends Controller
      *
      *     @OA\RequestBody(
      *
-     *          @OA\JsonContent(
-     *              type="object",
-     *
-     *              @OA\Property(
-     *                   type="string",
-     *                   default="Solicitação de teste",
-     *                   description="The title that best describes the solicitation",
-     *                   property="title"
-     *               ),
-     *              @OA\Property(
-     *                  type="string",
-     *                  default="Relato de teste",
-     *                  description="The report that describes the reason for the solicitation",
-     *                  property="report"
-     *              ),
-     *              @OA\Property(
-     *                  type="string",
-     *                  default="-23.6486",
-     *                  description="Latitude1 coordinate of the solicitation",
-     *                  property="latitudeCoordinate"
-     *              ),
-     *              @OA\Property(
-     *                   type="string",
-     *                   default="71.6406",
-     *                   description="Loongitude coordinate of the solicitation",
-     *                   property="longitudeCoordinate"
-     *               ),
-     *              @OA\Property(
-     *                    type="integer",
-     *                    default="1",
-     *                    description="Id of the solicitation category that best describes the solicitation",
-     *                    property="soliticationCategoryId"
-     *                )
-     *          ),
+     *          @OA\JsonContent(ref="#/components/schemas/Solicitation")
      *      ),
      *
      *      @OA\Response(
      *          response=201,
      *          description="Successfully registered a new solicitation",
      *
-     *         @OA\JsonContent(ref="#/components/schemas/SolicitationResponse")
+     *         @OA\JsonContent(ref="#/components/schemas/Solicitation")
      *      ),
      *
      *      @OA\Response(
