@@ -624,7 +624,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Solicitation"
+                                    "$ref": "#/components/schemas/SolicitationResponse"
                                 }
                             }
                         }
@@ -681,7 +681,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Solicitation"
+                                "$ref": "#/components/schemas/SolicitationRequest"
                             }
                         }
                     }
@@ -692,7 +692,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Solicitation"
+                                    "$ref": "#/components/schemas/SolicitationResponse"
                                 }
                             }
                         }
@@ -740,42 +740,28 @@
     },
     "components": {
         "schemas": {
-            "Solicitation": {
+            "SolicitationRequest": {
                 "title": "Solicitation",
-                "description": "Solicitation information",
+                "description": "Solicitation request information",
                 "required": [
-                    "id",
-                    "status",
+                    "title",
                     "report",
                     "latitudeCoordinate",
                     "longitudeCoordinate",
                     "solicitationCategoryId"
                 ],
                 "properties": {
-                    "id": {
-                        "title": "id",
-                        "description": "Id of the solicitation",
-                        "type": "string",
-                        "readOnly": true,
-                        "example": "1"
-                    },
                     "title": {
                         "title": "title",
                         "description": "The title that best describes the solicitation",
                         "type": "string",
-                        "example": "Centro"
+                        "example": "Rampa de acesso com buracos"
                     },
                     "report": {
                         "title": "report",
                         "description": "The report that describes the reason for the solicitation",
                         "type": "string",
-                        "example": "Guarapuava"
-                    },
-                    "status": {
-                        "title": "status",
-                        "description": "The status of the solicitation",
-                        "type": "string",
-                        "example": "PR"
+                        "example": "Na frente da escola municipal, existe uma rampa de acesso com buracos, impossibilitando o seu uso com segurança."
                     },
                     "latitudeCoordinate": {
                         "title": "latitudeCoordinate",
@@ -792,9 +778,67 @@
                     "solicitationCategoryId": {
                         "title": "solicitationCategoryId",
                         "description": "Id of the solicitation category that best describes the solicitation",
-                        "type": "string",
+                        "type": "integer",
                         "writeOnly": true,
                         "example": "1"
+                    }
+                },
+                "type": "object"
+            },
+            "SolicitationResponse": {
+                "title": "SolicitationResponse",
+                "description": "Solicitation response information",
+                "required": [
+                    "id",
+                    "title",
+                    "status",
+                    "report",
+                    "latitudeCoordinate",
+                    "longitudeCoordinate",
+                    "solicitationCategory"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Id of the solicitation",
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": "1"
+                    },
+                    "title": {
+                        "title": "title",
+                        "description": "The title that best describes the solicitation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "Rampa de acesso com buracos"
+                    },
+                    "report": {
+                        "title": "report",
+                        "description": "The report that describes the reason for the solicitation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "Na frente da escola municipal, existe uma rampa de acesso com buracos, impossibilitando o seu uso com segurança."
+                    },
+                    "status": {
+                        "title": "status",
+                        "description": "The status of the solicitation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "open"
+                    },
+                    "latitudeCoordinate": {
+                        "title": "latitudeCoordinate",
+                        "description": "Latitude coordinate of the solicitation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "-25.430"
+                    },
+                    "longitudeCoordinate": {
+                        "title": "longitudeCoordinate",
+                        "description": "Longitude coordinate of the solicitation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "-49.271"
                     },
                     "createdAt": {
                         "title": "createdAt",
@@ -809,6 +853,42 @@
                         "type": "string",
                         "readOnly": true,
                         "example": "2021-09-01T00:00:00.000000Z"
+                    },
+                    "solicitationCategory": {
+                        "$ref": "#/components/schemas/SolicitationCategory"
+                    }
+                },
+                "type": "object"
+            },
+            "SolicitationCategory": {
+                "title": "SolicitationCategory",
+                "description": "Solicitation category information",
+                "required": [
+                    "id",
+                    "name",
+                    "description"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Id of the solicitation category",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "1"
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "The name of the solicitation category",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "Problemas de Acessibilidade"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "The description of the solicitation category",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "Compreende todos os problemas que envolvem a acessibilidade de pessoas com deficiência como rampas de acesso ou em calçadas, falta de piso tátil direcional, entre outros."
                     }
                 },
                 "type": "object"

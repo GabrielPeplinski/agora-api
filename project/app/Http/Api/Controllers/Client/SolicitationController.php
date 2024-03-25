@@ -37,7 +37,7 @@ class SolicitationController extends Controller
      *          response=200,
      *          description="Successfully retrieve a solicitation data",
      *
-     *         @OA\JsonContent(ref="#/components/schemas/Solicitation")
+     *         @OA\JsonContent(ref="#/components/schemas/SolicitationResponse")
      *      ),
      *
      *      @OA\Response(
@@ -79,14 +79,14 @@ class SolicitationController extends Controller
      *
      *     @OA\RequestBody(
      *
-     *          @OA\JsonContent(ref="#/components/schemas/Solicitation")
+     *          @OA\JsonContent(ref="#/components/schemas/SolicitationRequest")
      *      ),
      *
      *      @OA\Response(
      *          response=201,
      *          description="Successfully registered a new solicitation",
      *
-     *         @OA\JsonContent(ref="#/components/schemas/Solicitation")
+     *         @OA\JsonContent(ref="#/components/schemas/SolicitationResponse")
      *      ),
      *
      *      @OA\Response(
