@@ -598,9 +598,246 @@
                     }
                 ]
             }
+        },
+        "/api/client/solicitations/{solicitationId}": {
+            "get": {
+                "tags": [
+                    "Solicitations"
+                ],
+                "summary": "Show the data of a solicitation",
+                "description": "Show the data of a solicitation",
+                "operationId": "Show a Solicitation Data",
+                "parameters": [
+                    {
+                        "name": "solicitationId",
+                        "in": "path",
+                        "description": "The id of the solicitation",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieve a solicitation data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SolicitationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/client/solicitations": {
+            "post": {
+                "tags": [
+                    "Solicitations"
+                ],
+                "summary": "Create a new Solicitation",
+                "description": "Create a new Solicitation",
+                "operationId": "Create a new Solicitation",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "description": "The title that best describes the solicitation",
+                                        "type": "string",
+                                        "default": "Solicitação de teste"
+                                    },
+                                    "report": {
+                                        "description": "The report that describes the reason for the solicitation",
+                                        "type": "string",
+                                        "default": "Relato de teste"
+                                    },
+                                    "latitudeCoordinate": {
+                                        "description": "Latitude1 coordinate of the solicitation",
+                                        "type": "string",
+                                        "default": "-23.6486"
+                                    },
+                                    "longitudeCoordinate": {
+                                        "description": "Loongitude coordinate of the solicitation",
+                                        "type": "string",
+                                        "default": "71.6406"
+                                    },
+                                    "soliticationCategoryId": {
+                                        "description": "Id of the solicitation category that best describes the solicitation",
+                                        "type": "integer",
+                                        "default": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully registered a new solicitation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SolicitationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
         }
     },
     "components": {
+        "schemas": {
+            "SolicitationResponse": {
+                "title": "SolicitationResponse",
+                "description": "Solicitation information",
+                "required": [
+                    "id",
+                    "status",
+                    "latitudeCoordinate",
+                    "longitudeCoordinate",
+                    "solicitationCategory",
+                    "createdAt",
+                    "updatedAt"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Id of the solicitation",
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "title": {
+                        "title": "title",
+                        "description": "The title that best describes the solicitation",
+                        "type": "string",
+                        "example": "Centro"
+                    },
+                    "report": {
+                        "title": "report",
+                        "description": "The report that describes the reason for the solicitation",
+                        "type": "string",
+                        "example": "Guarapuava"
+                    },
+                    "status": {
+                        "title": "status",
+                        "description": "The status of the solicitation",
+                        "type": "string",
+                        "example": "PR"
+                    },
+                    "latitudeCoordinate": {
+                        "title": "latitudeCoordinate",
+                        "description": "Latitude coordinate of the solicitation",
+                        "type": "string",
+                        "example": "-25.430"
+                    },
+                    "longitudeCoordinate": {
+                        "title": "longitudeCoordinate",
+                        "description": "Longitude coordinate of the solicitation",
+                        "type": "string",
+                        "example": "-49.271"
+                    },
+                    "solicitationCategory": {
+                        "title": "solicitationCategory",
+                        "description": "Id of the solicitation category that best describes the solicitation",
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "createdAt": {
+                        "title": "createdAt",
+                        "description": "Date of creation",
+                        "type": "string",
+                        "example": "2021-09-01T00:00:00.000000Z"
+                    },
+                    "updateAt": {
+                        "title": "updatedAt",
+                        "description": "Date of last update",
+                        "type": "string",
+                        "example": "2021-09-01T00:00:00.000000Z"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "sanctum": {
                 "type": "apiKey",

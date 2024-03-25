@@ -15,6 +15,51 @@ use Illuminate\Http\Response;
 
 class SolicitationController extends Controller
 {
+    /**
+     * @OA\Get (
+     *     path="/api/client/solicitations/{solicitationId}",
+     *     operationId="Show a Solicitation Data",
+     *     tags={"Solicitations"},
+     *     summary="Show the data of a solicitation",
+     *     description="Show the data of a solicitation",
+     *     security={{"sanctum":{}}},
+     *
+     *     @OA\Parameter(
+     *          name="solicitationId",
+     *          in="path",
+     *          description="The id of the solicitation",
+     *          required=true,
+     *          @OA\Schema (type="integer")
+     *       ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successfully retrieve a solicitation data",
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/SolicitationResponse")
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Unauthorized")
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad request",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Bad request")
+     *          )
+     *      ),
+     * )
+     */
     public function show(Solicitation $solicitation): SolicitationResource
     {
         $solicitation->loadMissing('solicitationCategory');
@@ -22,6 +67,81 @@ class SolicitationController extends Controller
         return SolicitationResource::make($solicitation);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/client/solicitations",
+     *     operationId="Create a new Solicitation",
+     *     tags={"Solicitations"},
+     *     summary="Create a new Solicitation",
+     *     description="Create a new Solicitation",
+     *     security={{"sanctum":{}}},
+     *
+     *     @OA\RequestBody(
+     *
+     *          @OA\JsonContent(
+     *              type="object",
+     *
+     *              @OA\Property(
+     *                   type="string",
+     *                   default="Solicitação de teste",
+     *                   description="The title that best describes the solicitation",
+     *                   property="title"
+     *               ),
+     *              @OA\Property(
+     *                  type="string",
+     *                  default="Relato de teste",
+     *                  description="The report that describes the reason for the solicitation",
+     *                  property="report"
+     *              ),
+     *              @OA\Property(
+     *                  type="string",
+     *                  default="-23.6486",
+     *                  description="Latitude1 coordinate of the solicitation",
+     *                  property="latitudeCoordinate"
+     *              ),
+     *              @OA\Property(
+     *                   type="string",
+     *                   default="71.6406",
+     *                   description="Loongitude coordinate of the solicitation",
+     *                   property="longitudeCoordinate"
+     *               ),
+     *              @OA\Property(
+     *                    type="integer",
+     *                    default="1",
+     *                    description="Id of the solicitation category that best describes the solicitation",
+     *                    property="soliticationCategoryId"
+     *                )
+     *          ),
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=201,
+     *          description="Successfully registered a new solicitation",
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/SolicitationResponse")
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Unauthorized")
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad request",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Bad request")
+     *          )
+     *      ),
+     * )
+     */
     public function store(SolicitationRequest $request): SolicitationResource
     {
         $data = SolicitationData::validateAndCreate([
