@@ -16,7 +16,7 @@ use Illuminate\Http\Response;
 class SolicitationController extends Controller
 {
     /**
-     * @OA\Get (
+     * @OA\Get(
      *     path="/api/client/solicitations/{solicitationId}",
      *     operationId="Show a Solicitation Data",
      *     tags={"Solicitations"},
@@ -137,6 +137,49 @@ class SolicitationController extends Controller
         return $this->show($solicitation);
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/api/client/solicitations/{solicitationId}",
+     *     operationId="Delete Solicitation",
+     *     tags={"Solicitations"},
+     *     summary="Delete a solicitation",
+     *     description="Delete a solicitation",
+     *     security={{"sanctum":{}}},
+     *
+     *     @OA\Parameter(
+     *          name="solicitationId",
+     *          in="path",
+     *          description="The id of the solicitation",
+     *          required=true,
+     *
+     *          @OA\Schema (type="integer")
+     *       ),
+     *
+     *      @OA\Response(
+     *          response=204,
+     *          description="Successfully deleted a solicitation",
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Unauthorized")
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad request",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Bad request")
+     *          )
+     *      ),
+     * )
+     */
     public function destroy(Solicitation $solicitation): Response
     {
         app(DeleteSolicitationAction::class)
