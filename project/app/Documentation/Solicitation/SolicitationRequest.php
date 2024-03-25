@@ -4,7 +4,7 @@ namespace App\Documentation\Solicitation;
 
 /**
  * @OA\Schema(
- *      title="Solicitation",
+ *      title="SolicitationRequest",
  *      description="Solicitation request information",
  *      type="object",
  *      required={"title", "report", "latitudeCoordinate", "longitudeCoordinate", "solicitationCategoryId"}

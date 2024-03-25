@@ -802,7 +802,7 @@
     "components": {
         "schemas": {
             "SolicitationRequest": {
-                "title": "Solicitation",
+                "title": "SolicitationRequest",
                 "description": "Solicitation request information",
                 "required": [
                     "title",
