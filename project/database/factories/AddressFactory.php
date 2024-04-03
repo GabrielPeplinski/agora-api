@@ -16,7 +16,7 @@ class AddressFactory extends Factory
             'id' => $this->faker->randomNumber(4),
             'zip_code' => $this->faker->postcode(),
             'neighborhood' => $this->faker->streetName(),
-            'city_id' => AddressCity::factory()->create()->id,
+            'address_city_id' => AddressCity::factory()->create()->id,
         ];
     }
 }

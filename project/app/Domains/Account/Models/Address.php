@@ -6,6 +6,7 @@ use Database\Factories\AddressFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Address extends Model
 {
@@ -15,12 +16,16 @@ class Address extends Model
         'zip_code',
         'neighborhood',
         'city_id',
-        'user_id',
     ];
 
     public function city(): BelongsTo
     {
         return $this->belongsTo(AddressCity::class);
+    }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class);
     }
 
     protected static function newFactory(): AddressFactory

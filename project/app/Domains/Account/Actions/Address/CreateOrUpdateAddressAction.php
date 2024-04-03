@@ -11,8 +11,8 @@ class CreateOrUpdateAddressAction
     {
         $data = array_keys_as($data->toArray(), [
             'zipCode' => 'zip_code',
-            'cityName' => 'city_name',
-            'addressCityId' => 'city_id',
+            'addressCityName' => 'address_city_name',
+            'addressCityId' => 'address_city_id',
             'userId' => 'user_id',
         ]);
 

@@ -15,10 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('zip_code');
             $table->string('neighborhood');
-            $table->foreignId('city_id')
+            $table->foreignId('address_city_id')
                 ->constrained('address_cities');
-            $table->foreignId('user_id')
-                ->constrained('users');
             $table->timestamps();
         });
     }
