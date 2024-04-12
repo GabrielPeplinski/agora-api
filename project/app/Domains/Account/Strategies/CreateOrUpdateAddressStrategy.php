@@ -11,7 +11,7 @@ use App\Domains\Account\Models\Address;
 use App\Domains\Account\Models\User;
 use Illuminate\Support\Facades\DB;
 
-class CreateAddressStrategy
+class CreateOrUpdateAddressStrategy
 {
     private ?AddressData $data;
 
