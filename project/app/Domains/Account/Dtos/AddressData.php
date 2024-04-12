@@ -35,9 +35,6 @@ class AddressData extends Data
 
         #[Nullable, IntegerType, Exists('address_cities', 'id')]
         public ?int $addressCityId,
-
-        #[Nullable, IntegerType, Exists('users', 'id')]
-        public ?int $userId,
     ) {
     }
 }

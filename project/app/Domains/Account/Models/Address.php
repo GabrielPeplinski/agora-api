@@ -6,7 +6,6 @@ use Database\Factories\AddressFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Address extends Model
 {
@@ -15,17 +14,17 @@ class Address extends Model
     protected $fillable = [
         'zip_code',
         'neighborhood',
-        'city_id',
+        'address_city_id',
     ];
 
     public function city(): BelongsTo
     {
-        return $this->belongsTo(AddressCity::class);
+        return $this->belongsTo(AddressCity::class, 'address_city_id', 'id');
     }
 
-    public function user(): HasOne
+    public function user(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'address_id', 'id');
     }
 
     protected static function newFactory(): AddressFactory

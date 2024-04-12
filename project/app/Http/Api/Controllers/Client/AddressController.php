@@ -151,12 +151,9 @@ class AddressController extends Controller
     public function createOrUpdate(AddressRequest $request): AddressResource
     {
         try {
-            $data = AddressData::validateAndCreate([
-                ...$request->validated(),
-                'userId' => current_user()->id,
-            ]);
+            $data = AddressData::validateAndCreate($request->validated());
 
-            $address = (new CreateAddressStrategy($data))
+            $address = (new CreateAddressStrategy($data, current_user()))
                 ->execute();
 
             return AddressResource::make($address);

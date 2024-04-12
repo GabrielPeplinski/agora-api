@@ -9,14 +9,11 @@ class FirstOrCreateAddressCityAction
 {
     public function execute(AddressData $data): AddressCity
     {
-        $data = array_keys_as($data->toArray(), [
-            'cityName' => 'name',
-            'addressStateId' => 'state_id',
-        ]);
+        $data = [
+            'name' => $data->cityName,
+            'address_state_id' => $data->addressStateId,
+        ];
 
-        return AddressCity::firstOrCreate([
-            'state_id' => $data['state_id'],
-            'name' => $data['name'],
-        ], $data);
+        return AddressCity::firstOrCreate($data);
     }
 }

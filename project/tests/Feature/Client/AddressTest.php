@@ -3,6 +3,7 @@
 namespace Tests\Feature\Client;
 
 use App\Domains\Account\Actions\Address\CreateOrUpdateAddressAction;
+use App\Domains\Account\Models\Address;
 use App\Http\Api\Controllers\Client\AddressController;
 use Tests\Cases\TestCaseFeature;
 
@@ -66,7 +67,7 @@ class AddressTest extends TestCaseFeature
         ];
 
         $this->putJson($this->controllerAction('createOrUpdate'), $data)
-            ->assertOk()
+            ->assertCreated()
             ->assertJsonStructure([
                 'data' => $this->getResponseStructure(),
             ]);
@@ -98,8 +99,7 @@ class AddressTest extends TestCaseFeature
 
         $this->assertFalse(current_user()->address()->exists());
 
-        $this->assertDatabaseMissing('addresses', [
-            'user_id' => current_user()->id,
+        $this->assertDatabaseMissing(Address::class, [
             'neighborhood' => 'Vila Carli',
         ]);
     }
@@ -119,8 +119,7 @@ class AddressTest extends TestCaseFeature
 
         $this->assertFalse(current_user()->address()->exists());
 
-        $this->assertDatabaseMissing('addresses', [
-            'user_id' => current_user()->id,
+        $this->assertDatabaseMissing(Address::class, [
             'neighborhood' => 'Vila Carli',
         ]);
     }

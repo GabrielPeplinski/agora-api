@@ -13,7 +13,7 @@ class AddressCityFactory extends Factory
     {
         return [
             'name' => 'Guarapuava',
-            'state_id' => 16,
+            'address_state_id' => 16,
         ];
     }
 }

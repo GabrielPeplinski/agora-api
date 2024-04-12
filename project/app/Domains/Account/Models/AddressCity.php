@@ -21,12 +21,12 @@ class AddressCity extends Model
 
     public function state(): BelongsTo
     {
-        return $this->belongsTo(AddressState::class);
+        return $this->belongsTo(AddressState::class, 'address_state_id', 'id');
     }
 
     public function addresses(): HasMany
     {
-        return $this->hasMany(Address::class);
+        return $this->hasMany(Address::class, 'id', 'address_id');
     }
 
     protected static function newFactory(): AddressCityFactory
