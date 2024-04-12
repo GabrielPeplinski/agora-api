@@ -14,13 +14,17 @@ class Address extends Model
     protected $fillable = [
         'zip_code',
         'neighborhood',
-        'city_id',
-        'user_id',
+        'address_city_id',
     ];
 
     public function city(): BelongsTo
     {
-        return $this->belongsTo(AddressCity::class);
+        return $this->belongsTo(AddressCity::class, 'address_city_id', 'id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'address_id', 'id');
     }
 
     protected static function newFactory(): AddressFactory

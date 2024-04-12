@@ -5,17 +5,22 @@ namespace App\Domains\Account\Strategies;
 use App\Domains\Account\Actions\Address\CreateOrUpdateAddressAction;
 use App\Domains\Account\Actions\AddressCity\FirstOrCreateAddressCityAction;
 use App\Domains\Account\Actions\AddressState\GetAddressStateIdByAbbreviationAction;
+use App\Domains\Account\Actions\User\UpdateUserAddressAction;
 use App\Domains\Account\Dtos\AddressData;
 use App\Domains\Account\Models\Address;
+use App\Domains\Account\Models\User;
 use Illuminate\Support\Facades\DB;
 
-class CreateAddressStrategy
+class CreateOrUpdateAddressStrategy
 {
     private ?AddressData $data;
 
-    public function __construct(AddressData $data)
+    private ?User $currentUser;
+
+    public function __construct(AddressData $data, User $currentUser)
     {
         $this->data = $data;
+        $this->currentUser = $currentUser;
     }
 
     public function execute(): ?Address
@@ -29,6 +34,9 @@ class CreateAddressStrategy
 
             $address = app(CreateOrUpdateAddressAction::class)
                 ->execute($this->data);
+
+            app(UpdateUserAddressAction::class)
+                ->execute($this->currentUser, $address->id);
 
             DB::commit();
 

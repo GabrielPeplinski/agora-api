@@ -64,11 +64,12 @@ abstract class TestCaseFeature extends BaseTestCase
         Sanctum::actingAs($user);
     }
 
-    protected function createClientUserAddress(): Address
+    protected function createClientUserAddress(): void
     {
-        return Address::factory()
-            ->create([
-                'user_id' => current_user()->id,
-            ]);
+        $address = Address::factory()
+            ->create();
+
+        current_user()->address_id = $address->id;
+        current_user()->save();
     }
 }

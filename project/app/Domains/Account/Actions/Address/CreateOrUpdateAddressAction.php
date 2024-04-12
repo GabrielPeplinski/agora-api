@@ -9,15 +9,12 @@ class CreateOrUpdateAddressAction
 {
     public function execute(AddressData $data): Address
     {
-        $data = array_keys_as($data->toArray(), [
-            'zipCode' => 'zip_code',
-            'cityName' => 'city_name',
-            'addressCityId' => 'city_id',
-            'userId' => 'user_id',
-        ]);
+        $data = [
+            'zip_code' => $data->zipCode,
+            'neighborhood' => $data->neighborhood,
+            'address_city_id' => $data->addressCityId,
+        ];
 
-        return Address::updateOrCreate([
-            'user_id' => $data['user_id'],
-        ], $data);
+        return Address::updateOrCreate($data);
     }
 }
