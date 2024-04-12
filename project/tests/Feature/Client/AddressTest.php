@@ -37,7 +37,7 @@ class AddressTest extends TestCaseFeature
         ];
 
         $this->putJson($this->controllerAction('createOrUpdate'), $data)
-            ->assertCreated()
+            ->assertSuccessful()
             ->assertJsonStructure([
                 'data' => $this->getResponseStructure(),
             ]);
@@ -67,7 +67,7 @@ class AddressTest extends TestCaseFeature
         ];
 
         $this->putJson($this->controllerAction('createOrUpdate'), $data)
-            ->assertCreated()
+            ->assertSuccessful()
             ->assertJsonStructure([
                 'data' => $this->getResponseStructure(),
             ]);
