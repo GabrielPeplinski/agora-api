@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('solicitation_id');
             $table->foreignId('user_id');
             $table->string('status');
-            $table->string('action_description', 500);
+            $table->string('action_description');
             $table->timestamps();
         });
     }
