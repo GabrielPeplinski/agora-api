@@ -4,6 +4,7 @@ namespace App\Domains\Solicitations\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Solicitation extends Model
 {
@@ -21,5 +22,10 @@ class Solicitation extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(SolicitationCategory::class, 'solicitation_category_id');
+    }
+
+    public function userSolicitations(): HasMany
+    {
+        return $this->hasMany(UserSolicitation::class);
     }
 }
