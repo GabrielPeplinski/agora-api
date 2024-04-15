@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Solicitations\Enums;
+namespace App\Domains\Solicitation\Enums;
 
 enum SolicitationActionDescriptionEnum: string
 {
