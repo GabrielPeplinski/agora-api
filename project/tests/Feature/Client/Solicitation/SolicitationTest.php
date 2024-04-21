@@ -2,7 +2,11 @@
 
 namespace Tests\Feature\Client\Solicitation;
 
+use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
+use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
+use App\Domains\Solicitation\Models\Solicitation;
 use App\Domains\Solicitation\Models\SolicitationCategory;
+use App\Domains\Solicitation\Models\UserSolicitation;
 use App\Http\Api\Controllers\Client\Solicitation\SolicitationController;
 use Tests\Cases\TestCaseFeature;
 
@@ -13,6 +17,19 @@ class SolicitationTest extends TestCaseFeature
         parent::setUp();
         $this->loginAsClient();
         $this->useActionsFromController(SolicitationController::class);
+    }
+
+    private function getSolicitationResourceData(): array
+    {
+        return [
+            'id',
+            'description',
+            'latitudeCoordinates',
+            'longitudeCoordinates',
+            'status',
+            'createdAt',
+            'updatedAt',
+        ];
     }
 
     public function test_should_create_solicitation_when_data_is_valid(): void
@@ -31,14 +48,26 @@ class SolicitationTest extends TestCaseFeature
         $this->postJson($this->controllerAction('store'), $data)
             ->assertCreated()
             ->assertJsonStructure([
-                'data' => [
-                    'id',
-                    'category',
-                    'description',
-                    'latitudeCoordinates',
-                    'longitudeCoordinates',
-                    'status',
-                ],
+                'data' => $this->getSolicitationResourceData(),
             ]);
+
+        $this->assertDatabaseHas(Solicitation::class, [
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'latitude_coordinates' => $data['latitudeCoordinates'],
+            'longitude_coordinates' => $data['longitudeCoordinates'],
+            'solicitation_category_id' => $solicitationCategory->id,
+        ]);
+
+        $solicitation = Solicitation::first();
+
+        $this->assertDatabaseHas(UserSolicitation::class, [
+            'solicitation_id' => $solicitation->id,
+            'user_id' => current_user()->id,
+            'status' => SolicitationStatusEnum::OPEN,
+            'action_description' => SolicitationActionDescriptionEnum::CREATED,
+        ]);
+
+        $this->assertTrue($solicitation->userSolicitations()->exists());
     }
 }

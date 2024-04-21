@@ -8,6 +8,7 @@ use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
 use App\Domains\Solicitation\Models\Solicitation;
 use App\Domains\Solicitation\Strategies\CreateSolicitationStrategy;
 use App\Http\Api\Request\Solicitation\SolicitationRequest;
+use App\Http\Api\Resources\Client\Solicitation\SolicitationResource;
 
 class SolicitationController
 {
@@ -38,6 +39,8 @@ class SolicitationController
 
         $solicitation = app(CreateSolicitationStrategy::class)
             ->execute($data);
+
+        return SolicitationResource::make($solicitation);
     }
 
     public function update(SolicitationRequest $request, Solicitation $solicitation)
