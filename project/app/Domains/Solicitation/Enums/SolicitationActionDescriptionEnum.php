@@ -4,13 +4,13 @@ namespace App\Domains\Solicitation\Enums;
 
 enum SolicitationActionDescriptionEnum: string
 {
-    case CREATED = 'created';
+    public const CREATED = 'created';
 
-    case UPDATED = 'updated';
+    public const UPDATED = 'updated';
 
-    case STATUS_UPDATED = 'status_updated';
+    public const STATUS_UPDATED = 'status_updated';
 
-    case LIKED = 'liked';
+    public const LIKED = 'liked';
 
-    case DELETED = 'deleted';
+    public const DELETED = 'deleted';
 }

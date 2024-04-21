@@ -25,12 +25,12 @@ class SolicitationRequest extends FormRequest
         return [
             'title' => 'required|string|min:5|max:255',
             'description' => 'required|string|min:5|max:1000',
-            'latitudeCoordinate' => [
+            'latitudeCoordinates' => [
                 'required',
                 'string',
                 'regex:/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/',
             ],
-            'longitudeCoordinate' => [
+            'longitudeCoordinates' => [
                 'required',
                 'string',
                 'regex:/^[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/',
