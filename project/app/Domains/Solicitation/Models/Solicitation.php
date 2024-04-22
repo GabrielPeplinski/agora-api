@@ -28,4 +28,12 @@ class Solicitation extends Model
     {
         return $this->hasMany(UserSolicitation::class);
     }
+
+    public function getStatusAttribute(): string
+    {
+        return $this->userSolicitations()
+            ->latest()
+            ->first()
+            ->status;
+    }
 }
