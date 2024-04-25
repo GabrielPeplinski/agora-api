@@ -69,7 +69,7 @@ class MySolicitationsTest extends TestCaseFeature
             ]);
     }
 
-    public function test_should_return_only_current_user_solicitations_and_filter_according_to_status()
+    public function test_should_return_only_current_user_solicitations_and_filter_according_to_status_open()
     {
         $mySolicitations = $this->createCurrentUserSolicitation();
 
@@ -82,6 +82,11 @@ class MySolicitationsTest extends TestCaseFeature
             ->assertJsonStructure([
                 'data' => ['*' => $this->getSolicitationResourceData()],
             ]);
+    }
+
+    public function test_should_return_only_current_user_solicitations_and_filter_according_to_status_in_progress()
+    {
+        $this->createCurrentUserSolicitation();
 
         /*
          * Update one solicitation to 'in_progress' status
@@ -96,6 +101,11 @@ class MySolicitationsTest extends TestCaseFeature
             ->assertJsonStructure([
                 'data' => ['*' => $this->getSolicitationResourceData()],
             ]);
+    }
+
+    public function test_should_return_only_current_user_solicitations_and_filter_according_to_status_resolved()
+    {
+        $this->createCurrentUserSolicitation();
 
         /*
          * Update one solicitation to 'resolved' status
