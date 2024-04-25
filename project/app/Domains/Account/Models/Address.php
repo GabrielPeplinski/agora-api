@@ -2,7 +2,7 @@
 
 namespace App\Domains\Account\Models;
 
-use Database\Factories\AddressFactory;
+use Database\Factories\Domains\Account\AddressFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

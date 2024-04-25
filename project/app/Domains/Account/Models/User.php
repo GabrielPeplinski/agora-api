@@ -4,7 +4,7 @@ namespace App\Domains\Account\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Domains\Solicitation\Models\UserSolicitation;
-use Database\Factories\UserFactory;
+use Database\Factories\Domains\Account\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;

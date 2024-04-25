@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Domains\Solicitation;
 
 use App\Domains\Solicitation\Models\SolicitationCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;

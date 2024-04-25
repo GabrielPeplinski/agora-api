@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Domains\Solicitation;
 
 use App\Domains\Account\Models\User;
 use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;

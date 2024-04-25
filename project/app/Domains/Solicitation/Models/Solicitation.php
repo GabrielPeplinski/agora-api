@@ -2,7 +2,7 @@
 
 namespace App\Domains\Solicitation\Models;
 
-use Database\Factories\SolicitationFactory;
+use Database\Factories\Domains\Solicitation\SolicitationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
