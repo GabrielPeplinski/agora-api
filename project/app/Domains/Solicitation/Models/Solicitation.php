@@ -2,12 +2,16 @@
 
 namespace App\Domains\Solicitation\Models;
 
+use Database\Factories\SolicitationFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Solicitation extends Model
 {
+    use HasFactory;
+
     protected $table = 'solicitations';
 
     protected $fillable = [
@@ -35,5 +39,10 @@ class Solicitation extends Model
             ->latest()
             ->first()
             ->status;
+    }
+
+    protected static function newFactory(): SolicitationFactory
+    {
+        return SolicitationFactory::new();
     }
 }
