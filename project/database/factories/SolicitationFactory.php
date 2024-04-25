@@ -2,14 +2,15 @@
 
 namespace Database\Factories;
 
+use App\Domains\Account\Models\User;
 use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
 use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
 use App\Domains\Solicitation\Models\Solicitation;
+use App\Domains\Solicitation\Models\SolicitationCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SolicitationFactory extends Factory
 {
-
     protected $model = Solicitation::class;
 
     /**
@@ -20,7 +21,7 @@ class SolicitationFactory extends Factory
     public function definition(): array
     {
         return [
-            'solicitation_category_id' => SolicitationCategoryFactory::factory()
+            'solicitation_category_id' => SolicitationCategory::factory()
                 ->create(),
             'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraph(),
@@ -33,17 +34,21 @@ class SolicitationFactory extends Factory
     public function configure(): SolicitationFactory
     {
         return $this->afterCreating(function (Solicitation $solicitation) {
-            $solicitation->userSolicitations()->create([
-                'status' => SolicitationStatusEnum::OPEN,
-                'action_description' => SolicitationActionDescriptionEnum::CREATED,
-                'user_id' => UserFactory::create(),
-            ]);
+            $solicitation
+                ->userSolicitations()
+                ->create([
+                    'status' => SolicitationStatusEnum::OPEN,
+                    'action_description' => SolicitationActionDescriptionEnum::CREATED,
+                    'user_id' => User::factory()
+                        ->create()
+                        ->id,
+                ]);
         });
     }
 
-    public function makeCurrentUserSolicitation(): void
+    public function makeCurrentUserSolicitations(): SolicitationFactory
     {
-        $this->afterCreating(function (Solicitation $solicitation) {
+        return $this->afterCreating(function (Solicitation $solicitation) {
             $solicitation->userSolicitations()
                 ->where('action_description', SolicitationActionDescriptionEnum::CREATED)
                 ->update([

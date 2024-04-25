@@ -4,7 +4,6 @@ namespace App\Support;
 
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -25,7 +24,7 @@ class PaginationBuilder extends QueryBuilder implements Responsable
 
     private function getPerPage()
     {
-        $perPage = Request::input('perPage', $this->perPage);
+        $perPage = \Request::input('perPage', $this->perPage);
         if ($perPage > 100 || $perPage < 1) {
             $message = "Per page parameter [{$perPage}] out of the range.";
             throw new UnauthorizedHttpException($message);

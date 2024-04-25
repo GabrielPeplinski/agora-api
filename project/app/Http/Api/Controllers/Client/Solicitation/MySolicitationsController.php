@@ -12,10 +12,10 @@ class MySolicitationsController
     public function __invoke()
     {
         $mySolicitations = app(Solicitation::class)
-            ->whereHas('usersSolicitations', function ($query) {
+            ->whereHas('userSolicitations', function ($query) {
                 $query->where('user_id', current_user()->id)
-                    ->where('status', SolicitationActionDescriptionEnum::CREATED);
-            })->get();
+                    ->where('action_description', SolicitationActionDescriptionEnum::CREATED);
+            });
 
         return PaginationBuilder::for($mySolicitations)
             ->resource(SolicitationResource::class);
