@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Client\Solicitation;
 
+use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
 use App\Domains\Solicitation\Models\Solicitation;
 use App\Http\Api\Controllers\Client\Solicitation\MySolicitationsController;
 use Illuminate\Database\Eloquent\Collection;
@@ -29,6 +30,21 @@ class MySolicitationsTest extends TestCaseFeature
         ];
     }
 
+    private function createCurrentUserSolicitation(): Collection
+    {
+        return Solicitation::factory()
+            ->count(2)
+            ->makeCurrentUserSolicitations()
+            ->create();
+    }
+
+    private function updateSolicitationStatus(string $status): void
+    {
+        current_user()->userSolicitations()
+            ->first()
+            ->update(['status' => $status]);
+    }
+
     public function test_should_return_only_current_user_solicitations()
     {
         $mySolicitations = $this->createCurrentUserSolicitation();
@@ -53,11 +69,46 @@ class MySolicitationsTest extends TestCaseFeature
             ]);
     }
 
-    private function createCurrentUserSolicitation(): Collection
+    public function test_should_return_only_current_user_solicitations_and_filter_according_to_status()
     {
-        return Solicitation::factory()
-            ->count(2)
-            ->makeCurrentUserSolicitations()
-            ->create();
+        $mySolicitations = $this->createCurrentUserSolicitation();
+
+        /*
+         * At this point, all solicitation are in 'open' status
+         */
+        $this->getJson($this->controllerAction(null, ['filter[status]' => SolicitationStatusEnum::OPEN]))
+            ->assertOk()
+            ->assertJsonCount($mySolicitations->count(), 'data')
+            ->assertJsonStructure([
+                'data' => ['*' => $this->getSolicitationResourceData()],
+            ]);
+
+        /*
+         * Update one solicitation to 'in_progress' status
+         */
+        $this->updateSolicitationStatus(SolicitationStatusEnum::IN_PROGRESS);
+
+        $this->refreshDatabase();
+
+        $this->getJson($this->controllerAction(null, ['filter[status]' => SolicitationStatusEnum::IN_PROGRESS]))
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonStructure([
+                'data' => ['*' => $this->getSolicitationResourceData()],
+            ]);
+
+        /*
+         * Update one solicitation to 'resolved' status
+         */
+        $this->updateSolicitationStatus(SolicitationStatusEnum::RESOLVED);
+
+        $this->refreshDatabase();
+
+        $this->getJson($this->controllerAction(null, ['filter[status]' => SolicitationStatusEnum::RESOLVED]))
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonStructure([
+                'data' => ['*' => $this->getSolicitationResourceData()],
+            ]);
     }
 }
