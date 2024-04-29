@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('description', 1000);
             $table->string('latitude_coordinates', 15);
             $table->string('longitude_coordinates', 15);
-            $table->bigInteger('likes_amount')->default(0);
+            $table->bigInteger('likes_count')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

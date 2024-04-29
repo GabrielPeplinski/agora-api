@@ -20,7 +20,7 @@ class Solicitation extends Model
         'description',
         'latitude_coordinates',
         'longitude_coordinates',
-        'likes_amount',
+        'likes_count',
     ];
 
     public function category(): BelongsTo

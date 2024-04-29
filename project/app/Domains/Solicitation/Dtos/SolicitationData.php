@@ -30,7 +30,7 @@ class SolicitationData extends Data
         public int $solicitationCategoryId,
 
         #[Nullable, IntegerType]
-        public ?int $likesAmount,
+        public ?int $likesCount,
 
         // UserSolicitation fields
 

@@ -27,6 +27,7 @@ class SolicitationTest extends TestCaseFeature
             'latitudeCoordinates',
             'longitudeCoordinates',
             'status',
+            'likesCount',
             'createdAt',
             'updatedAt',
         ];
