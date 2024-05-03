@@ -14,21 +14,15 @@ class LikeSolicitationAction
         try {
             DB::beginTransaction();
 
-            $this->updateSolicitationLikesCount($solicitation);
-
             app(CreateUserSolicitationAction::class)
                 ->execute($data);
+
+            $solicitation->increment('likes_count');
 
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
             throw new \Exception($exception->getMessage());
         }
-    }
-
-    private function updateSolicitationLikesCount(Solicitation $solicitation): void
-    {
-        $solicitation->likes_count += 1;
-        $solicitation->save();
     }
 }

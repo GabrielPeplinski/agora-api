@@ -16,24 +16,18 @@ class DislikeSolicitationAction
         try {
             DB::beginTransaction();
 
-            $this->updateSolicitationLikesCount($solicitation);
-
-            $solicitation = $this->findUserSolicitationToDestroy($data);
+            $solicitationToUpdate = $this->findUserSolicitationToDestroy($data);
 
             app(DeleteUserSolicitationAction::class)
-                ->execute($solicitation);
+                ->execute($solicitationToUpdate);
+
+            $solicitation->decrement('likes_count');
 
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
             throw new \Exception($exception->getMessage());
         }
-    }
-
-    private function updateSolicitationLikesCount(Solicitation $solicitation): void
-    {
-        $solicitation->likes_count -= 1;
-        $solicitation->save();
     }
 
     private function findUserSolicitationToDestroy(UserSolicitationData $data)

@@ -35,6 +35,8 @@ class LikeSolicitationTest extends TestCaseFeature
             'solicitation_id' => $solicitation->id,
             'action_description' => SolicitationActionDescriptionEnum::LIKE,
         ]);
+
+        $this->assertEquals(1, $solicitation->refresh()->likes_count);
     }
 
     public function test_should_like_and_dislike_a_solicitation()
@@ -55,6 +57,7 @@ class LikeSolicitationTest extends TestCaseFeature
             'solicitation_id' => $solicitation->id,
             'action_description' => SolicitationActionDescriptionEnum::LIKE,
         ]);
+        $this->assertEquals(1, $solicitation->refresh()->likes_count);
 
         $this->postJson($this->controllerAction(), [
             'solicitationId' => $solicitation->id,
@@ -67,7 +70,6 @@ class LikeSolicitationTest extends TestCaseFeature
             'solicitation_id' => $solicitation->id,
             'action_description' => SolicitationActionDescriptionEnum::LIKE,
         ]);
-
-
+        $this->assertEquals(0, $solicitation->refresh()->likes_count);
     }
 }
