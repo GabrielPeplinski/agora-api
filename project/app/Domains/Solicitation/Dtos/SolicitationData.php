@@ -2,6 +2,7 @@
 
 namespace App\Domains\Solicitation\Dtos;
 
+use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Attributes\Validation\Exists;
 use Spatie\LaravelData\Attributes\Validation\IntegerType;
 use Spatie\LaravelData\Attributes\Validation\Max;
@@ -32,19 +33,8 @@ class SolicitationData extends Data
         #[Nullable, IntegerType]
         public ?int $likesCount,
 
-        // UserSolicitation fields
-
-        #[Nullable, IntegerType, Exists('solicitations', 'id')]
-        public ?int $solicitationId,
-
-        #[Nullable, IntegerType, Exists('users', 'id')]
-        public ?int $userId,
-
-        #[Nullable, StringType, Min(1), Max(255)]
-        public ?string $status,
-
-        #[Nullable, StringType, Min(5), Max(255)]
-        public ?string $actionDescription,
+        #[Nullable, DataCollectionOf(UserSolicitationData::class)]
+        public ?UserSolicitationData $userSolicitationData,
     ) {
     }
 }

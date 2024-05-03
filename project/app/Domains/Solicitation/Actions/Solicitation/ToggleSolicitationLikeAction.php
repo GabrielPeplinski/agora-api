@@ -3,19 +3,20 @@
 namespace App\Domains\Solicitation\Actions\Solicitation;
 
 use App\Domains\Account\Models\User;
+use App\Domains\Solicitation\Dtos\UserSolicitationData;
 use App\Domains\Solicitation\Models\Solicitation;
 use Illuminate\Support\Facades\DB;
 
 class ToggleSolicitationLikeAction
 {
-    public function execute(User $user, Solicitation $solicitation): void
+    public function execute(User $user, UserSolicitationData $data, Solicitation $solicitation): void
     {
         try {
             DB::beginTransaction();
 
-            if (!$this->checkIfUserLikedSolicitation($user, $solicitation)) {
+            if (! $this->checkIfUserLikedSolicitation($user, $solicitation)) {
                 app(LikeSolicitationAction::class)
-                    ->execute($user, $solicitation);
+                    ->execute($data, $solicitation);
             }
 
             DB::commit();

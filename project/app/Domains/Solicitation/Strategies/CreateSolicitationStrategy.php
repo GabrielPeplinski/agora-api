@@ -18,10 +18,10 @@ class CreateSolicitationStrategy
             $solicitation = app(CreateSolicitationAction::class)
                 ->execute($data);
 
-            $data->solicitationId = $solicitation->id;
+            $data->userSolicitationData->solicitationId = $solicitation->id;
 
             app(CreateUserSolicitationAction::class)
-                ->execute($data);
+                ->execute($data->userSolicitationData);
 
             DB::commit();
 

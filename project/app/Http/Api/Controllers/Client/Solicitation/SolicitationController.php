@@ -24,41 +24,43 @@ class SolicitationController
     {
         $solicitation->loadMissing('category');
 
-        return response()->json([
-            'message' => 'Solicitation details',
-        ]);
+        return SolicitationResource::make($solicitation);
     }
 
     public function store(SolicitationRequest $request)
     {
         $data = SolicitationData::validateAndCreate([
             ...$request->validated(),
-            'status' => SolicitationStatusEnum::OPEN,
-            'userId' => current_user()->id,
-            'actionDescription' => SolicitationActionDescriptionEnum::CREATED,
+            'userSolicitationData' => [
+                'status' => SolicitationStatusEnum::OPEN,
+                'userId' => current_user()->id,
+                'actionDescription' => SolicitationActionDescriptionEnum::CREATED,
+            ],
         ]);
 
         $solicitation = app(CreateSolicitationStrategy::class)
             ->execute($data);
 
-        return SolicitationResource::make($solicitation);
+        return $this->show($solicitation);
     }
 
     public function update(SolicitationRequest $request, Solicitation $solicitation)
     {
         $data = SolicitationData::validateAndCreate([
             ...$request->validated(),
-            'status' => $solicitation->status,
-            'likesAmount' => $solicitation->likes_amount,
-            'solicitationId' => $solicitation->id,
-            'userId' => current_user()->id,
-            'actionDescription' => SolicitationActionDescriptionEnum::UPDATED,
+            'userSolicitationData' => [
+                'status' => $solicitation->status,
+                'likesAmount' => $solicitation->likes_amount,
+                'solicitationId' => $solicitation->id,
+                'userId' => current_user()->id,
+                'actionDescription' => SolicitationActionDescriptionEnum::UPDATED,
+            ],
         ]);
 
         $solicitation = app(UpdateSolicitationStrategy::class)
             ->execute($data, $solicitation);
 
-        return SolicitationResource::make($solicitation);
+        return $this->show($solicitation);
     }
 
     public function destroy(Solicitation $solicitation)

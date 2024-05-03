@@ -18,7 +18,7 @@ class LikeSolicitationTest extends TestCaseFeature
 
     public function test_should_like_a_solicitation()
     {
-        $solicitation  = Solicitation::factory()
+        $solicitation = Solicitation::factory()
             ->create();
 
         $this->postJson($this->controllerAction(), [

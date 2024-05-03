@@ -23,7 +23,7 @@ class LikeSolicitationRequest extends FormRequest
     public function rules(): array
     {
         return [
-           'solicitationId' => 'required|exists:solicitations,id',
+            'solicitationId' => 'required|exists:solicitations,id',
         ];
     }
 }

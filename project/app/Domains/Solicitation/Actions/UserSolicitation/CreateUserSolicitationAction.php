@@ -2,12 +2,12 @@
 
 namespace App\Domains\Solicitation\Actions\UserSolicitation;
 
-use App\Domains\Solicitation\Dtos\SolicitationData;
+use App\Domains\Solicitation\Dtos\UserSolicitationData;
 use App\Domains\Solicitation\Models\UserSolicitation;
 
 class CreateUserSolicitationAction
 {
-    public function execute(SolicitationData $data): UserSolicitation
+    public function execute(UserSolicitationData $data): UserSolicitation
     {
         $data = [
             'status' => $data->status,
