@@ -10,7 +10,7 @@ enum SolicitationActionDescriptionEnum: string
 
     public const STATUS_UPDATED = 'status_updated';
 
-    public const LIKED = 'liked';
+    public const LIKE = 'like';
 
     public const DELETED = 'deleted';
 }

@@ -2,6 +2,7 @@
 
 namespace App\Domains\Solicitation\Models;
 
+use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
 use Database\Factories\Domains\Solicitation\SolicitationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -44,5 +45,11 @@ class Solicitation extends Model
     protected static function newFactory(): SolicitationFactory
     {
         return SolicitationFactory::new();
+    }
+
+    public function likes(): HasMany
+    {
+        return $this->userSolicitations()
+            ->where('action_description', SolicitationActionDescriptionEnum::LIKE);
     }
 }

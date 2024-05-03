@@ -24,9 +24,9 @@ class LikeSolicitationAction
                 ->execute($data);
 
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             DB::rollBack();
-            throw new \Exception($e->getMessage());
+            throw new \Exception($exception->getMessage());
         }
     }
 
@@ -35,7 +35,7 @@ class LikeSolicitationAction
         return SolicitationData::from([
             'solicitationId' => $solicitation->id,
             'userId' => $user->id,
-            'actionDescription' => SolicitationActionDescriptionEnum::LIKED,
+            'actionDescription' => SolicitationActionDescriptionEnum::LIKE,
         ]);
     }
 
