@@ -50,6 +50,9 @@ class Solicitation extends Model
     public function likes(): HasMany
     {
         return $this->userSolicitations()
-            ->where('action_description', SolicitationActionDescriptionEnum::LIKE);
+            ->where(
+                'action_description',
+                SolicitationActionDescriptionEnum::LIKE
+            );
     }
 }

@@ -4,6 +4,7 @@ namespace Tests\Feature\Client\Solicitation;
 
 use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
 use App\Domains\Solicitation\Models\Solicitation;
+use App\Domains\Solicitation\Models\UserSolicitation;
 use App\Http\Api\Controllers\Client\Solicitation\LikeSolicitationController;
 use Tests\Cases\TestCaseFeature;
 
@@ -19,7 +20,9 @@ class LikeSolicitationTest extends TestCaseFeature
     public function test_should_like_a_solicitation()
     {
         $solicitation = Solicitation::factory()
-            ->create();
+            ->create([
+                'likes_count' => 0,
+            ]);
 
         $this->postJson($this->controllerAction(), [
             'solicitationId' => $solicitation->id,
@@ -27,10 +30,44 @@ class LikeSolicitationTest extends TestCaseFeature
 
         $this->refreshDatabase();
 
-        $this->assertDatabaseHas('user_solicitations', [
+        $this->assertDatabaseHas(UserSolicitation::class, [
             'user_id' => current_user()->id,
             'solicitation_id' => $solicitation->id,
             'action_description' => SolicitationActionDescriptionEnum::LIKE,
         ]);
+    }
+
+    public function test_should_like_and_dislike_a_solicitation()
+    {
+        $solicitation = Solicitation::factory()
+            ->create([
+                'likes_count' => 0,
+            ]);
+
+        $this->postJson($this->controllerAction(), [
+            'solicitationId' => $solicitation->id,
+        ])->assertOk();
+
+        $this->refreshDatabase();
+
+        $this->assertDatabaseHas(UserSolicitation::class, [
+            'user_id' => current_user()->id,
+            'solicitation_id' => $solicitation->id,
+            'action_description' => SolicitationActionDescriptionEnum::LIKE,
+        ]);
+
+        $this->postJson($this->controllerAction(), [
+            'solicitationId' => $solicitation->id,
+        ])->assertOk();
+
+        $this->refreshDatabase();
+
+        $this->assertDatabaseMissing(UserSolicitation::class, [
+            'user_id' => current_user()->id,
+            'solicitation_id' => $solicitation->id,
+            'action_description' => SolicitationActionDescriptionEnum::LIKE,
+        ]);
+
+
     }
 }

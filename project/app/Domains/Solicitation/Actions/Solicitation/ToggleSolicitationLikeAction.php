@@ -17,6 +17,9 @@ class ToggleSolicitationLikeAction
             if (! $this->checkIfUserLikedSolicitation($user, $solicitation)) {
                 app(LikeSolicitationAction::class)
                     ->execute($data, $solicitation);
+            } else {
+                app(DislikeSolicitationAction::class)
+                    ->execute($data, $solicitation);
             }
 
             DB::commit();
