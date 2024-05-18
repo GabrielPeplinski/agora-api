@@ -10,8 +10,8 @@ class AddressCityNameFormatter
         $words = explode(' ', mb_strtolower($name));
 
         foreach ($words as $key => $word) {
-            if (!in_array($word, $prepositions)) {
-                $words[$key] = mb_convert_case($word, MB_CASE_TITLE, "UTF-8");
+            if (! in_array($word, $prepositions)) {
+                $words[$key] = mb_convert_case($word, MB_CASE_TITLE, 'UTF-8');
             }
         }
 
