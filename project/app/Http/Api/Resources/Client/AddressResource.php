@@ -15,8 +15,6 @@ class AddressResource extends JsonResource
             'neighborhood' => $this->neighborhood,
             'cityName' => $this->city->name,
             'stateAbbreviation' => $this->city->state->name_abbreviation,
-            'created_at' => output_date_format($this->created_at),
-            'updated_at' => output_date_format($this->updated_at),
         ];
     }
 }

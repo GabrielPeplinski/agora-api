@@ -85,7 +85,7 @@ class RegisterController extends Controller
     public function __invoke(Request $request): JsonResponse
     {
         $userData = $request->validate([
-            'email' => 'required|string',
+            'email' => 'required|string|unique:users,email',
             'name' => 'required|string',
             'password' => 'required|string|confirmed',
         ]);
