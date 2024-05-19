@@ -598,6 +598,66 @@
                     }
                 ]
             }
+        },
+        "/api/selects/solicitation-categories": {
+            "get": {
+                "tags": [
+                    "Selects"
+                ],
+                "summary": "Get Solicitation Categories List",
+                "description": "Get solicitation categories list",
+                "operationId": "Get Solicitation Categories List",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved solicitation categories data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Ruas com asfalto em mau estado"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "A má qualidade do asfalto nas ruas pode causar danos aos veículos, aumentar o risco de acidentes e dificultar a locomoção."
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {

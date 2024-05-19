@@ -6,10 +6,10 @@ use App\Http\Api\Controllers\Auth\MeController;
 use App\Http\Api\Controllers\Auth\RegisterController;
 use App\Http\Api\Controllers\Auth\UpdatePersonalDataController;
 use App\Http\Api\Controllers\Client\AddressController;
-use App\Http\Api\Controllers\Client\Selects\SolicitationCategoriesSelectController;
 use App\Http\Api\Controllers\Client\Solicitation\LikeSolicitationController;
 use App\Http\Api\Controllers\Client\Solicitation\MySolicitationsController;
 use App\Http\Api\Controllers\Client\Solicitation\SolicitationController;
+use App\Http\Shared\Controllers\Selects\SolicitationCategoriesSelectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,13 +42,6 @@ Route::prefix('auth')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('client')->group(function () {
 
-        /*
-         * Select routes
-         */
-        Route::prefix('selects')->group(function () {
-            Route::get('solicitation-categories', SolicitationCategoriesSelectController::class);
-        });
-
         Route::get('address', [AddressController::class, 'index']);
         Route::put('address', [AddressController::class, 'createOrUpdate']);
 
@@ -57,4 +50,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('solicitations', SolicitationController::class)
             ->except(['index']);
     });
+});
+
+/*
+ * No authentication routes
+ */
+Route::prefix('selects')->group(function () {
+    Route::get('solicitation-categories', SolicitationCategoriesSelectController::class);
 });

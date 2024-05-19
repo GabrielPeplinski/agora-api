@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Feature\Client\Selects;
+namespace Tests\Feature\Shared\Selects;
 
 use App\Domains\Solicitation\Models\SolicitationCategory;
-use App\Http\Api\Controllers\Client\Selects\SolicitationCategoriesSelectController;
+use App\Http\Shared\Controllers\Selects\SolicitationCategoriesSelectController;
 use Tests\Cases\TestCaseFeature;
 
 class SolicitationCategoriesSelectTest extends TestCaseFeature

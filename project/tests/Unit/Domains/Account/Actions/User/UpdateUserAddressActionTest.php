@@ -15,7 +15,7 @@ class UpdateUserAddressActionTest extends TestCase
         $userMock->expects($this->once())
             ->method('update')
             ->with($this->equalTo([
-                'address_id' => 1
+                'address_id' => 1,
             ]));
 
         (new UpdateUserAddressAction())->execute($userMock, 1);
