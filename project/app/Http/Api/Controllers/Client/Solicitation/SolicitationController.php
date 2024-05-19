@@ -8,7 +8,7 @@ use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
 use App\Domains\Solicitation\Models\Solicitation;
 use App\Domains\Solicitation\Strategies\CreateSolicitationStrategy;
 use App\Domains\Solicitation\Strategies\UpdateSolicitationStrategy;
-use App\Http\Api\Request\Solicitation\SolicitationRequest;
+use App\Http\Api\Request\Client\SolicitationRequest;
 use App\Http\Api\Resources\Client\Solicitation\SolicitationResource;
 
 class SolicitationController

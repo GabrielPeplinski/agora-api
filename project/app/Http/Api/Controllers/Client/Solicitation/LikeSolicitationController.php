@@ -6,7 +6,7 @@ use App\Domains\Solicitation\Actions\Solicitation\ToggleSolicitationLikeAction;
 use App\Domains\Solicitation\Dtos\UserSolicitationData;
 use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
 use App\Domains\Solicitation\Models\Solicitation;
-use App\Http\Api\Request\Solicitation\LikeSolicitationRequest;
+use App\Http\Api\Request\Client\LikeSolicitationRequest;
 
 class LikeSolicitationController
 {
