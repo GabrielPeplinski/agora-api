@@ -13,13 +13,6 @@ use App\Http\Api\Resources\Client\Solicitation\SolicitationResource;
 
 class SolicitationController
 {
-    public function index()
-    {
-        return response()->json([
-            'message' => 'Solicitations list',
-        ]);
-    }
-
     public function show(Solicitation $solicitation)
     {
         $solicitation->loadMissing('category');

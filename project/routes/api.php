@@ -54,6 +54,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('my-solicitations', MySolicitationsController::class);
         Route::post('solicitations/like', LikeSolicitationController::class);
-        Route::apiResource('solicitations', SolicitationController::class);
+        Route::apiResource('solicitations', SolicitationController::class)
+            ->except(['index']);
     });
 });
