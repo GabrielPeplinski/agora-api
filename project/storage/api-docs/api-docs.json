@@ -599,6 +599,74 @@
                 ]
             }
         },
+        "/api/client/solicitations/like": {
+            "post": {
+                "tags": [
+                    "Solicitations"
+                ],
+                "summary": "Like or unlike a solicitation",
+                "description": "Like or unlike a solicitation by its id",
+                "operationId": "Like or Unlike a Solicitation",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "solicitationId": {
+                                        "description": "A solicitation ID",
+                                        "type": "integer",
+                                        "default": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully liked or unliked a solicitation"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/selects/solicitation-categories": {
             "get": {
                 "tags": [
