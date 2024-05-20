@@ -33,6 +33,52 @@ class MySolicitationsController
             ->resource(SolicitationResource::class);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/client/my-solicitations/{mySolicitationId}",
+     *     operationId="Show a Solicitation Data",
+     *     tags={"My Solicitations"},
+     *     summary="Show the data of a solicitation",
+     *     description="Show the data of a solicitation",
+     *     security={{"sanctum":{}}},
+     *
+     *     @OA\Parameter(
+     *          name="mySolicitationId",
+     *          in="path",
+     *          description="The id of the solicitation",
+     *          required=true,
+     *
+     *          @OA\Schema (type="integer")
+     *       ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successfully retrieve a solicitation data",
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/SolicitationResponse")
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Unauthorized")
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad request",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Bad request")
+     *          )
+     *      ),
+     * )
+     */
     public function show(Solicitation $mySolicitation)
     {
         $mySolicitation->loadMissing('category');
@@ -78,9 +124,9 @@ class MySolicitationsController
 
     /**
      * @OA\Delete(
-     *     path="/api/client/solicitations/{mySolicitationId}",
+     *     path="/api/client/my-solicitations/{mySolicitationId}",
      *     operationId="Delete Solicitation",
-     *     tags={"Solicitations"},
+     *     tags={"My Solicitations"},
      *     summary="Delete a solicitation",
      *     description="Delete a solicitation",
      *     security={{"sanctum":{}}},

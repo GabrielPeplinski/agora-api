@@ -3,7 +3,7 @@
 namespace App\Http\Shared\Controllers\Selects;
 
 use App\Domains\Solicitation\Models\SolicitationCategory;
-use App\Http\Api\Resources\Client\Selects\SolicitationCategorySelectResource;
+use App\Http\Shared\Resources\Selects\SolicitationCategorySelectResource;
 
 class SolicitationCategoriesSelectController
 {

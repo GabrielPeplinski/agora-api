@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Api\Resources\Client\Selects;
+namespace App\Http\Shared\Resources\Selects;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;

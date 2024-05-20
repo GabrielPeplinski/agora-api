@@ -667,17 +667,85 @@
                 ]
             }
         },
-        "/api/client/solicitations/{solicitationId}": {
+        "/api/client/my-solicitations/{mySolicitationId}": {
+            "get": {
+                "tags": [
+                    "My Solicitations"
+                ],
+                "summary": "Show the data of a solicitation",
+                "description": "Show the data of a solicitation",
+                "operationId": "Show a Solicitation Data",
+                "parameters": [
+                    {
+                        "name": "mySolicitationId",
+                        "in": "path",
+                        "description": "The id of the solicitation",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieve a solicitation data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SolicitationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
             "delete": {
                 "tags": [
-                    "Solicitations"
+                    "My Solicitations"
                 ],
                 "summary": "Delete a solicitation",
                 "description": "Delete a solicitation",
                 "operationId": "Delete Solicitation",
                 "parameters": [
                     {
-                        "name": "solicitationId",
+                        "name": "mySolicitationId",
                         "in": "path",
                         "description": "The id of the solicitation",
                         "required": true,
@@ -792,6 +860,127 @@
         }
     },
     "components": {
+        "schemas": {
+            "SolicitationResponse": {
+                "title": "SolicitationResponse",
+                "description": "Solicitation response information",
+                "required": [
+                    "id",
+                    "title",
+                    "description",
+                    "status",
+                    "latitudeCoordinates",
+                    "longitudeCoordinates",
+                    "likesCount",
+                    "solicitationCategory",
+                    "createdAt",
+                    "updatedAt",
+                    "updatedAt"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Id of the solicitation",
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": "1"
+                    },
+                    "title": {
+                        "title": "title",
+                        "description": "The title that best describes the solicitation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "Rampa de acesso com buracos"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "The description that describes the reason for the solicitation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "Na frente da escola municipal, existe uma rampa de acesso com buracos, impossibilitando o seu uso com segurança."
+                    },
+                    "status": {
+                        "title": "status",
+                        "description": "The status of the solicitation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "open"
+                    },
+                    "latitudeCoordinates": {
+                        "title": "latitudeCoordinates",
+                        "description": "Latitude coordinate of the solicitation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "-25.430"
+                    },
+                    "longitudeCoordinates": {
+                        "title": "longitudeCoordinates",
+                        "description": "Longitude coordinate of the solicitation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "-49.271"
+                    },
+                    "likesCount": {
+                        "title": "likesCount",
+                        "description": "The total os likes the solicitation has received",
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": 100
+                    },
+                    "solicitationCategory": {
+                        "$ref": "#/components/schemas/SolicitationCategoryResponse"
+                    },
+                    "createdAt": {
+                        "title": "createdAt",
+                        "description": "Date of creation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "2021-09-01T00:00:00.000000Z"
+                    },
+                    "updateAt": {
+                        "title": "updatedAt",
+                        "description": "Date of last update",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "2021-09-01T00:00:00.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "SolicitationCategoryResponse": {
+                "title": "SolicitationCategory",
+                "description": "Solicitation category information",
+                "required": [
+                    "id",
+                    "name",
+                    "description"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Id of the solicitation category",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "1"
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "The name of the solicitation category",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "Problemas de Acessibilidade"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "The description of the solicitation category",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "Compreende todos os problemas que envolvem a acessibilidade de pessoas com deficiência como rampas de acesso ou em calçadas, falta de piso tátil direcional, entre outros."
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "sanctum": {
                 "type": "apiKey",

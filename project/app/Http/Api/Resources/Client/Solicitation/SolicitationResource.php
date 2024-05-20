@@ -2,6 +2,7 @@
 
 namespace App\Http\Api\Resources\Client\Solicitation;
 
+use App\Http\Shared\Resources\Selects\SolicitationCategorySelectResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,6 +18,7 @@ class SolicitationResource extends JsonResource
             'longitudeCoordinates' => $this->longitude_coordinates,
             'status' => $this->status,
             'likesCount' => $this->likes_count,
+            'solicitationCategory' => SolicitationCategorySelectResource::make($this->whenLoaded('solicitationCategory')),
             'createdAt' => output_date_format($this->created_at),
             'updatedAt' => output_date_format($this->updated_at),
         ];
