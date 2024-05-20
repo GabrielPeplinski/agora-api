@@ -8,7 +8,6 @@ use App\Http\Api\Controllers\Auth\UpdatePersonalDataController;
 use App\Http\Api\Controllers\Client\AddressController;
 use App\Http\Api\Controllers\Client\Solicitation\LikeSolicitationController;
 use App\Http\Api\Controllers\Client\Solicitation\MySolicitationsController;
-use App\Http\Api\Controllers\Client\Solicitation\SolicitationController;
 use App\Http\Shared\Controllers\Selects\SolicitationCategoriesSelectController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,10 +44,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('address', [AddressController::class, 'index']);
         Route::put('address', [AddressController::class, 'createOrUpdate']);
 
-        Route::get('my-solicitations', MySolicitationsController::class);
+        Route::apiResource('my-solicitations', MySolicitationsController::class);
+
         Route::post('solicitations/like', LikeSolicitationController::class);
-        Route::apiResource('solicitations', SolicitationController::class)
-            ->except(['index']);
     });
 });
 
