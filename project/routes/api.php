@@ -8,6 +8,7 @@ use App\Http\Api\Controllers\Auth\UpdatePersonalDataController;
 use App\Http\Api\Controllers\Client\AddressController;
 use App\Http\Api\Controllers\Client\Solicitation\LikeSolicitationController;
 use App\Http\Api\Controllers\Client\Solicitation\MySolicitationsController;
+use App\Http\Api\Controllers\Shared\SolicitationController;
 use App\Http\Shared\Controllers\Selects\SolicitationCategoriesSelectController;
 use Illuminate\Support\Facades\Route;
 
@@ -56,3 +57,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::prefix('selects')->group(function () {
     Route::get('solicitation-categories', SolicitationCategoriesSelectController::class);
 });
+
+Route::get('solicitations', [SolicitationController::class, 'index']);
+Route::get('solicitations/{solicitation}', [SolicitationController::class, 'show']);
