@@ -2,7 +2,6 @@
 
 namespace App\Http\Api\Resources\Shared\Solicitation;
 
-use App\Http\Api\Resources\Shared\SolicitationImage\SolicitationImageResource;
 use App\Http\Shared\Resources\Selects\SolicitationCategorySelectResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;

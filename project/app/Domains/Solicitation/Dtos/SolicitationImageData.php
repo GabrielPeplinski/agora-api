@@ -25,8 +25,7 @@ class SolicitationImageData extends Data
         public string $filePath,
 
         #[Required, BooleanType, In([true, false])]
-        public bool   $isCoverImage = false,
-    )
-    {
+        public bool $isCoverImage = false,
+    ) {
     }
 }

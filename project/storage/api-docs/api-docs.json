@@ -667,6 +667,82 @@
                 ]
             }
         },
+        "/api/client/my-solicitations": {
+            "get": {
+                "tags": [
+                    "My Solicitations"
+                ],
+                "summary": "List all my solicitations",
+                "description": "Get a paginated list with all current user solicitations",
+                "operationId": "List all my solicitations",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter by status",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "open",
+                                "in_progress",
+                                "resolved"
+                            ],
+                            "example": "open"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully liked or unliked a solicitation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SolicitationPaginatedResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/client/my-solicitations/{mySolicitationId}": {
             "get": {
                 "tags": [
@@ -798,6 +874,60 @@
                 ]
             }
         },
+        "/api/solicitations": {
+            "get": {
+                "tags": [
+                    "Solicitations"
+                ],
+                "summary": "List all solicitations",
+                "description": "Get a paginated list with all solicitations",
+                "operationId": "List all solicitations",
+                "responses": {
+                    "200": {
+                        "description": "Successfully liked or unliked a solicitation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SolicitationPaginatedResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/selects/solicitation-categories": {
             "get": {
                 "tags": [
@@ -861,6 +991,117 @@
     },
     "components": {
         "schemas": {
+            "PaginationLinks": {
+                "title": "Pagination Links",
+                "description": "Links for pagination",
+                "properties": {
+                    "first": {
+                        "title": "First page link",
+                        "type": "string",
+                        "example": "http://localhost:8080/api/example?page=1"
+                    },
+                    "last": {
+                        "title": "Last page link",
+                        "type": "string",
+                        "example": "http://localhost:8080/api/example?page=1"
+                    },
+                    "prev": {
+                        "title": "Previous page link",
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "next": {
+                        "title": "Next page link",
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "PaginationMeta": {
+                "title": "Pagination Meta",
+                "description": "Metadata for pagination",
+                "properties": {
+                    "current_page": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "from": {
+                        "type": "integer",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "last_page": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "links": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PaginationMetaLink"
+                        }
+                    },
+                    "path": {
+                        "type": "string",
+                        "example": "http://localhost:8080/api/example"
+                    },
+                    "per_page": {
+                        "type": "integer",
+                        "example": 20
+                    },
+                    "to": {
+                        "type": "integer",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "total": {
+                        "type": "integer",
+                        "example": 0
+                    }
+                },
+                "type": "object"
+            },
+            "PaginationMetaLink": {
+                "title": "Pagination Meta Link",
+                "description": "Meta link for pagination",
+                "properties": {
+                    "url": {
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "label": {
+                        "type": "string",
+                        "example": "&laquo; Anterior"
+                    },
+                    "active": {
+                        "type": "boolean",
+                        "example": false
+                    }
+                },
+                "type": "object"
+            },
+            "SolicitationPaginatedResponse": {
+                "title": "Solicitation Paginated Response",
+                "description": "Paginated response structure for solicitations",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SolicitationResponse"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/PaginationLinks"
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/PaginationMeta"
+                    }
+                },
+                "type": "object"
+            },
             "SolicitationResponse": {
                 "title": "SolicitationResponse",
                 "description": "Solicitation response information",

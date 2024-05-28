@@ -9,6 +9,42 @@ use App\Support\PaginationBuilder;
 
 class SolicitationController
 {
+    /**
+     * @OA\Get  (
+     *     path="/api/solicitations",
+     *     operationId="List all solicitations",
+     *     tags={"Solicitations"},
+     *     summary="List all solicitations",
+     *     description="Get a paginated list with all solicitations",
+     *
+     *      @OA\Response(
+     *           response=200,
+     *           description="Successfully liked or unliked a solicitation",
+     *
+     *           @OA\JsonContent(ref="#/components/schemas/SolicitationPaginatedResponse")
+     *       ),
+     *
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Unauthorized")
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad request",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Bad request")
+     *          )
+     *      ),
+     * )
+     */
     public function index()
     {
         return PaginationBuilder::for(Solicitation::class)

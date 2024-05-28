@@ -18,6 +18,56 @@ use Spatie\QueryBuilder\AllowedFilter;
 
 class MySolicitationsController
 {
+    /**
+     * @OA\Get(
+     *     path="/api/client/my-solicitations",
+     *     operationId="List all my solicitations",
+     *     tags={"My Solicitations"},
+     *     summary="List all my solicitations",
+     *     description="Get a paginated list with all current user solicitations",
+     *     security={{"sanctum":{}}},
+     *
+     *     @OA\Parameter(
+     *          name="status",
+     *          in="query",
+     *          description="Filter by status",
+     *          required=false,
+     *
+     *          @OA\Schema(
+     *              type="string",
+     *              enum={"open", "in_progress", "resolved"},
+     *              example="open"
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *           response=200,
+     *           description="Successfully liked or unliked a solicitation",
+     *
+     *           @OA\JsonContent(ref="#/components/schemas/SolicitationPaginatedResponse")
+     *       ),
+     *
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Unauthorized")
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad request",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Bad request")
+     *          )
+     *      ),
+     * )
+     */
     public function index()
     {
         $mySolicitations = app(Solicitation::class)
