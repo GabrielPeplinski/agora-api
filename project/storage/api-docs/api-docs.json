@@ -768,7 +768,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/SolicitationResponse"
+                                    "$ref": "#/components/schemas/ShowSolicitationResponse"
                                 }
                             }
                         }
@@ -879,9 +879,9 @@
                 "tags": [
                     "Solicitations"
                 ],
-                "summary": "List all solicitations",
+                "summary": "Show a solicitation data",
                 "description": "Get a paginated list with all solicitations",
-                "operationId": "List all solicitations",
+                "operationId": "Show a solicitation data",
                 "responses": {
                     "200": {
                         "description": "Successfully liked or unliked a solicitation",
@@ -889,6 +889,60 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/SolicitationPaginatedResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/solicitations/{solicitationId}": {
+            "get": {
+                "tags": [
+                    "Solicitations"
+                ],
+                "summary": "Show the data of a solicitation",
+                "description": "Show the data of a solicitation",
+                "operationId": "Show a Solicitation Data for Unauthenticated Users",
+                "responses": {
+                    "200": {
+                        "description": "Successfully liked or unliked a solicitation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ShowSolicitationResponse"
                                 }
                             }
                         }
@@ -1083,28 +1137,9 @@
                 },
                 "type": "object"
             },
-            "SolicitationPaginatedResponse": {
-                "title": "Solicitation Paginated Response",
-                "description": "Paginated response structure for solicitations",
-                "properties": {
-                    "data": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/SolicitationResponse"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/PaginationLinks"
-                    },
-                    "meta": {
-                        "$ref": "#/components/schemas/PaginationMeta"
-                    }
-                },
-                "type": "object"
-            },
-            "SolicitationResponse": {
-                "title": "SolicitationResponse",
-                "description": "Solicitation response information",
+            "ShowSolicitationResponse": {
+                "title": "ShowSolicitationResponse",
+                "description": "Solicitation response complete information",
                 "required": [
                     "id",
                     "title",
@@ -1170,6 +1205,74 @@
                     },
                     "solicitationCategory": {
                         "$ref": "#/components/schemas/SolicitationCategoryResponse"
+                    },
+                    "createdAt": {
+                        "title": "createdAt",
+                        "description": "Date of creation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "2021-09-01T00:00:00.000000Z"
+                    },
+                    "updateAt": {
+                        "title": "updatedAt",
+                        "description": "Date of last update",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "2021-09-01T00:00:00.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "SolicitationPaginatedResponse": {
+                "title": "Solicitation Paginated Response",
+                "description": "Paginated response structure for solicitations",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SolicitationResponse"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/PaginationLinks"
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/PaginationMeta"
+                    }
+                },
+                "type": "object"
+            },
+            "SolicitationResponse": {
+                "title": "SolicitationResponse",
+                "description": "Solicitation response with basic information",
+                "required": [
+                    "id",
+                    "title",
+                    "likesCount",
+                    "createdAt",
+                    "updatedAt"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Id of the solicitation",
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": "1"
+                    },
+                    "title": {
+                        "title": "title",
+                        "description": "The title that best describes the solicitation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "Rampa de acesso com buracos"
+                    },
+                    "likesCount": {
+                        "title": "likesCount",
+                        "description": "The total os likes the solicitation has received",
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": 100
                     },
                     "createdAt": {
                         "title": "createdAt",

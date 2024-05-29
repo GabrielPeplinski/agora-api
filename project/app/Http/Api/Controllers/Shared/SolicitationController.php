@@ -12,9 +12,9 @@ class SolicitationController
     /**
      * @OA\Get  (
      *     path="/api/solicitations",
-     *     operationId="List all solicitations",
+     *     operationId="Show a solicitation data",
      *     tags={"Solicitations"},
-     *     summary="List all solicitations",
+     *     summary="Show a solicitation data",
      *     description="Get a paginated list with all solicitations",
      *
      *      @OA\Response(
@@ -55,6 +55,42 @@ class SolicitationController
             ->resource(SolicitationResource::class);
     }
 
+    /**
+     * @OA\Get  (
+     *     path="/api/solicitations/{solicitationId}",
+     *     operationId="Show a Solicitation Data for Unauthenticated Users",
+     *     tags={"Solicitations"},
+     *     summary="Show the data of a solicitation",
+     *     description="Show the data of a solicitation",
+     *
+     *      @OA\Response(
+     *           response=200,
+     *           description="Successfully liked or unliked a solicitation",
+     *
+     *          @OA\JsonContent(ref="#/components/schemas/ShowSolicitationResponse")
+     *       ),
+     *
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Unauthorized")
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad request",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Bad request")
+     *          )
+     *      ),
+     * )
+     */
     public function show(Solicitation $solicitation)
     {
         return ShowSolicitationResource::make($solicitation);

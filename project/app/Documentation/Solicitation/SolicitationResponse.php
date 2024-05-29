@@ -5,9 +5,9 @@ namespace App\Documentation\Solicitation;
 /**
  * @OA\Schema(
  *      title="SolicitationResponse",
- *      description="Solicitation response information",
+ *      description="Solicitation response with basic information",
  *      type="object",
- *      required={"id", "title", "description", "status", "latitudeCoordinates", "longitudeCoordinates", "likesCount", "solicitationCategory", "createdAt", "updatedAt", "updatedAt"}
+ *      required={"id", "title", "likesCount", "createdAt", "updatedAt"}
  * )
  */
 class SolicitationResponse
@@ -36,50 +36,6 @@ class SolicitationResponse
 
     /**
      * @OA\Property(
-     *     type="string",
-     *     title="description",
-     *     description="The description that describes the reason for the solicitation",
-     *     example="Na frente da escola municipal, existe uma rampa de acesso com buracos, impossibilitando o seu uso com segurança.",
-     *     readOnly=true
-     * )
-     */
-    public string $description;
-
-    /**
-     * @OA\Property(
-     *     type="string",
-     *     title="status",
-     *     description="The status of the solicitation",
-     *     example="open",
-     *     readOnly=true
-     * )
-     */
-    public string $status;
-
-    /**
-     * @OA\Property(
-     *     type="string",
-     *     title="latitudeCoordinates",
-     *     description="Latitude coordinate of the solicitation",
-     *     example="-25.430",
-     *     readOnly=true
-     * )
-     */
-    public string $latitudeCoordinates;
-
-    /**
-     * @OA\Property(
-     *     type="string",
-     *     title="longitudeCoordinates",
-     *     description="Longitude coordinate of the solicitation",
-     *     example="-49.271",
-     *     readOnly=true
-     * )
-     */
-    public string $longitudeCoordinates;
-
-    /**
-     * @OA\Property(
      *     type="integer",
      *     title="likesCount",
      *     description="The total os likes the solicitation has received",
@@ -88,17 +44,6 @@ class SolicitationResponse
      * )
      */
     public string $likesCount;
-
-    /**
-     * @OA\Property(
-     *     type="object",
-     *     title="solicitationCategory",
-     *     description="The solicitation category data that best describes the solicitation",
-     *     ref="#/components/schemas/SolicitationCategoryResponse",
-     *     readOnly=true
-     * )
-     */
-    public string $solicitationCategory;
 
     /**
      * @OA\Property(

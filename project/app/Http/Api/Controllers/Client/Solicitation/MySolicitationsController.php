@@ -105,7 +105,7 @@ class MySolicitationsController
      *          response=200,
      *          description="Successfully retrieve a solicitation data",
      *
-     *         @OA\JsonContent(ref="#/components/schemas/SolicitationResponse")
+     *         @OA\JsonContent(ref="#/components/schemas/ShowSolicitationResponse")
      *      ),
      *
      *      @OA\Response(
