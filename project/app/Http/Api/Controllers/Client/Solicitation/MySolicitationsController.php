@@ -12,7 +12,7 @@ use App\Domains\Solicitation\Strategies\CreateSolicitationStrategy;
 use App\Domains\Solicitation\Strategies\DeleteSolicitationStrategy;
 use App\Domains\Solicitation\Strategies\UpdateSolicitationStrategy;
 use App\Http\Api\Request\Client\SolicitationRequest;
-use App\Http\Api\Resources\Client\Solicitation\SolicitationResource;
+use App\Http\Api\Resources\Shared\Solicitation\SolicitationResource;
 use App\Support\PaginationBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 
@@ -28,7 +28,7 @@ class MySolicitationsController
      *     security={{"sanctum":{}}},
      *
      *     @OA\Parameter(
-     *          name="status",
+     *          name="filter[status]",
      *          in="query",
      *          description="Filter by status",
      *          required=false,
@@ -39,6 +39,18 @@ class MySolicitationsController
      *              example="open"
      *          )
      *      ),
+     *
+     *      @OA\Parameter(
+     *           name="page",
+     *           in="query",
+     *           description="Page number",
+     *           required=false,
+     *
+     *           @OA\Schema(
+     *               type="integer",
+     *               example=1
+     *           )
+     *       ),
      *
      *      @OA\Response(
      *           response=200,

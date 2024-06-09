@@ -14,7 +14,8 @@ class SolicitationResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'likesCount' => $this->likes_count,
-            'coverImageLink' => SolicitationImageResource::make($this->coverImage),
+            'coverImage' => '',
+//            'coverImageLink' => SolicitationImageResource::make($this->coverImage),
             'createdAt' => output_date_format($this->created_at),
             'updatedAt' => output_date_format($this->updated_at),
         ];

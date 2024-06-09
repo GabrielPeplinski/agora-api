@@ -677,7 +677,7 @@
                 "operationId": "List all my solicitations",
                 "parameters": [
                     {
-                        "name": "status",
+                        "name": "filter[status]",
                         "in": "query",
                         "description": "Filter by status",
                         "required": false,
@@ -689,6 +689,16 @@
                                 "resolved"
                             ],
                             "example": "open"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
                         }
                     }
                 ],
