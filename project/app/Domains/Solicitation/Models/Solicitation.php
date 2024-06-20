@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Solicitation extends Model
+class Solicitation extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $table = 'solicitations';
 
@@ -56,15 +58,23 @@ class Solicitation extends Model
             );
     }
 
-    public function images(): HasMany
+    public function registerMediaCollections(): void
     {
-        return $this->hasMany(SolicitationImage::class);
+        $this->addMediaCollection('coverImage')
+            ->singleFile();
+
+        $this->addMediaCollection('images');
     }
 
-    public function coverImage(): ?BelongsTo
-    {
-        return $this->belongsTo(SolicitationImage::class, 'id', 'solicitation_id')
-            ->where('is_cover_image', true)
-            ->first();
-    }
+//    public function images(): HasMany
+//    {
+//        return $this->hasMany(SolicitationImage::class);
+//    }
+//
+//    public function coverImage(): ?BelongsTo
+//    {
+//        return $this->belongsTo(SolicitationImage::class, 'id', 'solicitation_id')
+//            ->where('is_cover_image', true)
+//            ->first();
+//    }
 }

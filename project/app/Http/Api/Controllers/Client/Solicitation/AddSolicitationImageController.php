@@ -14,6 +14,7 @@ use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class AddSolicitationImageController
 {
@@ -67,20 +68,16 @@ class AddSolicitationImageController
 //     */
     public function __invoke(Request $request, Solicitation $mySolicitation)
     {
+        $uuid = Str::uuid();
         $fileContent = $request->getContent();
-        $tempFilePath = sys_get_temp_dir() . '/uploaded_image';
+        $tempFilePath = sys_get_temp_dir() . "/solicitation-$mySolicitation->id-$uuid";
 
         file_put_contents($tempFilePath, $fileContent);
 
         $file = new File($tempFilePath);
 
-        if ($mySolicitation->coverImage()) {
-            app(AddSolicitationImageStrategy::class)
-                ->execute($mySolicitation, $file, true);
-        } else {
-            app(AddSolicitationImageStrategy::class)
-                ->execute($mySolicitation, $file);
-        }
+        app(AddSolicitationImageStrategy::class)
+            ->execute($mySolicitation, $file, true);
 
         unlink($tempFilePath);
     }

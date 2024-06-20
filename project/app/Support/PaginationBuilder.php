@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class PaginationBuilder extends QueryBuilder implements Responsable
 {
-    public const PER_PAGE_DEFAULT = 20;
+    public const PER_PAGE_DEFAULT = 10;
 
     private int $perPage = self::PER_PAGE_DEFAULT;
 

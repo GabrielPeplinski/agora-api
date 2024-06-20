@@ -891,7 +891,19 @@
                 ],
                 "summary": "Show a solicitation data",
                 "description": "Get a paginated list with all solicitations",
-                "operationId": "Show a solicitation data",
+                "operationId": "List all solicitations",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successfully liked or unliked a solicitation",

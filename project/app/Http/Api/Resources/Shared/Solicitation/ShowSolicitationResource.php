@@ -18,6 +18,11 @@ class ShowSolicitationResource extends JsonResource
             'longitudeCoordinates' => $this->longitude_coordinates,
             'status' => $this->status,
             'likesCount' => $this->likes_count,
+            'coverImage' => $this->getFirstMedia('coverImage')->getFullUrl(),
+            'images' => $this->getMedia('images')
+                ->map(function ($media) {
+                    return $media->getFullUrl();
+                }),
             'solicitationCategory' => SolicitationCategorySelectResource::make($this->whenLoaded('solicitationCategory')),
             'createdAt' => output_date_format($this->created_at),
             'updatedAt' => output_date_format($this->updated_at),

@@ -3,8 +3,8 @@
 namespace App\Http\Api\Controllers\Shared;
 
 use App\Domains\Solicitation\Models\Solicitation;
-use App\Http\Api\Resources\Client\Solicitation\SolicitationResource;
 use App\Http\Api\Resources\Shared\Solicitation\ShowSolicitationResource;
+use App\Http\Api\Resources\Shared\Solicitation\SolicitationResource;
 use App\Support\PaginationBuilder;
 
 class SolicitationController
@@ -12,10 +12,22 @@ class SolicitationController
     /**
      * @OA\Get  (
      *     path="/api/solicitations",
-     *     operationId="Show a solicitation data",
+     *     operationId="List all solicitations",
      *     tags={"Solicitations"},
      *     summary="Show a solicitation data",
      *     description="Get a paginated list with all solicitations",
+     *
+     *     @OA\Parameter(
+     *           name="page",
+     *           in="query",
+     *           description="Page number",
+     *           required=false,
+     *
+     *            @OA\Schema(
+     *                type="integer",
+     *                example=1
+     *            )
+     *        ),
      *
      *      @OA\Response(
      *           response=200,
@@ -49,8 +61,7 @@ class SolicitationController
     {
         return PaginationBuilder::for(Solicitation::class)
             ->with([
-                'images',
-                'coverImage',
+                'media'
             ])
             ->resource(SolicitationResource::class);
     }
