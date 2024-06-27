@@ -92,6 +92,8 @@ class MySolicitationsController
             ->allowedFilters([
                 AllowedFilter::custom('status', new SolicitationStatusFilter()),
             ])
+            ->allowedSorts(['created_at', 'updated_at'])
+            ->defaultSort('-created_at')
             ->resource(SolicitationResource::class);
     }
 

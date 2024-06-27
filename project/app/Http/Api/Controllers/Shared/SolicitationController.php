@@ -63,6 +63,8 @@ class SolicitationController
             ->with([
                 'media',
             ])
+            ->allowedSorts(['created_at', 'updated_at'])
+            ->defaultSort('-created_at')
             ->resource(SolicitationResource::class);
     }
 
