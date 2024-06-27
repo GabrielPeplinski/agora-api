@@ -58,6 +58,11 @@
         ],
         "pint": [
             "./vendor/bin/pint"
+        ],
+        "pr": [
+            "./vendor/bin/pint",
+            "./vendor/bin/phpunit",
+            "@php artisan l5-swagger:generate"
         ]
     },
     "extra": {

@@ -2,10 +2,10 @@
 
 namespace App\Http\Api\Controllers\Client\Solicitation;
 
-use App\Domains\Solicitation\Actions\Solicitation\ToggleSolicitationLikeAction;
 use App\Domains\Solicitation\Dtos\UserSolicitationData;
 use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
 use App\Domains\Solicitation\Models\Solicitation;
+use App\Domains\Solicitation\Strategies\Solicitation\ToggleSolicitationLikeStrategy;
 use App\Http\Api\Request\Client\LikeSolicitationRequest;
 
 class LikeSolicitationController
@@ -72,7 +72,7 @@ class LikeSolicitationController
             'actionDescription' => SolicitationActionDescriptionEnum::LIKE,
         ]);
 
-        app(ToggleSolicitationLikeAction::class)
+        app(ToggleSolicitationLikeStrategy::class)
             ->execute(current_user(), $data, $solicitation);
     }
 }

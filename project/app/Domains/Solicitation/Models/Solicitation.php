@@ -66,15 +66,15 @@ class Solicitation extends Model implements HasMedia
         $this->addMediaCollection('images');
     }
 
-//    public function images(): HasMany
-//    {
-//        return $this->hasMany(SolicitationImage::class);
-//    }
-//
-//    public function coverImage(): ?BelongsTo
-//    {
-//        return $this->belongsTo(SolicitationImage::class, 'id', 'solicitation_id')
-//            ->where('is_cover_image', true)
-//            ->first();
-//    }
+    //    public function images(): HasMany
+    //    {
+    //        return $this->hasMany(SolicitationImage::class);
+    //    }
+    //
+    //    public function coverImage(): ?BelongsTo
+    //    {
+    //        return $this->belongsTo(SolicitationImage::class, 'id', 'solicitation_id')
+    //            ->where('is_cover_image', true)
+    //            ->first();
+    //    }
 }

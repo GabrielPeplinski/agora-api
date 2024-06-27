@@ -48,7 +48,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('address', [AddressController::class, 'index']);
         Route::put('address', [AddressController::class, 'createOrUpdate']);
 
-
         Route::apiResource('my-solicitations', MySolicitationsController::class);
 
         Route::post('solicitations/like', LikeSolicitationController::class);

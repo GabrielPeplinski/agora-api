@@ -61,7 +61,7 @@ class SolicitationController
     {
         return PaginationBuilder::for(Solicitation::class)
             ->with([
-                'media'
+                'media',
             ])
             ->resource(SolicitationResource::class);
     }

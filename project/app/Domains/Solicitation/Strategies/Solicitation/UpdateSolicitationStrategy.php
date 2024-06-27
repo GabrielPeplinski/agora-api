@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Domains\Solicitation\Strategies;
+namespace App\Domains\Solicitation\Strategies\Solicitation;
 
 use App\Domains\Solicitation\Actions\Solicitation\UpdateSolicitationAction;
 use App\Domains\Solicitation\Actions\UserSolicitation\CreateUserSolicitationAction;
 use App\Domains\Solicitation\Dtos\SolicitationData;
 use App\Domains\Solicitation\Models\Solicitation;
-use Illuminate\Support\Facades\DB;
 
 class UpdateSolicitationStrategy
 {

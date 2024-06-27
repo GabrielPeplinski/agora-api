@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Domains\Solicitation\Actions\Solicitation;
+namespace App\Domains\Solicitation\Strategies\Solicitation;
 
 use App\Domains\Account\Models\User;
+use App\Domains\Solicitation\Actions\Solicitation\DislikeSolicitationAction;
+use App\Domains\Solicitation\Actions\Solicitation\LikeSolicitationAction;
 use App\Domains\Solicitation\Dtos\UserSolicitationData;
 use App\Domains\Solicitation\Models\Solicitation;
 use Illuminate\Support\Facades\DB;
 
-class ToggleSolicitationLikeAction
+class ToggleSolicitationLikeStrategy
 {
     public function execute(User $user, UserSolicitationData $data, Solicitation $solicitation): void
     {

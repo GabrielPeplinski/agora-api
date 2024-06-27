@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Solicitation\Strategies;
+namespace App\Domains\Solicitation\Strategies\Solicitation;
 
 use App\Domains\Solicitation\Actions\Solicitation\CreateSolicitationAction;
 use App\Domains\Solicitation\Actions\UserSolicitation\CreateUserSolicitationAction;
