@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AddressStatesSeeder::class,
+            SolicitationCategorySeeder::class
         ]);
     }
 }

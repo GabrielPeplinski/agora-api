@@ -598,9 +598,755 @@
                     }
                 ]
             }
+        },
+        "/api/client/solicitations/like": {
+            "post": {
+                "tags": [
+                    "Solicitations"
+                ],
+                "summary": "Like or unlike a solicitation",
+                "description": "Like or unlike a solicitation by its id",
+                "operationId": "Like or Unlike a Solicitation",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "solicitationId": {
+                                        "description": "A solicitation ID",
+                                        "type": "integer",
+                                        "default": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully liked or unliked a solicitation"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/client/my-solicitations": {
+            "get": {
+                "tags": [
+                    "My Solicitations"
+                ],
+                "summary": "List all my solicitations",
+                "description": "Get a paginated list with all current user solicitations",
+                "operationId": "List all my solicitations",
+                "parameters": [
+                    {
+                        "name": "filter[status]",
+                        "in": "query",
+                        "description": "Filter by status",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "open",
+                                "in_progress",
+                                "resolved"
+                            ],
+                            "example": "open"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully liked or unliked a solicitation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SolicitationPaginatedResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/client/my-solicitations/{mySolicitationId}": {
+            "get": {
+                "tags": [
+                    "My Solicitations"
+                ],
+                "summary": "Show the data of a solicitation",
+                "description": "Show the data of a solicitation",
+                "operationId": "Show a Solicitation Data",
+                "parameters": [
+                    {
+                        "name": "mySolicitationId",
+                        "in": "path",
+                        "description": "The id of the solicitation",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieve a solicitation data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ShowSolicitationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "My Solicitations"
+                ],
+                "summary": "Delete a solicitation",
+                "description": "Delete a solicitation",
+                "operationId": "Delete Solicitation",
+                "parameters": [
+                    {
+                        "name": "mySolicitationId",
+                        "in": "path",
+                        "description": "The id of the solicitation",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successfully deleted a solicitation"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/solicitations": {
+            "get": {
+                "tags": [
+                    "Solicitations"
+                ],
+                "summary": "Show a solicitation data",
+                "description": "Get a paginated list with all solicitations",
+                "operationId": "List all solicitations",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully liked or unliked a solicitation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SolicitationPaginatedResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/solicitations/{solicitationId}": {
+            "get": {
+                "tags": [
+                    "Solicitations"
+                ],
+                "summary": "Show the data of a solicitation",
+                "description": "Show the data of a solicitation",
+                "operationId": "Show a Solicitation Data for Unauthenticated Users",
+                "responses": {
+                    "200": {
+                        "description": "Successfully liked or unliked a solicitation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ShowSolicitationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/selects/solicitation-categories": {
+            "get": {
+                "tags": [
+                    "Selects"
+                ],
+                "summary": "Get Solicitation Categories List",
+                "description": "Get solicitation categories list",
+                "operationId": "Get Solicitation Categories List",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved solicitation categories data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Ruas com asfalto em mau estado"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "A má qualidade do asfalto nas ruas pode causar danos aos veículos, aumentar o risco de acidentes e dificultar a locomoção."
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
+        "schemas": {
+            "PaginationLinks": {
+                "title": "Pagination Links",
+                "description": "Links for pagination",
+                "properties": {
+                    "first": {
+                        "title": "First page link",
+                        "type": "string",
+                        "example": "http://localhost:8080/api/example?page=1"
+                    },
+                    "last": {
+                        "title": "Last page link",
+                        "type": "string",
+                        "example": "http://localhost:8080/api/example?page=1"
+                    },
+                    "prev": {
+                        "title": "Previous page link",
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "next": {
+                        "title": "Next page link",
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "PaginationMeta": {
+                "title": "Pagination Meta",
+                "description": "Metadata for pagination",
+                "properties": {
+                    "current_page": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "from": {
+                        "type": "integer",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "last_page": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "links": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PaginationMetaLink"
+                        }
+                    },
+                    "path": {
+                        "type": "string",
+                        "example": "http://localhost:8080/api/example"
+                    },
+                    "per_page": {
+                        "type": "integer",
+                        "example": 20
+                    },
+                    "to": {
+                        "type": "integer",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "total": {
+                        "type": "integer",
+                        "example": 0
+                    }
+                },
+                "type": "object"
+            },
+            "PaginationMetaLink": {
+                "title": "Pagination Meta Link",
+                "description": "Meta link for pagination",
+                "properties": {
+                    "url": {
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "label": {
+                        "type": "string",
+                        "example": "&laquo; Anterior"
+                    },
+                    "active": {
+                        "type": "boolean",
+                        "example": false
+                    }
+                },
+                "type": "object"
+            },
+            "ShowSolicitationResponse": {
+                "title": "ShowSolicitationResponse",
+                "description": "Solicitation response complete information",
+                "required": [
+                    "id",
+                    "title",
+                    "description",
+                    "status",
+                    "latitudeCoordinates",
+                    "longitudeCoordinates",
+                    "likesCount",
+                    "solicitationCategory",
+                    "createdAt",
+                    "updatedAt",
+                    "updatedAt"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Id of the solicitation",
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": "1"
+                    },
+                    "title": {
+                        "title": "title",
+                        "description": "The title that best describes the solicitation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "Rampa de acesso com buracos"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "The description that describes the reason for the solicitation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "Na frente da escola municipal, existe uma rampa de acesso com buracos, impossibilitando o seu uso com segurança."
+                    },
+                    "status": {
+                        "title": "status",
+                        "description": "The status of the solicitation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "open"
+                    },
+                    "latitudeCoordinates": {
+                        "title": "latitudeCoordinates",
+                        "description": "Latitude coordinate of the solicitation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "-25.430"
+                    },
+                    "longitudeCoordinates": {
+                        "title": "longitudeCoordinates",
+                        "description": "Longitude coordinate of the solicitation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "-49.271"
+                    },
+                    "likesCount": {
+                        "title": "likesCount",
+                        "description": "The total os likes the solicitation has received",
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": 100
+                    },
+                    "solicitationCategory": {
+                        "$ref": "#/components/schemas/SolicitationCategoryResponse"
+                    },
+                    "createdAt": {
+                        "title": "createdAt",
+                        "description": "Date of creation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "2021-09-01T00:00:00.000000Z"
+                    },
+                    "updateAt": {
+                        "title": "updatedAt",
+                        "description": "Date of last update",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "2021-09-01T00:00:00.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "SolicitationPaginatedResponse": {
+                "title": "Solicitation Paginated Response",
+                "description": "Paginated response structure for solicitations",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SolicitationResponse"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/PaginationLinks"
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/PaginationMeta"
+                    }
+                },
+                "type": "object"
+            },
+            "SolicitationResponse": {
+                "title": "SolicitationResponse",
+                "description": "Solicitation response with basic information",
+                "required": [
+                    "id",
+                    "title",
+                    "likesCount",
+                    "createdAt",
+                    "updatedAt"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Id of the solicitation",
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": "1"
+                    },
+                    "title": {
+                        "title": "title",
+                        "description": "The title that best describes the solicitation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "Rampa de acesso com buracos"
+                    },
+                    "likesCount": {
+                        "title": "likesCount",
+                        "description": "The total os likes the solicitation has received",
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": 100
+                    },
+                    "createdAt": {
+                        "title": "createdAt",
+                        "description": "Date of creation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "2021-09-01T00:00:00.000000Z"
+                    },
+                    "updateAt": {
+                        "title": "updatedAt",
+                        "description": "Date of last update",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "2021-09-01T00:00:00.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "SolicitationCategoryResponse": {
+                "title": "SolicitationCategory",
+                "description": "Solicitation category information",
+                "required": [
+                    "id",
+                    "name",
+                    "description"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Id of the solicitation category",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "1"
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "The name of the solicitation category",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "Problemas de Acessibilidade"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "The description of the solicitation category",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "Compreende todos os problemas que envolvem a acessibilidade de pessoas com deficiência como rampas de acesso ou em calçadas, falta de piso tátil direcional, entre outros."
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "sanctum": {
                 "type": "apiKey",

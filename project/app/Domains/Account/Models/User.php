@@ -3,8 +3,10 @@
 namespace App\Domains\Account\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
+use App\Domains\Solicitation\Models\UserSolicitation;
+use Database\Factories\Domains\Account\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -55,5 +57,10 @@ class User extends Authenticatable
     public function address(): HasOne
     {
         return $this->hasOne(Address::class, 'id', 'address_id');
+    }
+
+    public function userSolicitations(): HasMany
+    {
+        return $this->hasMany(UserSolicitation::class, 'user_id');
     }
 }
