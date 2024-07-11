@@ -40,6 +40,9 @@ class Solicitation extends Model implements HasMedia
     {
         return $this->userSolicitations()
             ->latest()
+            ->whereNot('action_description', [
+                SolicitationActionDescriptionEnum::LIKE
+            ])
             ->first()
             ->status;
     }
