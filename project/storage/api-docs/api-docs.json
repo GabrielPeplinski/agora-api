@@ -311,9 +311,9 @@
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Update Current User",
-                "description": "Update current user personal data",
-                "operationId": "Personal Data",
+                "summary": "Update Current User Data",
+                "description": "Update the personal data of the current user, including the option to change the password.",
+                "operationId": "UpdatePersonalData",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -322,12 +322,27 @@
                                     "name": {
                                         "description": "New user name",
                                         "type": "string",
-                                        "default": "New User"
+                                        "example": "New User Name"
                                     },
                                     "email": {
                                         "description": "A valid email address",
                                         "type": "string",
-                                        "default": "example@example.com"
+                                        "example": "example@example.com"
+                                    },
+                                    "password": {
+                                        "description": "Current user account password",
+                                        "type": "string",
+                                        "example": "12345"
+                                    },
+                                    "new_password": {
+                                        "description": "New password for the current account",
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "new_password_confirmation": {
+                                        "description": "Confirmation of the new password",
+                                        "type": "string",
+                                        "example": "123456"
                                     }
                                 },
                                 "type": "object"
@@ -344,7 +359,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Suas informações foram atualizadas com sucesso"
+                                            "example": "Suas informações pessoais foram atualizadas com sucesso"
                                         }
                                     },
                                     "type": "object"
@@ -380,6 +395,16 @@
                                         }
                                     },
                                     "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponseExample"
                                 }
                             }
                         }
@@ -1155,6 +1180,35 @@
                     "active": {
                         "type": "boolean",
                         "example": false
+                    }
+                },
+                "type": "object"
+            },
+            "UnprocessableEntityResponseExample": {
+                "title": "UnprocessableEntityResponseExample",
+                "description": "Common 422 Unprocessable Entity response example",
+                "required": [
+                    "message",
+                    "errors"
+                ],
+                "properties": {
+                    "message": {
+                        "title": "message",
+                        "description": "Validation error message",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "Validation error example"
+                    },
+                    "errors": {
+                        "title": "errors",
+                        "description": "Detailed error messages for each invalid field",
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 },
                 "type": "object"
