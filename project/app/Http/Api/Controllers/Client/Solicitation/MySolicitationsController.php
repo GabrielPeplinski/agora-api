@@ -3,7 +3,6 @@
 namespace App\Http\Api\Controllers\Client\Solicitation;
 
 use App\Domains\Solicitation\Dtos\SolicitationData;
-use App\Domains\Solicitation\Dtos\UserSolicitationData;
 use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
 use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
 use App\Domains\Solicitation\Filters\SolicitationStatusFilter;
@@ -14,6 +13,7 @@ use App\Domains\Solicitation\Strategies\Solicitation\UpdateSolicitationStrategy;
 use App\Http\Api\Request\Client\SolicitationRequest;
 use App\Http\Api\Resources\Shared\Solicitation\SolicitationResource;
 use App\Support\PaginationBuilder;
+use Illuminate\Validation\ValidationException;
 use Spatie\QueryBuilder\AllowedFilter;
 
 class MySolicitationsController
@@ -231,16 +231,15 @@ class MySolicitationsController
      */
     public function destroy(Solicitation $mySolicitation)
     {
-        $data = UserSolicitationData::from([
-            'solicitationId' => $mySolicitation->id,
-            'userId' => current_user()->id,
-            'status' => $mySolicitation->status,
-            'actionDescription' => SolicitationActionDescriptionEnum::DELETED,
-        ]);
+        try {
+            app(DeleteSolicitationStrategy::class)
+                ->execute($mySolicitation);
 
-        app(DeleteSolicitationStrategy::class)
-            ->execute($data);
-
-        return response()->noContent();
+            return response()->noContent();
+        } catch (\Exception $exception) {
+            throw ValidationException::withMessages([
+                $exception->getMessage(),
+            ]);
+        }
     }
 }
