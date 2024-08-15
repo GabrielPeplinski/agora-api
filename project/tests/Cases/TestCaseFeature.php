@@ -58,7 +58,9 @@ abstract class TestCaseFeature extends BaseTestCase
     protected function loginAsClient()
     {
         $user = User::factory()
-            ->create();
+            ->create([
+                'password' => '12345678',
+            ]);
 
         $this->actingAs($user);
         Sanctum::actingAs($user);

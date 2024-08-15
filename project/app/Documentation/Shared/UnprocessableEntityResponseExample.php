@@ -10,7 +10,6 @@ namespace App\Documentation\Shared;
  *      required={"message", "errors"}
  * )
  */
-
 class UnprocessableEntityResponseExample
 {
     /**
@@ -29,8 +28,10 @@ class UnprocessableEntityResponseExample
      *     type="object",
      *     title="errors",
      *     description="Detailed error messages for each invalid field",
+     *
      *     @OA\AdditionalProperties(
      *         type="array",
+     *
      *         @OA\Items(type="string")
      *     )
      * )

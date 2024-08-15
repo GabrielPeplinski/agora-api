@@ -5,7 +5,6 @@ namespace App\Http\Api\Controllers\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Auth;
 
 class UpdatePersonalDataController
 {
@@ -19,8 +18,10 @@ class UpdatePersonalDataController
      *     security={{"sanctum":{}}},
      *
      *     @OA\RequestBody(
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(
      *                 property="name",
      *                 type="string",
@@ -57,7 +58,9 @@ class UpdatePersonalDataController
      *     @OA\Response(
      *         response=200,
      *         description="Successfully updated current user personal data",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(
      *                 property="message",
      *                 type="string",
@@ -69,7 +72,9 @@ class UpdatePersonalDataController
      *     @OA\Response(
      *         response=401,
      *         description="Unauthorized",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(
      *                 property="message",
      *                 type="string",
@@ -81,7 +86,9 @@ class UpdatePersonalDataController
      *     @OA\Response(
      *         response=400,
      *         description="Bad request",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(
      *                 property="message",
      *                 type="string",
@@ -93,6 +100,7 @@ class UpdatePersonalDataController
      *     @OA\Response(
      *         response=422,
      *         description="Unprocessable Entity",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/UnprocessableEntityResponseExample")
      *     )
      * )
@@ -108,19 +116,20 @@ class UpdatePersonalDataController
             'new_password' => ['sometimes', 'string', 'min:5', 'confirmed'],
         ]);
 
-        if (!Hash::check($data['password'], $user->password)) {
+        if (! Hash::check($data['password'], $user->password)) {
             throw ValidationException::withMessages([
                 'password' => __('custom.invalid_current_user_password'),
             ]);
         }
 
-        if (!empty($data['new_password'])) {
+        if (! empty($data['new_password'])) {
             $user->password = Hash::make($data['new_password']);
-            Auth::logoutOtherDevices($data['new_password']);
         }
 
-        unset($data['password']);
-        unset($data['new_password']);
+        // Remover os campos que não devem ser atualizados diretamente
+        unset($data['password'], $data['new_password']);
+
+        // Atualizar os outros dados do usuário
         $user->update($data);
 
         return response()->json([
