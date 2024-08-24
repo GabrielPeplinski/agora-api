@@ -126,10 +126,8 @@ class UpdatePersonalDataController
             $user->password = Hash::make($data['new_password']);
         }
 
-        // Remover os campos que não devem ser atualizados diretamente
         unset($data['password'], $data['new_password']);
 
-        // Atualizar os outros dados do usuário
         $user->update($data);
 
         return response()->json([
