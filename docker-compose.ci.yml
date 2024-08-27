@@ -17,8 +17,6 @@ services:
       - php.opcache.enable_cli=1
     ports:
       - 8080:80
-    depends_on:
-      - media-converter
 
   postgres-test:
     container_name: tagsell-v2-postgres-test
