@@ -1,4 +1,4 @@
-name: Styleguide Check (Pint)
+name: API Styleguide Check (Pint)
 
 on:
   push:
