@@ -2,7 +2,9 @@
 
 namespace Database\Factories\Domains\Account;
 
+use App\Domains\Account\Models\Address;
 use App\Domains\Account\Models\User;
+use App\Domains\Shared\Enums\RolesEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -40,8 +42,22 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    public function admin(): UserFactory
+    {
+        return $this->afterCreating(function (User $user) {
+            $user->assignRole(RolesEnum::ADMIN);
+        });
+    }
+
+    public function client(): UserFactory
+    {
+        return $this->afterCreating(function (User $user) {
+            $user->assignRole(RolesEnum::CLIENT);
+        });
     }
 }

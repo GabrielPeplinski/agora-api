@@ -3,6 +3,7 @@
 namespace App\Http\Api\Controllers\Client;
 
 use App\Domains\Account\Dtos\AddressData;
+use App\Domains\Account\Models\Address;
 use App\Domains\Account\Strategies\CreateOrUpdateAddressStrategy;
 use App\Http\Api\Request\Client\AddressRequest;
 use App\Http\Api\Resources\Client\AddressResource;
@@ -47,6 +48,8 @@ class AddressController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', Address::class);
+
         if ($address = current_user()->address) {
             current_user()->load('address.city.state');
 
@@ -150,6 +153,8 @@ class AddressController extends Controller
      */
     public function createOrUpdate(AddressRequest $request): AddressResource
     {
+        $this->authorize('update', Address::class);
+
         try {
             $data = AddressData::validateAndCreate($request->validated());
 
