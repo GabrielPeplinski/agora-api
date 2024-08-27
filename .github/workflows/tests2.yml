@@ -1,0 +1,41 @@
+name: Testing Laravel with PostgreSQL
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  tests:
+    name: Run tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+      - name: Docker Compose Build
+        run: docker compose -f docker-compose.ci.yml up -d --build
+
+      - name: Run Backend Unit Tests
+        run: docker compose exec -it back php artisan test --parallel --testsuite Unit
+
+      - name: Run Backend Feature Tests
+        run: docker compose exec -it back php artisan test --parallel --testsuite Feature
+
+      - name: Stop and remove Docker containers
+        run: docker-compose down
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@master
+        if: failure()
+        with:
+          name: Logs
+          path: ./projects/backend/storage/logs

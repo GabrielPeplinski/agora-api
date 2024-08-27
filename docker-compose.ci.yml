@@ -1,0 +1,36 @@
+version: '3'
+
+volumes:
+  app-postgres-data:
+    driver: local
+
+services:
+  back:
+    container_name: tagsell-v2-back
+    build:
+      context: .
+      dockerfile: infra/docker/backend/Dockerfile
+    image: tagsell-v2-back
+    environment:
+      - WEB_DOCUMENT_ROOT=/app/public
+      - PHP_MEMORY_LIMIT=256M
+      - php.opcache.enable_cli=1
+    ports:
+      - 8080:80
+    depends_on:
+      - media-converter
+
+  postgres-test:
+    container_name: tagsell-v2-postgres-test
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=app_dev
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=laraveldocker
+    tmpfs:
+      - /var/lib/postgresql/data
+
+  redis:
+    container_name: tagsell-v2-redis
+    image: redis:5.0
+    command: --appendonly no

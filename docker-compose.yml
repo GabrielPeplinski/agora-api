@@ -45,9 +45,3 @@ services:
     container_name: agora-back-redis
     image: redis:5.0
     command: --appendonly no
-
-  mailcatcher:
-    container_name: agora-back-mailcatcher
-    image: schickling/mailcatcher
-    ports:
-      - 1080:1080
