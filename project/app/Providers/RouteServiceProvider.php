@@ -38,7 +38,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('api/auth')
                 ->group(base_path('routes/api/auth.php'));
 
-            Route::middleware(['api', 'auth:sanctum', 'check-user-role:' . RolesEnum::CLIENT])
+            Route::middleware(['api', 'auth:sanctum', 'check-user-role:'.RolesEnum::CLIENT])
                 ->prefix('api/client')
                 ->group(base_path('routes/api/client.php'));
 

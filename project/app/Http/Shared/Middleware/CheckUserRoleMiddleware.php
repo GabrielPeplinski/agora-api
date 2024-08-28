@@ -24,7 +24,7 @@ class CheckUserRoleMiddleware
         }
 
         return response()->json([
-            'message' => __('custom.forbidden_route_according_to_current_user_role')
+            'message' => __('custom.forbidden_route_according_to_current_user_role'),
         ], 403);
     }
 }

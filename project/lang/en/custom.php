@@ -11,5 +11,5 @@
 return [
     'personal_data_updated' => 'Your personal information has been successfully updated',
     'invalid_current_user_password' => 'Invalid current password',
-    'forbidden_route_according_to_current_user_role' => 'This route is forbidden for current user role.'
+    'forbidden_route_according_to_current_user_role' => 'This route is forbidden for current user role.',
 ];
