@@ -624,6 +624,91 @@
                 ]
             }
         },
+        "/api/client/my-solicitations/{mySolicitationId}/add-image": {
+            "post": {
+                "tags": [
+                    "Solicitations"
+                ],
+                "summary": "Add a Image to a Solicitation",
+                "description": "Add a image as a temporary path to a solicitation",
+                "operationId": "Add a Image to a Solicitation",
+                "parameters": [
+                    {
+                        "name": "mySolicitationId",
+                        "in": "path",
+                        "description": "The id of the solicitation",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Image to add to the solicitation",
+                    "required": true,
+                    "content": {
+                        "application/octet-stream": {
+                            "schema": {
+                                "type": "string",
+                                "format": "binary"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully added an image to a solicitation"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenResponseExample"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/client/solicitations/like": {
             "post": {
                 "tags": [
@@ -1180,6 +1265,23 @@
                     "active": {
                         "type": "boolean",
                         "example": false
+                    }
+                },
+                "type": "object"
+            },
+            "ForbiddenResponseExample": {
+                "title": "ForbiddenResponseExample",
+                "description": "Common 403 Forbidden response example",
+                "required": [
+                    "message"
+                ],
+                "properties": {
+                    "message": {
+                        "title": "message",
+                        "description": "Forbidden error message example",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "This route is forbidden for current user role."
                     }
                 },
                 "type": "object"

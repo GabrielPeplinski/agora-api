@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Domains\Account\Models\User;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Console\Command;
 
@@ -29,5 +30,9 @@ class UpgradeRolesAndPermissionsCommand extends Command
         $this->info('Running RolesAndPermissionsSeeder...');
         $this->call(RolesAndPermissionsSeeder::class);
         $this->info('RolesAndPermissionsSeeder completed!');
+
+        User::all()->each(function (User $user) {
+            $user->assignRole('client');
+        });
     }
 }

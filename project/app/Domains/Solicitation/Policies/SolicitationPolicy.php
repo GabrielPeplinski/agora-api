@@ -58,7 +58,7 @@ class SolicitationPolicy
     /**
      * Determine whether the user can add images to a new solicitation.
      */
-    public function addImages(User $user): bool
+    public function addImages(User $user, Solicitation $solicitation): bool
     {
         return $user->can('solicitations add images');
     }

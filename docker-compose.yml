@@ -38,6 +38,8 @@ services:
       - POSTGRES_DB=app_dev
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=laraveldocker
+    ports:
+      - 5434:5434
     tmpfs:
       - /var/lib/postgresql/data
 
