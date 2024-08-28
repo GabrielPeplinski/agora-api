@@ -21,7 +21,7 @@ services:
 
   postgres:
     container_name: agora-back-postgres
-    image: postgres:16-alpine
+    image: postgres:15-alpine
     volumes:
       - app-postgres-data:/var/lib/postgresql/data
     environment:
@@ -33,7 +33,7 @@ services:
 
   postgres-test:
     container_name: agora-back-postgres-test
-    image: postgres:16-alpine
+    image: postgres:15-alpine
     environment:
       - POSTGRES_DB=app_dev
       - POSTGRES_USER=postgres
