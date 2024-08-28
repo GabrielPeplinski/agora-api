@@ -4,11 +4,12 @@ namespace App\Http\Api\Controllers\Client\Solicitation;
 
 use App\Domains\Solicitation\Models\Solicitation;
 use App\Domains\Solicitation\Strategies\SolicitationImage\AddSolicitationImageStrategy;
+use App\Http\Shared\Controllers\Controller;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-class AddSolicitationImageController
+class AddSolicitationImageController extends Controller
 {
     //    /**
     //     * @OA\Post (
@@ -60,6 +61,8 @@ class AddSolicitationImageController
     //     */
     public function __invoke(Request $request, Solicitation $mySolicitation)
     {
+        $this->authorize('addImages', $mySolicitation);
+
         $uuid = Str::uuid();
         $fileContent = $request->getContent();
         $tempFilePath = sys_get_temp_dir()."/solicitation-$mySolicitation->id-$uuid";

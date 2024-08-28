@@ -12,11 +12,12 @@ use App\Domains\Solicitation\Strategies\Solicitation\DeleteSolicitationStrategy;
 use App\Domains\Solicitation\Strategies\Solicitation\UpdateSolicitationStrategy;
 use App\Http\Api\Request\Client\SolicitationRequest;
 use App\Http\Api\Resources\Shared\Solicitation\SolicitationResource;
+use App\Http\Shared\Controllers\Controller;
 use App\Support\PaginationBuilder;
 use Illuminate\Validation\ValidationException;
 use Spatie\QueryBuilder\AllowedFilter;
 
-class MySolicitationsController
+class MySolicitationsController extends Controller
 {
     /**
      * @OA\Get(
@@ -82,6 +83,8 @@ class MySolicitationsController
      */
     public function index()
     {
+        $this->authorize('viewAny', Solicitation::class);
+
         $mySolicitations = app(Solicitation::class)
             ->whereHas('userSolicitations', function ($query) {
                 $query->where('user_id', current_user()->id)
@@ -145,6 +148,8 @@ class MySolicitationsController
      */
     public function show(Solicitation $mySolicitation)
     {
+        $this->authorize('view', $mySolicitation);
+
         $mySolicitation->loadMissing('category');
 
         return SolicitationResource::make($mySolicitation);
@@ -152,6 +157,8 @@ class MySolicitationsController
 
     public function store(SolicitationRequest $request)
     {
+        $this->authorize('create', Solicitation::class);
+
         $data = SolicitationData::validateAndCreate([
             ...$request->validated(),
             'userSolicitationData' => [
@@ -169,6 +176,8 @@ class MySolicitationsController
 
     public function update(SolicitationRequest $request, Solicitation $mySolicitation)
     {
+        $this->authorize('update', $mySolicitation);
+
         $data = SolicitationData::validateAndCreate([
             ...$request->validated(),
             'userSolicitationData' => [
@@ -231,6 +240,8 @@ class MySolicitationsController
      */
     public function destroy(Solicitation $mySolicitation)
     {
+        $this->authorize('delete', $mySolicitation);
+
         try {
             app(DeleteSolicitationStrategy::class)
                 ->execute($mySolicitation);

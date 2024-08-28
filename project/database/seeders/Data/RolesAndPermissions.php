@@ -15,22 +15,18 @@ abstract class RolesAndPermissions
                 'update'
             ],
 
-            'my-solicitations' => [
+            'solicitations' => [
                 'create',
                 'view any',
                 'view',
                 'update',
                 'delete',
-            ],
-
-            'solicitations' => [
-                'view any',
-                'view',
-                'like'
+                'like',
+                'add images'
             ],
 
             'dashboard' => [
-                'view any',
+                'view',
             ],
         ]);
     }
@@ -48,7 +44,6 @@ abstract class RolesAndPermissions
 
         return [
             'address' => $permissions('address'),
-            'my-solicitations' => $permissions('my-solicitations'),
             'solicitations' => $permissions('solicitations'),
             'dashboard' => $permissions('dashboard'),
         ];
