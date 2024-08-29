@@ -18,6 +18,6 @@ class UpdateUserAddressActionTest extends TestCase
                 'address_id' => 1,
             ]));
 
-        (new UpdateUserAddressAction())->execute($userMock, 1);
+        (new UpdateUserAddressAction)->execute($userMock, 1);
     }
 }

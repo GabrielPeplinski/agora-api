@@ -101,7 +101,7 @@ class MySolicitationsController extends Controller
 
         return PaginationBuilder::for($mySolicitations)
             ->allowedFilters([
-                AllowedFilter::custom('status', new SolicitationStatusFilter()),
+                AllowedFilter::custom('status', new SolicitationStatusFilter),
             ])
             ->allowedSorts(['created_at', 'updated_at'])
             ->defaultSort('-created_at')

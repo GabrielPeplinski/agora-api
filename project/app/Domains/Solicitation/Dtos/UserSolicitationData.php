@@ -24,6 +24,5 @@ class UserSolicitationData extends Data
 
         #[Nullable, StringType, Min(4), Max(255)]
         public ?string $actionDescription,
-    ) {
-    }
+    ) {}
 }

@@ -19,7 +19,6 @@ class LogoutController
      *          response=204,
      *          description="Successfully logged out user.",
      *      ),
-     *
      *      @OA\Response(
      *          response=400,
      *          description="Bad request",
