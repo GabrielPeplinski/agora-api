@@ -16,5 +16,8 @@ return [
     'failed' => 'Essas credenciais não foram encontradas em nossos registros.',
     'password' => 'A senha informada está incorreta.',
     'throttle' => 'Muitas tentativas de login. Tente novamente em :seconds segundos.',
-
+    'login_successful' => 'Usuário logado com sucesso.',
+    'invalid_login_credentials' => 'Credenciais de login inválidas.',
+    'logout_successfully' => 'Usuário desconectado com sucesso.',
+    'logout_failed' => 'Falha ao desconectar.'
 ];

@@ -43,29 +43,29 @@ class LoginController extends Controller
      *          @OA\JsonContent(
      *
      *              @OA\Property(property="tokenType", type="string", example="Bearer"),
-     *              @OA\Property(property="message", type="string", example="Login Successfully"),
+     *              @OA\Property(property="message", type="string", example="User successfully logged in."),
      *              @OA\Property(property="token", type="string", example="1|Lkhuda45dajdanfi45")
      *          )
      *      ),
      *
      *      @OA\Response(
-     *          response=401,
-     *          description="Unauthorized",
+     *         response=400,
+     *         description="Bad request",
      *
-     *          @OA\JsonContent(
+     *         @OA\JsonContent(
      *
-     *              @OA\Property(property="message", type="string", example="Unauthorized")
-     *          )
-     *      ),
+     *             @OA\Property(property="message", type="string", example="Bad request")
+     *         )
+     *     ),
      *
-     *      @OA\Response(
-     *          response=400,
-     *          description="Bad request",
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
      *
-     *          @OA\JsonContent(
+     *         @OA\JsonContent(
      *
-     *              @OA\Property(property="message", type="string", example="Bad request")
-     *          )
+     *             @OA\Property(property="message", type="string", example="Invalid login credentials")
+     *         )
      *      ),
      * )
      */
@@ -76,15 +76,18 @@ class LoginController extends Controller
             'password' => 'required|string',
         ]);
 
-        if (! auth()->attempt($credentials)) {
-            abort(401, 'Credenciais inválidas');
+        if (!auth()->attempt($credentials)) {
+            return response()
+                ->json([
+                    'message' => __('auth.invalid_login_credentials')
+                ], 401);
         }
 
         $token = auth()->user()->createToken('auth_token');
 
         return response()
             ->json([
-                'message' => 'User successfully logged',
+                'message' => __('auth.login_successful'),
                 'tokenType' => 'Bearer',
                 'token' => $token->plainTextToken,
             ], 201);
