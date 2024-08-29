@@ -39,16 +39,6 @@ class LikeSolicitationController extends Controller
      *           description="Successfully liked or unliked a solicitation",
      *       ),
      *      @OA\Response(
-     *          response=401,
-     *          description="Unauthorized",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Unauthorized")
-     *          )
-     *      ),
-     *
-     *      @OA\Response(
      *          response=400,
      *          description="Bad request",
      *
@@ -57,6 +47,24 @@ class LikeSolicitationController extends Controller
      *              @OA\Property(property="message", type="string", example="Bad request")
      *          )
      *      ),
+     *
+     *      @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *
+     *           @OA\JsonContent(
+     *
+     *               @OA\Property(property="message", type="string", example="Unauthorized")
+     *           )
+     *       ),
+     *
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden",
+     *
+     *          @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
+     *      )
+     *  )
      * )
      */
     public function __invoke(LikeSolicitationRequest $request)

@@ -61,16 +61,6 @@ class MySolicitationsController extends Controller
      *       ),
      *
      *      @OA\Response(
-     *          response=401,
-     *          description="Unauthorized",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Unauthorized")
-     *          )
-     *      ),
-     *
-     *      @OA\Response(
      *          response=400,
      *          description="Bad request",
      *
@@ -79,6 +69,24 @@ class MySolicitationsController extends Controller
      *              @OA\Property(property="message", type="string", example="Bad request")
      *          )
      *      ),
+     *
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Unauthorized")
+     *           )
+     *       ),
+     *
+     *      @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
+     *       )
+     *   )
      * )
      */
     public function index()
@@ -126,16 +134,6 @@ class MySolicitationsController extends Controller
      *      ),
      *
      *      @OA\Response(
-     *          response=401,
-     *          description="Unauthorized",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Unauthorized")
-     *          )
-     *      ),
-     *
-     *      @OA\Response(
      *          response=400,
      *          description="Bad request",
      *
@@ -144,6 +142,24 @@ class MySolicitationsController extends Controller
      *              @OA\Property(property="message", type="string", example="Bad request")
      *          )
      *      ),
+     *
+     *     @OA\Response(
+     *           response=401,
+     *           description="Unauthorized",
+     *
+     *           @OA\JsonContent(
+     *
+     *               @OA\Property(property="message", type="string", example="Unauthorized")
+     *           )
+     *       ),
+     *
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
+     *       )
+     *   )
      * )
      */
     public function show(Solicitation $mySolicitation)
@@ -218,6 +234,16 @@ class MySolicitationsController extends Controller
      *          description="Successfully deleted a solicitation",
      *      ),
      *      @OA\Response(
+     *          response=400,
+     *          description="Bad request",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Bad request")
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
      *          response=401,
      *          description="Unauthorized",
      *
@@ -228,14 +254,12 @@ class MySolicitationsController extends Controller
      *      ),
      *
      *      @OA\Response(
-     *          response=400,
-     *          description="Bad request",
+     *         response=403,
+     *         description="Forbidden",
      *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Bad request")
-     *          )
-     *      ),
+     *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
+     *       )
+     *   )
      * )
      */
     public function destroy(Solicitation $mySolicitation)

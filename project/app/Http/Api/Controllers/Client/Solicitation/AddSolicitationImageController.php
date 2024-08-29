@@ -45,22 +45,22 @@ class AddSolicitationImageController extends Controller
      *           description="Successfully added an image to a solicitation",
      *       ),
      *      @OA\Response(
+     *           response=400,
+     *           description="Bad request",
+     *
+     *           @OA\JsonContent(
+     *
+     *               @OA\Property(property="message", type="string", example="Bad request")
+     *           )
+     *       ),
+     *
+     *      @OA\Response(
      *          response=401,
      *          description="Unauthorized",
      *
      *          @OA\JsonContent(
      *
      *              @OA\Property(property="message", type="string", example="Unauthorized")
-     *          )
-     *      ),
-     *
-     *      @OA\Response(
-     *          response=400,
-     *          description="Bad request",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Bad request")
      *          )
      *      ),
      *
