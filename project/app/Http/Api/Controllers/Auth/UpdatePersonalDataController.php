@@ -118,7 +118,7 @@ class UpdatePersonalDataController
 
         if (! Hash::check($data['password'], $user->password)) {
             throw ValidationException::withMessages([
-                'password' => __('custom.invalid_current_user_password'),
+                'password' => __('auth.invalid_current_user_password'),
             ]);
         }
 
@@ -131,7 +131,7 @@ class UpdatePersonalDataController
         $user->update($data);
 
         return response()->json([
-            'message' => __('custom.personal_data_updated'),
+            'message' => __('auth.personal_data_updated_successfully'),
         ]);
     }
 }

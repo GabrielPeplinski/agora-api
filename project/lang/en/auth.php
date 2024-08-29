@@ -19,5 +19,7 @@ return [
     'login_successful' => 'User successfully logged in.',
     'invalid_login_credentials' => 'Invalid login credentials.',
     'logout_successfully' => 'Successfully logged out user.',
-    'logout_failed' => 'Failed to log out.'
+    'logout_failed' => 'Failed to log out.',
+    'personal_data_updated_successfully' => 'Your personal information has been successfully updated.',
+    'invalid_current_user_password' => 'Invalid current password.',
 ];

@@ -29,7 +29,7 @@ class UpdatePersonalDataTest extends TestCaseFeature
         $this->putJson($this->controllerAction(), $data)
             ->assertOk()
             ->assertJson([
-                'message' => 'Suas informações pessoais foram atualizadas com sucesso',
+                'message' => __('auth.personal_data_updated_successfully'),
             ]);
 
         $this->assertEquals($data['name'], $this->currentUser->name);
@@ -47,7 +47,7 @@ class UpdatePersonalDataTest extends TestCaseFeature
         $this->putJson($this->controllerAction(), $data)
             ->assertStatus(422)
             ->assertJsonValidationErrors([
-                'password' => 'Senha atual inválida',
+                'password' => __('auth.invalid_current_user_password'),
             ]);
     }
 
@@ -64,7 +64,7 @@ class UpdatePersonalDataTest extends TestCaseFeature
         $this->putJson($this->controllerAction(), $data)
             ->assertOk()
             ->assertJson([
-                'message' => 'Suas informações pessoais foram atualizadas com sucesso',
+                'message' => __('auth.personal_data_updated_successfully'),
             ]);
 
         $this->currentUser->refresh();

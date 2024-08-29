@@ -19,5 +19,7 @@ return [
     'login_successful' => 'Usuário logado com sucesso.',
     'invalid_login_credentials' => 'Credenciais de login inválidas.',
     'logout_successfully' => 'Usuário desconectado com sucesso.',
-    'logout_failed' => 'Falha ao desconectar.'
+    'logout_failed' => 'Falha ao desconectar.',
+    'personal_data_updated_successfully' => 'Suas informações pessoais foram atualizadas com sucesso.',
+    'invalid_current_user_password' => 'Senha atual inválida.',
 ];
