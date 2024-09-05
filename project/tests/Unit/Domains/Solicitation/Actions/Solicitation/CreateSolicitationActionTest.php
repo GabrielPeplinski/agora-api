@@ -21,8 +21,8 @@ class CreateSolicitationActionTest extends TestCaseUnit
 
         $this->mock(Solicitation::class)
             ->expects('create')
-            ->andReturns(new Solicitation());
+            ->andReturns(new Solicitation);
 
-        (new CreateSolicitationAction())->execute($data);
+        (new CreateSolicitationAction)->execute($data);
     }
 }

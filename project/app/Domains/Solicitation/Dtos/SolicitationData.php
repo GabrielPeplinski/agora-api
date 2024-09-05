@@ -35,6 +35,5 @@ class SolicitationData extends Data
 
         #[Nullable, DataCollectionOf(UserSolicitationData::class)]
         public ?UserSolicitationData $userSolicitationData,
-    ) {
-    }
+    ) {}
 }

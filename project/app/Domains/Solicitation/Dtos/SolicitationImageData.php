@@ -26,6 +26,5 @@ class SolicitationImageData extends Data
 
         #[Required, BooleanType, In([true, false])]
         public bool $isCoverImage = false,
-    ) {
-    }
+    ) {}
 }

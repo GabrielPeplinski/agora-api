@@ -56,7 +56,7 @@ class RegisterController extends Controller
      *
      *          @OA\JsonContent(
      *
-     *              @OA\Property(property="message", type="string", example="Usuário criado com sucesso."),
+     *              @OA\Property(property="message", type="string", example="User created successfully."),
      *              @OA\Property(property="name", type="string", example="New User")
      *          )
      *      ),
@@ -80,6 +80,16 @@ class RegisterController extends Controller
      *              @OA\Property(property="message", type="string", example="Bad request")
      *          )
      *      ),
+     *
+     *           @OA\Response(
+     *           response=500,
+     *           description="Internal Server Error",
+     *
+     *           @OA\JsonContent(
+     *
+     *               @OA\Property(property="message", type="string", example="Failed to create user.")
+     *           )
+     *       ),
      * )
      */
     public function __invoke(Request $request): JsonResponse
@@ -87,18 +97,21 @@ class RegisterController extends Controller
         $userData = $request->validate([
             'email' => 'required|string|unique:users,email',
             'name' => 'required|string',
-            'password' => 'required|string|confirmed',
+            'password' => 'required|string|confirmed|min:5',
         ]);
 
         $userData['password'] = Hash::make($userData['password']);
 
         if (! $user = User::create($userData)) {
-            abort(500, 'Não foi possível cadastrar o usuário.');
+            response()
+                ->json([
+                    'message' => 'auth.user_created_failed',
+                ], 500);
         }
 
         return response()
             ->json([
-                'message' => 'Usuário criado com sucesso.',
+                'message' => 'auth.user_created_successfully',
                 'name' => $user->name,
             ], 201);
     }

@@ -51,27 +51,11 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Login Successfully"
+                                            "example": "User successfully logged in."
                                         },
                                         "token": {
                                             "type": "string",
                                             "example": "1|Lkhuda45dajdanfi45"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Unauthorized"
                                         }
                                     },
                                     "type": "object"
@@ -88,6 +72,22 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid login credentials"
                                         }
                                     },
                                     "type": "object"
@@ -108,23 +108,7 @@
                 "operationId": "Logout",
                 "responses": {
                     "204": {
-                        "description": "Successfully logged out user"
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Não foi possível realizar o logout."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
+                        "description": "Successfully logged out user."
                     },
                     "400": {
                         "description": "Bad request",
@@ -135,6 +119,22 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Failed to log out."
                                         }
                                     },
                                     "type": "object"
@@ -259,7 +259,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Usuário criado com sucesso."
+                                            "example": "User created successfully."
                                         },
                                         "name": {
                                             "type": "string",
@@ -302,6 +302,22 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Failed to create user."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -311,9 +327,9 @@
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Update Current User",
-                "description": "Update current user personal data",
-                "operationId": "Personal Data",
+                "summary": "Update Current User Data",
+                "description": "Update the personal data of the current user, including the option to change the password.",
+                "operationId": "UpdatePersonalData",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -322,12 +338,27 @@
                                     "name": {
                                         "description": "New user name",
                                         "type": "string",
-                                        "default": "New User"
+                                        "example": "New User Name"
                                     },
                                     "email": {
                                         "description": "A valid email address",
                                         "type": "string",
-                                        "default": "example@example.com"
+                                        "example": "example@example.com"
+                                    },
+                                    "password": {
+                                        "description": "Current user account password",
+                                        "type": "string",
+                                        "example": "12345"
+                                    },
+                                    "new_password": {
+                                        "description": "New password for the current account",
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "new_password_confirmation": {
+                                        "description": "Confirmation of the new password",
+                                        "type": "string",
+                                        "example": "123456"
                                     }
                                 },
                                 "type": "object"
@@ -344,7 +375,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Suas informações foram atualizadas com sucesso"
+                                            "example": "Suas informações pessoais foram atualizadas com sucesso"
                                         }
                                     },
                                     "type": "object"
@@ -380,6 +411,16 @@
                                         }
                                     },
                                     "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponseExample"
                                 }
                             }
                         }
@@ -433,6 +474,22 @@
                             }
                         }
                     },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {
@@ -445,6 +502,16 @@
                                         }
                                     },
                                     "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenResponseExample"
                                 }
                             }
                         }
@@ -495,38 +562,6 @@
                     }
                 },
                 "responses": {
-                    "201": {
-                        "description": "Successfully registered user address",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "id": {
-                                            "type": "string",
-                                            "example": "1"
-                                        },
-                                        "neighborhood": {
-                                            "type": "string",
-                                            "example": "Centro"
-                                        },
-                                        "cityName": {
-                                            "type": "string",
-                                            "example": "Guarapuava"
-                                        },
-                                        "stateAbbreviation": {
-                                            "type": "string",
-                                            "example": "PR"
-                                        },
-                                        "zipCode": {
-                                            "type": "string",
-                                            "example": "85010180"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
                     "200": {
                         "description": "Successfully updated user address",
                         "content": {
@@ -559,15 +594,31 @@
                             }
                         }
                     },
-                    "401": {
-                        "description": "Unauthorized",
+                    "201": {
+                        "description": "Successfully registered user address",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
+                                        "id": {
                                             "type": "string",
-                                            "example": "Unauthorized"
+                                            "example": "1"
+                                        },
+                                        "neighborhood": {
+                                            "type": "string",
+                                            "example": "Centro"
+                                        },
+                                        "cityName": {
+                                            "type": "string",
+                                            "example": "Guarapuava"
+                                        },
+                                        "stateAbbreviation": {
+                                            "type": "string",
+                                            "example": "PR"
+                                        },
+                                        "zipCode": {
+                                            "type": "string",
+                                            "example": "85010180"
                                         }
                                     },
                                     "type": "object"
@@ -587,6 +638,117 @@
                                         }
                                     },
                                     "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenResponseExample"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/client/my-solicitations/{mySolicitationId}/add-image": {
+            "post": {
+                "tags": [
+                    "Solicitations"
+                ],
+                "summary": "Add a Image to a Solicitation",
+                "description": "Add a image as a temporary path to a solicitation",
+                "operationId": "Add a Image to a Solicitation",
+                "parameters": [
+                    {
+                        "name": "mySolicitationId",
+                        "in": "path",
+                        "description": "The id of the solicitation",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Image to add to the solicitation",
+                    "required": true,
+                    "content": {
+                        "application/octet-stream": {
+                            "schema": {
+                                "type": "string",
+                                "format": "binary"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully added an image to a solicitation"
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenResponseExample"
                                 }
                             }
                         }
@@ -627,6 +789,22 @@
                     "200": {
                         "description": "Successfully liked or unliked a solicitation"
                     },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {
@@ -643,18 +821,12 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Bad request",
+                    "403": {
+                        "description": "Forbidden",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Bad request"
-                                        }
-                                    },
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/ForbiddenResponseExample"
                                 }
                             }
                         }
@@ -713,6 +885,22 @@
                             }
                         }
                     },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {
@@ -729,18 +917,12 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Bad request",
+                    "403": {
+                        "description": "Forbidden",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Bad request"
-                                        }
-                                    },
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/ForbiddenResponseExample"
                                 }
                             }
                         }
@@ -783,6 +965,22 @@
                             }
                         }
                     },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {
@@ -799,18 +997,12 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Bad request",
+                    "403": {
+                        "description": "Forbidden",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Bad request"
-                                        }
-                                    },
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/ForbiddenResponseExample"
                                 }
                             }
                         }
@@ -844,6 +1036,22 @@
                     "204": {
                         "description": "Successfully deleted a solicitation"
                     },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {
@@ -860,18 +1068,12 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Bad request",
+                    "403": {
+                        "description": "Forbidden",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Bad request"
-                                        }
-                                    },
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/ForbiddenResponseExample"
                                 }
                             }
                         }
@@ -1159,6 +1361,52 @@
                 },
                 "type": "object"
             },
+            "ForbiddenResponseExample": {
+                "title": "ForbiddenResponseExample",
+                "description": "Common 403 Forbidden response example",
+                "required": [
+                    "message"
+                ],
+                "properties": {
+                    "message": {
+                        "title": "message",
+                        "description": "Forbidden error message example",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "This route is forbidden for current user role."
+                    }
+                },
+                "type": "object"
+            },
+            "UnprocessableEntityResponseExample": {
+                "title": "UnprocessableEntityResponseExample",
+                "description": "Common 422 Unprocessable Entity response example",
+                "required": [
+                    "message",
+                    "errors"
+                ],
+                "properties": {
+                    "message": {
+                        "title": "message",
+                        "description": "Validation error message",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "Validation error example"
+                    },
+                    "errors": {
+                        "title": "errors",
+                        "description": "Detailed error messages for each invalid field",
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "type": "object"
+            },
             "ShowSolicitationResponse": {
                 "title": "ShowSolicitationResponse",
                 "description": "Solicitation response complete information",
@@ -1347,6 +1595,18 @@
                 "type": "object"
             }
         },
+        "responses": {
+            "422": {
+                "description": "Unprocessable Entity",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/UnprocessableEntityResponseExample"
+                        }
+                    }
+                }
+            }
+        },
         "securitySchemes": {
             "sanctum": {
                 "type": "apiKey",
@@ -1355,5 +1615,27 @@
                 "description": "Enter token in format (Bearer <token>)"
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Address",
+            "description": "Address"
+        },
+        {
+            "name": "Solicitations",
+            "description": "Solicitations"
+        },
+        {
+            "name": "My Solicitations",
+            "description": "My Solicitations"
+        },
+        {
+            "name": "Selects",
+            "description": "Selects"
+        }
+    ]
 }

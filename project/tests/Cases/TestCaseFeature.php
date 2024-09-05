@@ -5,6 +5,7 @@ namespace Tests\Cases;
 use App\Domains\Account\Models\Address;
 use App\Domains\Account\Models\User;
 use Database\Seeders\AddressStatesSeeder;
+use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Database\Events\MigrationsEnded;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -22,6 +23,7 @@ abstract class TestCaseFeature extends BaseTestCase
     protected function beforeRefreshingDatabase(): void
     {
         Event::listen(MigrationsEnded::class, function () {
+            $this->artisan('db:seed', ['--class' => RolesAndPermissionsSeeder::class]);
             $this->artisan('db:seed', ['--class' => AddressStatesSeeder::class]);
 
             $this->app->make(\Spatie\Permission\PermissionRegistrar::class)
@@ -58,7 +60,10 @@ abstract class TestCaseFeature extends BaseTestCase
     protected function loginAsClient()
     {
         $user = User::factory()
-            ->create();
+            ->client()
+            ->create([
+                'password' => '12345678',
+            ]);
 
         $this->actingAs($user);
         Sanctum::actingAs($user);

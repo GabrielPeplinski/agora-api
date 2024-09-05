@@ -25,6 +25,6 @@ class UpdateSolicitationActionTest extends TestCaseUnit
                 ->andReturnTrue();
         });
 
-        (new UpdateSolicitationAction())->execute($data, $solicitationMock);
+        (new UpdateSolicitationAction)->execute($data, $solicitationMock);
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Api\Controllers\Client\Solicitation;
 
 use App\Domains\Solicitation\Dtos\SolicitationData;
-use App\Domains\Solicitation\Dtos\UserSolicitationData;
 use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
 use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
 use App\Domains\Solicitation\Filters\SolicitationStatusFilter;
@@ -13,10 +12,12 @@ use App\Domains\Solicitation\Strategies\Solicitation\DeleteSolicitationStrategy;
 use App\Domains\Solicitation\Strategies\Solicitation\UpdateSolicitationStrategy;
 use App\Http\Api\Request\Client\SolicitationRequest;
 use App\Http\Api\Resources\Shared\Solicitation\SolicitationResource;
+use App\Http\Shared\Controllers\Controller;
 use App\Support\PaginationBuilder;
+use Illuminate\Validation\ValidationException;
 use Spatie\QueryBuilder\AllowedFilter;
 
-class MySolicitationsController
+class MySolicitationsController extends Controller
 {
     /**
      * @OA\Get(
@@ -60,16 +61,6 @@ class MySolicitationsController
      *       ),
      *
      *      @OA\Response(
-     *          response=401,
-     *          description="Unauthorized",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Unauthorized")
-     *          )
-     *      ),
-     *
-     *      @OA\Response(
      *          response=400,
      *          description="Bad request",
      *
@@ -78,10 +69,30 @@ class MySolicitationsController
      *              @OA\Property(property="message", type="string", example="Bad request")
      *          )
      *      ),
+     *
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Unauthorized")
+     *           )
+     *       ),
+     *
+     *      @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
+     *       )
+     *   )
      * )
      */
     public function index()
     {
+        $this->authorize('viewAny', Solicitation::class);
+
         $mySolicitations = app(Solicitation::class)
             ->whereHas('userSolicitations', function ($query) {
                 $query->where('user_id', current_user()->id)
@@ -90,7 +101,7 @@ class MySolicitationsController
 
         return PaginationBuilder::for($mySolicitations)
             ->allowedFilters([
-                AllowedFilter::custom('status', new SolicitationStatusFilter()),
+                AllowedFilter::custom('status', new SolicitationStatusFilter),
             ])
             ->allowedSorts(['created_at', 'updated_at'])
             ->defaultSort('-created_at')
@@ -123,16 +134,6 @@ class MySolicitationsController
      *      ),
      *
      *      @OA\Response(
-     *          response=401,
-     *          description="Unauthorized",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Unauthorized")
-     *          )
-     *      ),
-     *
-     *      @OA\Response(
      *          response=400,
      *          description="Bad request",
      *
@@ -141,10 +142,30 @@ class MySolicitationsController
      *              @OA\Property(property="message", type="string", example="Bad request")
      *          )
      *      ),
+     *
+     *     @OA\Response(
+     *           response=401,
+     *           description="Unauthorized",
+     *
+     *           @OA\JsonContent(
+     *
+     *               @OA\Property(property="message", type="string", example="Unauthorized")
+     *           )
+     *       ),
+     *
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
+     *       )
+     *   )
      * )
      */
     public function show(Solicitation $mySolicitation)
     {
+        $this->authorize('view', $mySolicitation);
+
         $mySolicitation->loadMissing('category');
 
         return SolicitationResource::make($mySolicitation);
@@ -152,6 +173,8 @@ class MySolicitationsController
 
     public function store(SolicitationRequest $request)
     {
+        $this->authorize('create', Solicitation::class);
+
         $data = SolicitationData::validateAndCreate([
             ...$request->validated(),
             'userSolicitationData' => [
@@ -169,6 +192,8 @@ class MySolicitationsController
 
     public function update(SolicitationRequest $request, Solicitation $mySolicitation)
     {
+        $this->authorize('update', $mySolicitation);
+
         $data = SolicitationData::validateAndCreate([
             ...$request->validated(),
             'userSolicitationData' => [
@@ -209,6 +234,16 @@ class MySolicitationsController
      *          description="Successfully deleted a solicitation",
      *      ),
      *      @OA\Response(
+     *          response=400,
+     *          description="Bad request",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Bad request")
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
      *          response=401,
      *          description="Unauthorized",
      *
@@ -219,28 +254,27 @@ class MySolicitationsController
      *      ),
      *
      *      @OA\Response(
-     *          response=400,
-     *          description="Bad request",
+     *         response=403,
+     *         description="Forbidden",
      *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Bad request")
-     *          )
-     *      ),
+     *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
+     *       )
+     *   )
      * )
      */
     public function destroy(Solicitation $mySolicitation)
     {
-        $data = UserSolicitationData::from([
-            'solicitationId' => $mySolicitation->id,
-            'userId' => current_user()->id,
-            'status' => $mySolicitation->status,
-            'actionDescription' => SolicitationActionDescriptionEnum::DELETED,
-        ]);
+        $this->authorize('delete', $mySolicitation);
 
-        app(DeleteSolicitationStrategy::class)
-            ->execute($data);
+        try {
+            app(DeleteSolicitationStrategy::class)
+                ->execute($mySolicitation);
 
-        return response()->noContent();
+            return response()->noContent();
+        } catch (\Exception $exception) {
+            throw ValidationException::withMessages([
+                $exception->getMessage(),
+            ]);
+        }
     }
 }

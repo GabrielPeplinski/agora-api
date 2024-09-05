@@ -1,4 +1,4 @@
-name: Validate Swagger Documentation
+name: API Documentation Validation (Swagger)
 
 on:
   push:

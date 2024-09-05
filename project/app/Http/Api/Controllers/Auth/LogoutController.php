@@ -17,18 +17,8 @@ class LogoutController
      *
      *      @OA\Response(
      *          response=204,
-     *          description="Successfully logged out user",
+     *          description="Successfully logged out user.",
      *      ),
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthorized",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Não foi possível realizar o logout.")
-     *          )
-     *      ),
-     *
      *      @OA\Response(
      *          response=400,
      *          description="Bad request",
@@ -38,6 +28,16 @@ class LogoutController
      *              @OA\Property(property="message", type="string", example="Bad request")
      *          )
      *      ),
+     *
+     *      @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="message", type="string", example="Failed to log out.")
+     *         )
+     *     ),
      * )
      */
     public function __invoke(): JsonResponse
@@ -48,12 +48,12 @@ class LogoutController
             $currentUser->currentAccessToken()->delete();
 
             return response()->json([
-                'message' => 'Usuário deslogado com sucesso.',
+                'message' => __('auth.logout_successfully'),
             ], 204);
         }
 
         return response()->json([
-            'error' => 'Não foi possível realizar o logout.',
+            'message' => __('auth.logout_failed'),
         ], 401);
     }
 }
