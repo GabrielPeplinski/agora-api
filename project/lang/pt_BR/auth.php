@@ -22,4 +22,6 @@ return [
     'logout_failed' => 'Falha ao desconectar.',
     'personal_data_updated_successfully' => 'Suas informações pessoais foram atualizadas com sucesso.',
     'invalid_current_user_password' => 'Senha atual inválida.',
+    'user_created_successfully' => 'Usuário criado com sucesso.',
+    'user_created_failed' => 'Não foi possível criar o usuário.',
 ];

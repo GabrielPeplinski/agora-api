@@ -129,7 +129,7 @@ class AddressTest extends TestCaseFeature
         $this->getJson($this->controllerAction('index'))
             ->assertOk()
             ->assertJson([
-                'message' => 'Este usuario não possui endereco cadastrado.',
+                'message' => __('custom.user_does_not_have_an_address'),
             ]);
     }
 
@@ -152,7 +152,7 @@ class AddressTest extends TestCaseFeature
         $this->putJson($this->controllerAction('createOrUpdate'), $data)
             ->assertStatus(500)
             ->assertJson([
-                'message' => 'Ocorreu um erro ao tentar cadastrar seu endereço',
+                'message' => __('custom.error_create_or_update_address'),
             ]);
     }
 }

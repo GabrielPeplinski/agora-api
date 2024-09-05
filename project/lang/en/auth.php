@@ -22,4 +22,6 @@ return [
     'logout_failed' => 'Failed to log out.',
     'personal_data_updated_successfully' => 'Your personal information has been successfully updated.',
     'invalid_current_user_password' => 'Invalid current password.',
+    'user_created_successfully' => 'User created successfully.',
+    'user_created_failed' => 'Failed to create user.',
 ];

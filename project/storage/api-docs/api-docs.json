@@ -51,27 +51,11 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Login Successfully"
+                                            "example": "User successfully logged in."
                                         },
                                         "token": {
                                             "type": "string",
                                             "example": "1|Lkhuda45dajdanfi45"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Unauthorized"
                                         }
                                     },
                                     "type": "object"
@@ -88,6 +72,22 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid login credentials"
                                         }
                                     },
                                     "type": "object"
@@ -108,23 +108,7 @@
                 "operationId": "Logout",
                 "responses": {
                     "204": {
-                        "description": "Successfully logged out user"
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Não foi possível realizar o logout."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
+                        "description": "Successfully logged out user."
                     },
                     "400": {
                         "description": "Bad request",
@@ -135,6 +119,22 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Failed to log out."
                                         }
                                     },
                                     "type": "object"
@@ -259,7 +259,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Usuário criado com sucesso."
+                                            "example": "User created successfully."
                                         },
                                         "name": {
                                             "type": "string",
@@ -296,6 +296,22 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Failed to create user."
                                         }
                                     },
                                     "type": "object"
@@ -546,8 +562,8 @@
                     }
                 },
                 "responses": {
-                    "201": {
-                        "description": "Successfully registered user address",
+                    "200": {
+                        "description": "Successfully updated user address",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -578,8 +594,8 @@
                             }
                         }
                     },
-                    "200": {
-                        "description": "Successfully updated user address",
+                    "201": {
+                        "description": "Successfully registered user address",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1579,6 +1595,18 @@
                 "type": "object"
             }
         },
+        "responses": {
+            "422": {
+                "description": "Unprocessable Entity",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/UnprocessableEntityResponseExample"
+                        }
+                    }
+                }
+            }
+        },
         "securitySchemes": {
             "sanctum": {
                 "type": "apiKey",
@@ -1587,5 +1615,27 @@
                 "description": "Enter token in format (Bearer <token>)"
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Address",
+            "description": "Address"
+        },
+        {
+            "name": "Solicitations",
+            "description": "Solicitations"
+        },
+        {
+            "name": "My Solicitations",
+            "description": "My Solicitations"
+        },
+        {
+            "name": "Selects",
+            "description": "Selects"
+        }
+    ]
 }
