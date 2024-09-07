@@ -5,6 +5,7 @@ namespace App\Http\Api\Controllers\Client\Solicitation;
 use App\Domains\Solicitation\Dtos\SolicitationData;
 use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
 use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
+use App\Domains\Solicitation\Exceptions\CannotDeleteSolicitationException;
 use App\Domains\Solicitation\Filters\SolicitationStatusFilter;
 use App\Domains\Solicitation\Models\Solicitation;
 use App\Domains\Solicitation\Strategies\Solicitation\CreateSolicitationStrategy;
@@ -271,10 +272,16 @@ class MySolicitationsController extends Controller
                 ->execute($mySolicitation);
 
             return response()->noContent();
-        } catch (\Exception $exception) {
+        } catch (CannotDeleteSolicitationException $exception) {
             throw ValidationException::withMessages([
                 $exception->getMessage(),
             ]);
+        } catch (\Exception $exception) {
+
+            return response()
+                ->json([
+                    'message' => $exception->getMessage(),
+                ], 500);
         }
     }
 }

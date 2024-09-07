@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Domains\Account\Models\User;
+use App\Domains\Shared\Enums\RolesEnum;
 use App\Http\Api\Controllers\Auth\RegisterController;
 use Tests\Cases\TestCaseFeature;
 
@@ -38,6 +40,11 @@ class RegisterTest extends TestCaseFeature
             'name' => $data['name'],
             'email' => $data['email'],
         ]);
+
+        $user = User::where('email', $data['email'])
+            ->first();
+
+        $this->assertTrue($user->hasRole(RolesEnum::CLIENT));
     }
 
     public function test_should_not_register_new_user_when_data_is_invalid(): void

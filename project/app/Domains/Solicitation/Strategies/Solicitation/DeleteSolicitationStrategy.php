@@ -5,6 +5,7 @@ namespace App\Domains\Solicitation\Strategies\Solicitation;
 use App\Domains\Solicitation\Actions\Solicitation\ClearSolicitationHistoryAction;
 use App\Domains\Solicitation\Actions\Solicitation\DeleteSolicitationAction;
 use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
+use App\Domains\Solicitation\Exceptions\CannotDeleteSolicitationException;
 use App\Domains\Solicitation\Models\Solicitation;
 use Illuminate\Support\Facades\DB;
 
@@ -28,21 +29,18 @@ class DeleteSolicitationStrategy
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
-            throw new \Exception($exception->getMessage());
+            throw $exception;
         }
     }
 
     private function checkIfSolicitationCanBeDeleted(Solicitation $solicitation): void
     {
-        $hasOtherRecords = $solicitation->userSolicitations()
-            ->whereNotIn('action_description', [
-                SolicitationActionDescriptionEnum::CREATED,
-                SolicitationActionDescriptionEnum::LIKE,
-            ])
+        $hasStatusUpdated = $solicitation->userSolicitations()
+            ->where('action_description', SolicitationActionDescriptionEnum::STATUS_UPDATED)
             ->exists();
 
-        if (! $hasOtherRecords) {
-            throw new \Exception('This solicitation cannot be deleted. Because its status has already been updated.');
+        if ($hasStatusUpdated) {
+            throw new CannotDeleteSolicitationException();
         }
     }
 
