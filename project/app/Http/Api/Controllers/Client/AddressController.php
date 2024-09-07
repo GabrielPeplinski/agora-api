@@ -175,12 +175,12 @@ class AddressController extends Controller
      *       )
      *    ),
      *
-     * @OA\Response(
-     *          response=422,
-     *          description="Unprocessable Entity",
+     *     @OA\Response(
+     *        response=422,
+     *        description="Unprocessable Entity",
      *
-     *          @OA\JsonContent(ref="#/components/schemas/UnprocessableEntityResponseExample")
-     *      )
+     *        @OA\JsonContent(ref="#/components/schemas/UnprocessableEntityResponseExample")
+     *    )
      * )
      */
     public function createOrUpdate(AddressRequest $request)

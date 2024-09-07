@@ -220,47 +220,41 @@ class MySolicitationsController extends Controller
      *     summary="Delete a solicitation",
      *     description="Delete a solicitation",
      *     security={{"sanctum":{}}},
-     *
      *     @OA\Parameter(
-     *          name="mySolicitationId",
-     *          in="path",
-     *          description="The id of the solicitation",
-     *          required=true,
-     *
-     *          @OA\Schema (type="integer")
-     *       ),
-     *
-     *      @OA\Response(
-     *          response=204,
-     *          description="Successfully deleted a solicitation",
-     *      ),
-     *      @OA\Response(
-     *          response=400,
-     *          description="Bad request",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Bad request")
-     *          )
-     *      ),
-     *
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthorized",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Unauthorized")
-     *          )
-     *      ),
-     *
-     *      @OA\Response(
+     *         name="mySolicitationId",
+     *         in="path",
+     *         description="The id of the solicitation",
+     *         required=true,
+     *         @OA\Schema (type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="Successfully deleted a solicitation",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Bad request")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthorized")
+     *         )
+     *     ),
+     *     @OA\Response(
      *         response=403,
      *         description="Forbidden",
-     *
      *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
-     *       )
-     *   )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity",
+     *         @OA\JsonContent(ref="#/components/schemas/UnprocessableEntityResponseExample")
+     *     )
      * )
      */
     public function destroy(Solicitation $mySolicitation)

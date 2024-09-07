@@ -1077,6 +1077,16 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponseExample"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
