@@ -6,7 +6,7 @@ use Exception;
 
 class CannotDeleteSolicitationException extends Exception
 {
-    public function __construct(Exception $previous = null)
+    public function __construct(?Exception $previous = null)
     {
         $message = __('custom.cannot_delete_solicitation');
         $code = 422;

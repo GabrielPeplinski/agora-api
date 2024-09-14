@@ -40,7 +40,7 @@ class DeleteSolicitationStrategy
             ->exists();
 
         if ($hasStatusUpdated) {
-            throw new CannotDeleteSolicitationException();
+            throw new CannotDeleteSolicitationException;
         }
     }
 
