@@ -19,21 +19,27 @@ class AddSolicitationImageController extends Controller
      *     summary="Add a Image to a Solicitation",
      *     description="Add a image as a temporary path to a solicitation",
      *     security={{"sanctum":{}}},
+     *
      *     @OA\Parameter(
      *         name="mySolicitationId",
      *         in="path",
      *         description="The id of the solicitation",
      *         required=true,
+     *
      *         @OA\Schema(type="integer")
      *     ),
+     *
      *     @OA\RequestBody(
      *         description="Image to add to the solicitation",
      *         required=true,
+     *
      *         @OA\MediaType(
      *             mediaType="application/octet-stream",
+     *
      *             @OA\Schema(type="string", format="binary")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successfully added an image to a solicitation",
@@ -41,22 +47,30 @@ class AddSolicitationImageController extends Controller
      *     @OA\Response(
      *         response=400,
      *         description="Bad request",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Bad request")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthorized",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Unauthorized")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=403,
      *         description="Forbidden",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Solicitation not found",
@@ -69,7 +83,7 @@ class AddSolicitationImageController extends Controller
 
         $uuid = Str::uuid();
         $fileContent = $request->getContent();
-        $tempFilePath = sys_get_temp_dir() . "/solicitation-$mySolicitation->id-$uuid";
+        $tempFilePath = sys_get_temp_dir()."/solicitation-$mySolicitation->id-$uuid";
 
         file_put_contents($tempFilePath, $fileContent);
 

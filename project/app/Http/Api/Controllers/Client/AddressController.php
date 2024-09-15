@@ -19,10 +19,13 @@ class AddressController extends Controller
      *     summary="Current User Address",
      *     description="Get current user address data",
      *     security={{"sanctum":{}}},
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successfully retrieved current user address data",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="id", type="string", example="1"),
      *             @OA\Property(property="neighborhood", type="string", example="Centro"),
      *             @OA\Property(property="cityName", type="string", example="Guarapuava"),
@@ -30,23 +33,31 @@ class AddressController extends Controller
      *             @OA\Property(property="zipCode", type="string", example="85010180")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=400,
      *         description="Bad request",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Bad request")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthorized",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Unauthorized")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=403,
      *         description="Forbidden",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
      *     )
      * )
@@ -74,9 +85,12 @@ class AddressController extends Controller
      *     summary="Update or Create Current User Address",
      *     description="Update or create current user address data",
      *     security={{"sanctum":{}}},
+     *
      *     @OA\RequestBody(
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(
      *                 type="string",
      *                 default="Centro",
@@ -103,10 +117,13 @@ class AddressController extends Controller
      *             )
      *         ),
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successfully updated user address",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="id", type="string", example="1"),
      *             @OA\Property(property="neighborhood", type="string", example="Centro"),
      *             @OA\Property(property="cityName", type="string", example="Guarapuava"),
@@ -114,10 +131,13 @@ class AddressController extends Controller
      *             @OA\Property(property="zipCode", type="string", example="85010180"),
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=201,
      *         description="Successfully registered user address",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="id", type="string", example="1"),
      *             @OA\Property(property="neighborhood", type="string", example="Centro"),
      *             @OA\Property(property="cityName", type="string", example="Guarapuava"),
@@ -125,28 +145,38 @@ class AddressController extends Controller
      *             @OA\Property(property="zipCode", type="string", example="85010180"),
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=400,
      *         description="Bad request",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Bad request")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthorized",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Unauthorized")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=403,
      *         description="Forbidden",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
      *     ),
+     *
      *     @OA\Response(
      *         response=422,
      *         description="Unprocessable Entity",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/UnprocessableEntityResponseExample")
      *     )
      * )

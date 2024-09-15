@@ -14,10 +14,13 @@ class SolicitationCategoriesSelectController
      *     tags={"Selects"},
      *     summary="Get Solicitation Categories List",
      *     description="Get solicitation categories list",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successfully retrieved solicitation categories data",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="data", type="array", @OA\Items(
      *                 @OA\Property(property="id", type="integer", example="1"),
      *                 @OA\Property(property="name", type="string", example="Ruas com asfalto em mau estado"),
@@ -25,10 +28,13 @@ class SolicitationCategoriesSelectController
      *             ))
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthorized",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Unauthorized")
      *         )
      *     )

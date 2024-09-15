@@ -19,9 +19,12 @@ class LikeSolicitationController extends Controller
      *     summary="Like or unlike a solicitation",
      *     description="Like or unlike a solicitation",
      *     security={{"sanctum":{}}},
+     *
      *     @OA\RequestBody(
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(
      *                 type="integer",
      *                 default="1",
@@ -30,6 +33,7 @@ class LikeSolicitationController extends Controller
      *             ),
      *         ),
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successfully liked or unliked a solicitation",
@@ -37,20 +41,27 @@ class LikeSolicitationController extends Controller
      *     @OA\Response(
      *         response=400,
      *         description="Bad request",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Bad request")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthorized",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Unauthorized")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=403,
      *         description="Forbidden",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
      *     )
      * )
