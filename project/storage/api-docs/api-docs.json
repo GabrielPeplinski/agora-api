@@ -667,6 +667,16 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponseExample"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -752,6 +762,9 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Solicitation not found"
                     }
                 },
                 "security": [
@@ -767,7 +780,7 @@
                     "Solicitations"
                 ],
                 "summary": "Like or unlike a solicitation",
-                "description": "Like or unlike a solicitation by its id",
+                "description": "Like or unlike a solicitation",
                 "operationId": "Like or Unlike a Solicitation",
                 "requestBody": {
                     "content": {
@@ -1404,6 +1417,9 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Solicitation not found"
                     }
                 }
             }
@@ -1844,18 +1860,6 @@
                     }
                 },
                 "type": "object"
-            }
-        },
-        "responses": {
-            "422": {
-                "description": "Unprocessable Entity",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "$ref": "#/components/schemas/UnprocessableEntityResponseExample"
-                        }
-                    }
-                }
             }
         },
         "securitySchemes": {
