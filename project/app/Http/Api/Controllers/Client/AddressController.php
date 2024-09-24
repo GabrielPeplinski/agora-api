@@ -20,47 +20,46 @@ class AddressController extends Controller
      *     description="Get current user address data",
      *     security={{"sanctum":{}}},
      *
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successfully retrieved current user address data",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successfully retrieved current user address data",
      *
-     *          @OA\JsonContent(
+     *         @OA\JsonContent(
      *
-     *              @OA\Property(property="id", type="string", example="1"),
-     *              @OA\Property(property="neighborhood", type="string", example="Centro"),
-     *              @OA\Property(property="cityName", type="string", example="Guarapuava"),
-     *              @OA\Property(property="stateAbbreviation", type="string", example="PR"),
-     *              @OA\Property(property="zipCode", type="string", example="85010180"),
-     *          )
-     *      ),
+     *             @OA\Property(property="id", type="string", example="1"),
+     *             @OA\Property(property="neighborhood", type="string", example="Centro"),
+     *             @OA\Property(property="cityName", type="string", example="Guarapuava"),
+     *             @OA\Property(property="stateAbbreviation", type="string", example="PR"),
+     *             @OA\Property(property="zipCode", type="string", example="85010180")
+     *         )
+     *     ),
      *
-     *      @OA\Response(
-     *          response=400,
-     *          description="Bad request",
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request",
      *
-     *          @OA\JsonContent(
+     *         @OA\JsonContent(
      *
-     *              @OA\Property(property="message", type="string", example="Bad request")
-     *          )
-     *      ),
+     *             @OA\Property(property="message", type="string", example="Bad request")
+     *         )
+     *     ),
      *
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthorized",
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
      *
-     *          @OA\JsonContent(
+     *         @OA\JsonContent(
      *
-     *              @OA\Property(property="message", type="string", example="Unauthorized")
-     *          )
-     *      ),
+     *             @OA\Property(property="message", type="string", example="Unauthorized")
+     *         )
+     *     ),
      *
-     *      @OA\Response(
+     *     @OA\Response(
      *         response=403,
      *         description="Forbidden",
      *
      *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
-     *       )
-     *    )
+     *     )
      * )
      */
     public function index()
@@ -89,98 +88,97 @@ class AddressController extends Controller
      *
      *     @OA\RequestBody(
      *
-     *          @OA\JsonContent(
-     *              type="object",
+     *         @OA\JsonContent(
+     *             type="object",
      *
-     *              @OA\Property(
-     *                   type="string",
-     *                   default="Centro",
-     *                   description="Current user neighborhood name",
-     *                   property="neighborhood"
-     *               ),
-     *              @OA\Property(
-     *                  type="string",
-     *                  default="Guarapuava",
-     *                  description="Current user city name",
-     *                  property="cityName"
-     *              ),
-     *              @OA\Property(
-     *                  type="string",
-     *                  default="PR",
-     *                  description="Current user state abbreviation",
-     *                  property="stateAbbreviation"
-     *              ),
-     *              @OA\Property(
-     *                   type="string",
-     *                   default="85010180",
-     *                   description="Current user zip code",
-     *                   property="zipCode"
-     *               )
-     *          ),
-     *      ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 default="Centro",
+     *                 description="Current user neighborhood name",
+     *                 property="neighborhood"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 default="Guarapuava",
+     *                 description="Current user city name",
+     *                 property="cityName"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 default="PR",
+     *                 description="Current user state abbreviation",
+     *                 property="stateAbbreviation"
+     *             ),
+     *             @OA\Property(
+     *                 type="string",
+     *                 default="85010180",
+     *                 description="Current user zip code",
+     *                 property="zipCode"
+     *             )
+     *         ),
+     *     ),
      *
      *     @OA\Response(
-     *          response=200,
-     *          description="Successfully updated user address",
+     *         response=200,
+     *         description="Successfully updated user address",
      *
-     *          @OA\JsonContent(
+     *         @OA\JsonContent(
      *
-     *              @OA\Property(property="id", type="string", example="1"),
-     *              @OA\Property(property="neighborhood", type="string", example="Centro"),
-     *              @OA\Property(property="cityName", type="string", example="Guarapuava"),
-     *              @OA\Property(property="stateAbbreviation", type="string", example="PR"),
-     *              @OA\Property(property="zipCode", type="string", example="85010180"),
-     *           )
-     *      ),
+     *             @OA\Property(property="id", type="string", example="1"),
+     *             @OA\Property(property="neighborhood", type="string", example="Centro"),
+     *             @OA\Property(property="cityName", type="string", example="Guarapuava"),
+     *             @OA\Property(property="stateAbbreviation", type="string", example="PR"),
+     *             @OA\Property(property="zipCode", type="string", example="85010180"),
+     *         )
+     *     ),
      *
-     *      @OA\Response(
-     *          response=201,
-     *          description="Successfully registered user address",
+     *     @OA\Response(
+     *         response=201,
+     *         description="Successfully registered user address",
      *
-     *          @OA\JsonContent(
+     *         @OA\JsonContent(
      *
-     *              @OA\Property(property="id", type="string", example="1"),
-     *              @OA\Property(property="neighborhood", type="string", example="Centro"),
-     *              @OA\Property(property="cityName", type="string", example="Guarapuava"),
-     *              @OA\Property(property="stateAbbreviation", type="string", example="PR"),
-     *              @OA\Property(property="zipCode", type="string", example="85010180"),
-     *          )
-     *      ),
+     *             @OA\Property(property="id", type="string", example="1"),
+     *             @OA\Property(property="neighborhood", type="string", example="Centro"),
+     *             @OA\Property(property="cityName", type="string", example="Guarapuava"),
+     *             @OA\Property(property="stateAbbreviation", type="string", example="PR"),
+     *             @OA\Property(property="zipCode", type="string", example="85010180"),
+     *         )
+     *     ),
      *
-     *      @OA\Response(
-     *           response=400,
-     *           description="Bad request",
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request",
      *
-     *           @OA\JsonContent(
+     *         @OA\JsonContent(
      *
-     *               @OA\Property(property="message", type="string", example="Bad request")
-     *           )
-     *       ),
+     *             @OA\Property(property="message", type="string", example="Bad request")
+     *         )
+     *     ),
      *
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthorized",
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
      *
-     *          @OA\JsonContent(
+     *         @OA\JsonContent(
      *
-     *              @OA\Property(property="message", type="string", example="Unauthorized")
-     *          )
-     *      ),
+     *             @OA\Property(property="message", type="string", example="Unauthorized")
+     *         )
+     *     ),
      *
-     *      @OA\Response(
+     *     @OA\Response(
      *         response=403,
      *         description="Forbidden",
      *
      *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
-     *       )
-     *    ),
+     *     ),
      *
-     * @OA\Response(
-     *          response=422,
-     *          description="Unprocessable Entity",
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity",
      *
-     *          @OA\JsonContent(ref="#/components/schemas/UnprocessableEntityResponseExample")
-     *      )
+     *         @OA\JsonContent(ref="#/components/schemas/UnprocessableEntityResponseExample")
+     *     )
      * )
      */
     public function createOrUpdate(AddressRequest $request)

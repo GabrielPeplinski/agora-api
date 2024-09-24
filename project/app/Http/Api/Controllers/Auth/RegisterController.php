@@ -3,6 +3,7 @@
 namespace App\Http\Api\Controllers\Auth;
 
 use App\Domains\Account\Models\User;
+use App\Domains\Shared\Enums\RolesEnum;
 use App\Http\Shared\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -105,13 +106,15 @@ class RegisterController extends Controller
         if (! $user = User::create($userData)) {
             response()
                 ->json([
-                    'message' => 'auth.user_created_failed',
+                    'message' => __('auth.user_created_failed'),
                 ], 500);
         }
 
+        $user->assignRole(RolesEnum::CLIENT);
+
         return response()
             ->json([
-                'message' => 'auth.user_created_successfully',
+                'message' => __('auth.user_created_successfully'),
                 'name' => $user->name,
             ], 201);
     }

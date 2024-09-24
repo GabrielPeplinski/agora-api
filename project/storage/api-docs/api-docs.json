@@ -667,6 +667,16 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponseExample"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -752,6 +762,9 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Solicitation not found"
                     }
                 },
                 "security": [
@@ -767,7 +780,7 @@
                     "Solicitations"
                 ],
                 "summary": "Like or unlike a solicitation",
-                "description": "Like or unlike a solicitation by its id",
+                "description": "Like or unlike a solicitation",
                 "operationId": "Like or Unlike a Solicitation",
                 "requestBody": {
                     "content": {
@@ -933,6 +946,92 @@
                         "sanctum": []
                     }
                 ]
+            },
+            "post": {
+                "tags": [
+                    "My Solicitations"
+                ],
+                "summary": "Create a solicitation",
+                "description": "Create a solicitation using the current user",
+                "operationId": "Create Solicitation",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SolicitationPayload"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully registered user address",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ShowSolicitationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenResponseExample"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponseExample"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/client/my-solicitations/{mySolicitationId}": {
@@ -941,7 +1040,7 @@
                     "My Solicitations"
                 ],
                 "summary": "Show the data of a solicitation",
-                "description": "Show the data of a solicitation",
+                "description": "Show the data of a solicitation that belongs to the current user",
                 "operationId": "Show a Solicitation Data",
                 "parameters": [
                     {
@@ -1006,6 +1105,109 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Solicitation not found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "My Solicitations"
+                ],
+                "summary": "Update a solicitation",
+                "description": "Update a solicitation that belongs to the current user",
+                "operationId": "Update Solicitation",
+                "parameters": [
+                    {
+                        "name": "mySolicitationId",
+                        "in": "path",
+                        "description": "The id of the solicitation to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SolicitationPayload"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully registered user address",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ShowSolicitationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenResponseExample"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Solicitation not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponseExample"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1019,7 +1221,7 @@
                     "My Solicitations"
                 ],
                 "summary": "Delete a solicitation",
-                "description": "Delete a solicitation",
+                "description": "Delete a solicitation that belongs to the current user",
                 "operationId": "Delete Solicitation",
                 "parameters": [
                     {
@@ -1074,6 +1276,19 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ForbiddenResponseExample"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponseExample"
                                 }
                             }
                         }
@@ -1202,6 +1417,9 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Solicitation not found"
                     }
                 }
             }
@@ -1512,6 +1730,55 @@
                 },
                 "type": "object"
             },
+            "SolicitationPayload": {
+                "title": "ShowSolicitationResponse",
+                "description": "Solicitation response complete information",
+                "required": [
+                    "title",
+                    "description",
+                    "latitudeCoordinates",
+                    "longitudeCoordinates",
+                    "solicitationCategoryId"
+                ],
+                "properties": {
+                    "title": {
+                        "title": "title",
+                        "description": "The title that best describes the solicitation",
+                        "type": "string",
+                        "readOnly": false,
+                        "example": "Rampa de acesso com buracos"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "The description that describes the reason for the solicitation",
+                        "type": "string",
+                        "readOnly": false,
+                        "example": "Na frente da escola municipal, existe uma rampa de acesso com buracos, impossibilitando o seu uso com segurança."
+                    },
+                    "latitudeCoordinates": {
+                        "title": "latitudeCoordinates",
+                        "description": "Latitude coordinate of the solicitation",
+                        "type": "string",
+                        "readOnly": false,
+                        "example": "-25.430"
+                    },
+                    "longitudeCoordinates": {
+                        "title": "longitudeCoordinates",
+                        "description": "Longitude coordinate of the solicitation",
+                        "type": "string",
+                        "readOnly": false,
+                        "example": "-49.271"
+                    },
+                    "solicitationCategoryId": {
+                        "title": "solicitationCategoryId",
+                        "description": "The solicitation category id that best describes the solicitation",
+                        "type": "object",
+                        "readOnly": false,
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            },
             "SolicitationResponse": {
                 "title": "SolicitationResponse",
                 "description": "Solicitation response with basic information",
@@ -1593,18 +1860,6 @@
                     }
                 },
                 "type": "object"
-            }
-        },
-        "responses": {
-            "422": {
-                "description": "Unprocessable Entity",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "$ref": "#/components/schemas/UnprocessableEntityResponseExample"
-                        }
-                    }
-                }
             }
         },
         "securitySchemes": {

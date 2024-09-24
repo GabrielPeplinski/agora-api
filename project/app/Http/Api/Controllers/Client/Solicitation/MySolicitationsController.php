@@ -5,6 +5,7 @@ namespace App\Http\Api\Controllers\Client\Solicitation;
 use App\Domains\Solicitation\Dtos\SolicitationData;
 use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
 use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
+use App\Domains\Solicitation\Exceptions\CannotDeleteSolicitationException;
 use App\Domains\Solicitation\Filters\SolicitationStatusFilter;
 use App\Domains\Solicitation\Models\Solicitation;
 use App\Domains\Solicitation\Strategies\Solicitation\CreateSolicitationStrategy;
@@ -29,64 +30,63 @@ class MySolicitationsController extends Controller
      *     security={{"sanctum":{}}},
      *
      *     @OA\Parameter(
-     *          name="filter[status]",
-     *          in="query",
-     *          description="Filter by status",
-     *          required=false,
+     *         name="filter[status]",
+     *         in="query",
+     *         description="Filter by status",
+     *         required=false,
      *
-     *          @OA\Schema(
-     *              type="string",
-     *              enum={"open", "in_progress", "resolved"},
-     *              example="open"
-     *          )
-     *      ),
+     *         @OA\Schema(
+     *             type="string",
+     *             enum={"open", "in_progress", "resolved"},
+     *             example="open"
+     *         )
+     *     ),
      *
-     *      @OA\Parameter(
-     *           name="page",
-     *           in="query",
-     *           description="Page number",
-     *           required=false,
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page number",
+     *         required=false,
      *
-     *           @OA\Schema(
-     *               type="integer",
-     *               example=1
-     *           )
-     *       ),
+     *         @OA\Schema(
+     *             type="integer",
+     *             example=1
+     *         )
+     *     ),
      *
-     *      @OA\Response(
-     *           response=200,
-     *           description="Successfully liked or unliked a solicitation",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successfully liked or unliked a solicitation",
      *
-     *           @OA\JsonContent(ref="#/components/schemas/SolicitationPaginatedResponse")
-     *       ),
+     *         @OA\JsonContent(ref="#/components/schemas/SolicitationPaginatedResponse")
+     *     ),
      *
-     *      @OA\Response(
-     *          response=400,
-     *          description="Bad request",
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request",
      *
-     *          @OA\JsonContent(
+     *         @OA\JsonContent(
      *
-     *              @OA\Property(property="message", type="string", example="Bad request")
-     *          )
-     *      ),
+     *             @OA\Property(property="message", type="string", example="Bad request")
+     *         )
+     *     ),
      *
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthorized",
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
      *
-     *          @OA\JsonContent(
+     *         @OA\JsonContent(
      *
-     *              @OA\Property(property="message", type="string", example="Unauthorized")
-     *           )
-     *       ),
+     *             @OA\Property(property="message", type="string", example="Unauthorized")
+     *         )
+     *     ),
      *
-     *      @OA\Response(
+     *     @OA\Response(
      *         response=403,
      *         description="Forbidden",
      *
      *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
-     *       )
-     *   )
+     *     )
      * )
      */
     public function index()
@@ -114,52 +114,56 @@ class MySolicitationsController extends Controller
      *     operationId="Show a Solicitation Data",
      *     tags={"My Solicitations"},
      *     summary="Show the data of a solicitation",
-     *     description="Show the data of a solicitation",
+     *     description="Show the data of a solicitation that belongs to the current user",
      *     security={{"sanctum":{}}},
      *
      *     @OA\Parameter(
-     *          name="mySolicitationId",
-     *          in="path",
-     *          description="The id of the solicitation",
-     *          required=true,
+     *         name="mySolicitationId",
+     *         in="path",
+     *         description="The id of the solicitation",
+     *         required=true,
      *
-     *          @OA\Schema (type="integer")
-     *       ),
-     *
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successfully retrieve a solicitation data",
-     *
-     *         @OA\JsonContent(ref="#/components/schemas/ShowSolicitationResponse")
-     *      ),
-     *
-     *      @OA\Response(
-     *          response=400,
-     *          description="Bad request",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Bad request")
-     *          )
-     *      ),
+     *         @OA\Schema(type="integer")
+     *     ),
      *
      *     @OA\Response(
-     *           response=401,
-     *           description="Unauthorized",
+     *         response=200,
+     *         description="Successfully retrieve a solicitation data",
      *
-     *           @OA\JsonContent(
+     *         @OA\JsonContent(ref="#/components/schemas/ShowSolicitationResponse")
+     *     ),
      *
-     *               @OA\Property(property="message", type="string", example="Unauthorized")
-     *           )
-     *       ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="message", type="string", example="Bad request")
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="message", type="string", example="Unauthorized")
+     *         )
+     *     ),
      *
      *     @OA\Response(
      *         response=403,
      *         description="Forbidden",
      *
      *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
-     *       )
-     *   )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=404,
+     *         description="Solicitation not found",
+     *     )
      * )
      */
     public function show(Solicitation $mySolicitation)
@@ -171,6 +175,62 @@ class MySolicitationsController extends Controller
         return SolicitationResource::make($mySolicitation);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/client/my-solicitations",
+     *     operationId="Create Solicitation",
+     *     tags={"My Solicitations"},
+     *     summary="Create a solicitation",
+     *     description="Create a solicitation using the current user",
+     *     security={{"sanctum":{}}},
+     *
+     *     @OA\RequestBody(
+     *
+     *        @OA\JsonContent(ref="#/components/schemas/SolicitationPayload")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=201,
+     *         description="Successfully registered user address",
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/ShowSolicitationResponse")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="message", type="string", example="Bad request")
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="message", type="string", example="Unauthorized")
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity",
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/UnprocessableEntityResponseExample")
+     *     )
+     * )
+     */
     public function store(SolicitationRequest $request)
     {
         $this->authorize('create', Solicitation::class);
@@ -190,6 +250,75 @@ class MySolicitationsController extends Controller
         return $this->show($solicitation);
     }
 
+    /**
+     * @OA\Put(
+     *     path="/api/client/my-solicitations/{mySolicitationId}",
+     *     operationId="Update Solicitation",
+     *     tags={"My Solicitations"},
+     *     summary="Update a solicitation",
+     *     description="Update a solicitation that belongs to the current user",
+     *     security={{"sanctum":{}}},
+     *
+     *     @OA\Parameter(
+     *         name="mySolicitationId",
+     *         in="path",
+     *         description="The id of the solicitation to update",
+     *         required=true,
+     *
+     *         @OA\Schema(type="integer")
+     *     ),
+     *
+     *     @OA\RequestBody(
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/SolicitationPayload")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=201,
+     *         description="Successfully registered user address",
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/ShowSolicitationResponse")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="message", type="string", example="Bad request")
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="message", type="string", example="Unauthorized")
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden",
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=404,
+     *         description="Solicitation not found",
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity",
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/UnprocessableEntityResponseExample")
+     *     )
+     * )
+     */
     public function update(SolicitationRequest $request, Solicitation $mySolicitation)
     {
         $this->authorize('update', $mySolicitation);
@@ -217,49 +346,59 @@ class MySolicitationsController extends Controller
      *     operationId="Delete Solicitation",
      *     tags={"My Solicitations"},
      *     summary="Delete a solicitation",
-     *     description="Delete a solicitation",
+     *     description="Delete a solicitation that belongs to the current user",
      *     security={{"sanctum":{}}},
      *
      *     @OA\Parameter(
-     *          name="mySolicitationId",
-     *          in="path",
-     *          description="The id of the solicitation",
-     *          required=true,
+     *         name="mySolicitationId",
+     *         in="path",
+     *         description="The id of the solicitation",
+     *         required=true,
      *
-     *          @OA\Schema (type="integer")
-     *       ),
+     *         @OA\Schema(type="integer")
+     *     ),
      *
-     *      @OA\Response(
-     *          response=204,
-     *          description="Successfully deleted a solicitation",
-     *      ),
-     *      @OA\Response(
-     *          response=400,
-     *          description="Bad request",
+     *     @OA\Response(
+     *         response=204,
+     *         description="Successfully deleted a solicitation",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request",
      *
-     *          @OA\JsonContent(
+     *         @OA\JsonContent(
      *
-     *              @OA\Property(property="message", type="string", example="Bad request")
-     *          )
-     *      ),
+     *             @OA\Property(property="message", type="string", example="Bad request")
+     *         )
+     *     ),
      *
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthorized",
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
      *
-     *          @OA\JsonContent(
+     *         @OA\JsonContent(
      *
-     *              @OA\Property(property="message", type="string", example="Unauthorized")
-     *          )
-     *      ),
+     *             @OA\Property(property="message", type="string", example="Unauthorized")
+     *         )
+     *     ),
      *
-     *      @OA\Response(
+     *     @OA\Response(
      *         response=403,
      *         description="Forbidden",
      *
      *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
-     *       )
-     *   )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity",
+     *
+     *         @OA\JsonContent(ref="#/components/schemas/UnprocessableEntityResponseExample")
+     *     )
      * )
      */
     public function destroy(Solicitation $mySolicitation)
@@ -271,10 +410,16 @@ class MySolicitationsController extends Controller
                 ->execute($mySolicitation);
 
             return response()->noContent();
-        } catch (\Exception $exception) {
+        } catch (CannotDeleteSolicitationException $exception) {
             throw ValidationException::withMessages([
                 $exception->getMessage(),
             ]);
+        } catch (\Exception $exception) {
+
+            return response()
+                ->json([
+                    'message' => $exception->getMessage(),
+                ], 500);
         }
     }
 }
