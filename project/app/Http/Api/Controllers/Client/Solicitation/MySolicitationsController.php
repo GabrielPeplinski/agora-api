@@ -11,7 +11,7 @@ use App\Domains\Solicitation\Models\Solicitation;
 use App\Domains\Solicitation\Strategies\Solicitation\CreateSolicitationStrategy;
 use App\Domains\Solicitation\Strategies\Solicitation\DeleteSolicitationStrategy;
 use App\Domains\Solicitation\Strategies\Solicitation\UpdateSolicitationStrategy;
-use App\Http\Api\Request\Client\SolicitationRequest;
+use App\Http\Api\Request\Client\Solicitation\SolicitationRequest;
 use App\Http\Api\Resources\Shared\Solicitation\SolicitationResource;
 use App\Http\Shared\Controllers\Controller;
 use App\Support\PaginationBuilder;

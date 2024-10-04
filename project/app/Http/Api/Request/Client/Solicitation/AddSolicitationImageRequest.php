@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Api\Request\Client;
+namespace App\Http\Api\Request\Client\Solicitation;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class LikeSolicitationRequest extends FormRequest
+class AddSolicitationImageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class LikeSolicitationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'solicitationId' => 'required|exists:solicitations,id',
+            'imageUri' => 'required|string',
         ];
     }
 }
