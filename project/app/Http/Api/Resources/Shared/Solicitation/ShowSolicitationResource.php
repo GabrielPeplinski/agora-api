@@ -16,7 +16,7 @@ class ShowSolicitationResource extends JsonResource
             'description' => $this->description,
             'latitudeCoordinates' => $this->latitude_coordinates,
             'longitudeCoordinates' => $this->longitude_coordinates,
-            'status' => $this->status,
+            'status' => $this->current_status,
             'likesCount' => $this->likes_count,
             'coverImage' => $this->getFirstMedia('coverImage')?->getFullUrl(),
             'images' => $this->getMedia('images')
@@ -24,7 +24,6 @@ class ShowSolicitationResource extends JsonResource
                     return $media->getFullUrl();
                 }),
             'solicitationCategory' => SolicitationCategorySelectResource::make($this->whenLoaded('category')),
-            'currentStatus' => $this->current_status,
             'createdAt' => output_date_format($this->created_at),
             'updatedAt' => output_date_format($this->updated_at),
         ];

@@ -24,25 +24,16 @@ class SolicitationStatusFilter implements Filter
 
     private function filterOpenSolicitations(Builder $query): Builder
     {
-        return $query->whereHas('userSolicitations', function ($query) {
-            $query->where('status', SolicitationStatusEnum::OPEN)
-                ->latest('id');
-        });
+        return $query->where('current_status', SolicitationStatusEnum::OPEN);
     }
 
     private function filterResolvedSolicitations(Builder $query): Builder
     {
-        return $query->whereHas('userSolicitations', function ($query) {
-            $query->where('status', SolicitationStatusEnum::RESOLVED)
-                ->latest('id');
-        });
+        return $query->where('current_status', SolicitationStatusEnum::RESOLVED);
     }
 
     private function filterInProgressSolicitations(Builder $query): Builder
     {
-        return $query->whereHas('userSolicitations', function ($query) {
-            $query->where('status', SolicitationStatusEnum::IN_PROGRESS)
-                ->latest('id');
-        });
+        return $query->where('current_status', SolicitationStatusEnum::IN_PROGRESS);
     }
 }

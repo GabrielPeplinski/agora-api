@@ -12,6 +12,7 @@ use App\Domains\Solicitation\Strategies\Solicitation\CreateSolicitationStrategy;
 use App\Domains\Solicitation\Strategies\Solicitation\DeleteSolicitationStrategy;
 use App\Domains\Solicitation\Strategies\Solicitation\UpdateSolicitationStrategy;
 use App\Http\Api\Request\Client\Solicitation\SolicitationRequest;
+use App\Http\Api\Resources\Shared\Solicitation\ShowSolicitationResource;
 use App\Http\Api\Resources\Shared\Solicitation\SolicitationResource;
 use App\Http\Shared\Controllers\Controller;
 use App\Support\PaginationBuilder;
@@ -106,6 +107,16 @@ class MySolicitationsController extends Controller
             ->allowedSorts(['created_at', 'updated_at'])
             ->defaultSort('-created_at')
             ->resource(SolicitationResource::class);
+    }
+
+    private function show(Solicitation $solicitation): ShowSolicitationResource
+    {
+        $solicitation->loadMissing([
+            'media',
+            'category',
+        ]);
+
+        return ShowSolicitationResource::make($solicitation);
     }
 
     /**
