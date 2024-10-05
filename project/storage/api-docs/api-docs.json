@@ -689,7 +689,7 @@
         "/api/client/my-solicitations/{mySolicitationId}/add-image": {
             "post": {
                 "tags": [
-                    "Solicitations"
+                    "My Solicitations"
                 ],
                 "summary": "Add a Image to a Solicitation",
                 "description": "Add a image as a temporary path to a solicitation",
@@ -1372,12 +1372,23 @@
                 "tags": [
                     "Solicitations"
                 ],
-                "summary": "Show the data of a solicitation",
+                "summary": "Show the data of any solicitation",
                 "description": "Show the data of a solicitation",
-                "operationId": "Show a Solicitation Data for Unauthenticated Users",
+                "operationId": "Show the data of any Solicitation",
+                "parameters": [
+                    {
+                        "name": "solicitationId",
+                        "in": "path",
+                        "description": "The id of one solicitation",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Successfully liked or unliked a solicitation",
+                        "description": "Successfully return a solicitation data",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1881,12 +1892,12 @@
             "description": "Address"
         },
         {
-            "name": "Solicitations",
-            "description": "Solicitations"
-        },
-        {
             "name": "My Solicitations",
             "description": "My Solicitations"
+        },
+        {
+            "name": "Solicitations",
+            "description": "Solicitations"
         },
         {
             "name": "Selects",

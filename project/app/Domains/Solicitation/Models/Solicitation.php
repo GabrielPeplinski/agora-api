@@ -24,6 +24,7 @@ class Solicitation extends Model implements HasMedia
         'latitude_coordinates',
         'longitude_coordinates',
         'likes_count',
+        'current_status',
     ];
 
     public function category(): BelongsTo

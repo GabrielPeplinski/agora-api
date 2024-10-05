@@ -237,6 +237,7 @@ class MySolicitationsController extends Controller
 
         $data = SolicitationData::validateAndCreate([
             ...$request->validated(),
+            'currentStatus' => SolicitationStatusEnum::OPEN,
             'userSolicitationData' => [
                 'status' => SolicitationStatusEnum::OPEN,
                 'userId' => current_user()->id,

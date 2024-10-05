@@ -33,6 +33,13 @@ class MySolicitationsTest extends TestCaseFeature
         ];
     }
 
+    private function getShowSolicitationResourceData(): array
+    {
+        return [
+
+        ];
+    }
+
     //
     //    private function createCurrentUserSolicitation(): Collection
     //    {

@@ -28,6 +28,7 @@ class SolicitationFactory extends Factory
             'latitude_coordinates' => $this->faker->latitude(),
             'longitude_coordinates' => $this->faker->longitude(),
             'likes_count' => $this->faker->randomNumber(3),
+            'current_status' => SolicitationStatusEnum::OPEN,
         ];
     }
 

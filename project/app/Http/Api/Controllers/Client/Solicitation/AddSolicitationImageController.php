@@ -3,7 +3,7 @@
 namespace App\Http\Api\Controllers\Client\Solicitation;
 
 use App\Domains\Solicitation\Models\Solicitation;
-use App\Domains\Solicitation\Strategies\SolicitationImage\AddSolicitationImageStrategy;
+use App\Domains\Solicitation\Strategies\Solicitation\AddSolicitationImageStrategy;
 use App\Http\Shared\Controllers\Controller;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class AddSolicitationImageController extends Controller
      * @OA\Post(
      *     path="/api/client/my-solicitations/{mySolicitationId}/add-image",
      *     operationId="Add a Image to a Solicitation",
-     *     tags={"Solicitations"},
+     *     tags={"My Solicitations"},
      *     summary="Add a Image to a Solicitation",
      *     description="Add a image as a temporary path to a solicitation",
      *     security={{"sanctum":{}}},

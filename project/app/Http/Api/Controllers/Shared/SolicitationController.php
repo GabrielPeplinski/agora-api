@@ -71,14 +71,23 @@ class SolicitationController
     /**
      * @OA\Get(
      *     path="/api/solicitations/{solicitationId}",
-     *     operationId="Show a Solicitation Data for Unauthenticated Users",
+     *     operationId="Show the data of any Solicitation",
      *     tags={"Solicitations"},
-     *     summary="Show the data of a solicitation",
+     *     summary="Show the data of any solicitation",
      *     description="Show the data of a solicitation",
+     *
+     *     @OA\Parameter(
+     *       name="solicitationId",
+     *       in="path",
+     *       description="The id of one solicitation",
+     *       required=true,
+     *
+     *       @OA\Schema(type="integer")
+     *    ),
      *
      *     @OA\Response(
      *         response=200,
-     *         description="Successfully liked or unliked a solicitation",
+     *         description="Successfully return a solicitation data",
      *
      *         @OA\JsonContent(ref="#/components/schemas/ShowSolicitationResponse")
      *     ),
@@ -111,6 +120,11 @@ class SolicitationController
      */
     public function show(Solicitation $solicitation)
     {
+        $solicitation->loadMissing([
+            'media',
+            'category',
+        ]);
+
         return ShowSolicitationResource::make($solicitation);
     }
 }
