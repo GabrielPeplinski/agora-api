@@ -28,7 +28,7 @@ class UpdateSolicitationStatusRequest extends FormRequest
             'status' => [
                 'required',
                 'string',
-                Rule::enum(SolicitationStatusEnum::class)
+                Rule::in(SolicitationStatusEnum::OPEN, SolicitationStatusEnum::IN_PROGRESS, SolicitationStatusEnum::RESOLVED),
             ],
         ];
     }

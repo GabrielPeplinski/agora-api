@@ -5,6 +5,7 @@ namespace App\Domains\Solicitation\Strategies\Solicitation;
 use App\Domains\Solicitation\Actions\Solicitation\UpdateSolicitationStatusAction;
 use App\Domains\Solicitation\Actions\UserSolicitation\CreateUserSolicitationAction;
 use App\Domains\Solicitation\Dtos\UserSolicitationData;
+use App\Domains\Solicitation\Models\Solicitation;
 use Illuminate\Support\Facades\DB;
 
 class UpdateSolicitationStatusStrategy
@@ -12,7 +13,7 @@ class UpdateSolicitationStatusStrategy
     /**
      * @throws \Exception
      */
-    public function execute(UserSolicitationData $data): void
+    public function execute(UserSolicitationData $data, Solicitation $solicitation): void
     {
         try {
             DB::beginTransaction();
@@ -21,7 +22,7 @@ class UpdateSolicitationStatusStrategy
                 ->execute($data);
 
             app(UpdateSolicitationStatusAction::class)
-                ->execute($data);
+                ->execute($data, $solicitation);
 
             DB::commit();
         } catch (\Exception $exception) {

@@ -11,18 +11,20 @@ use App\Http\Shared\Controllers\Controller;
 
 class UpdateSolicitationStatusController extends Controller
 {
-    public function __invoke(UpdateSolicitationStatusRequest $request, Solicitation $solicitation)
+    public function __invoke(UpdateSolicitationStatusRequest $request, Solicitation $mySolicitation)
     {
+        $this->authorize('updateStatus', $mySolicitation);
+
         $validated = $request->validated();
 
         $data = UserSolicitationData::validateAndCreate([
             'status' => $validated['status'],
-            'solicitationId' => $solicitation->id,
+            'solicitationId' => $mySolicitation->id,
             'userId' => current_user()->id,
             'actionDescription' => SolicitationActionDescriptionEnum::STATUS_UPDATED,
         ]);
 
         app(UpdateSolicitationStatusStrategy::class)
-            ->execute($data);
+            ->execute($data, $mySolicitation);
     }
 }

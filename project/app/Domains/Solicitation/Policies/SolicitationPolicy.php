@@ -3,6 +3,7 @@
 namespace App\Domains\Solicitation\Policies;
 
 use App\Domains\Account\Models\User;
+use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
 use App\Domains\Solicitation\Models\Solicitation;
 
 class SolicitationPolicy
@@ -61,5 +62,14 @@ class SolicitationPolicy
     public function addImages(User $user, Solicitation $solicitation): bool
     {
         return $user->can('solicitations add images');
+    }
+
+    /**
+     * Determine whether the user can update the status of any solicitations.
+     */
+    public function updateStatus(User $user, Solicitation $solicitation): bool
+    {
+        return $user->can('solicitations update status') &&
+            $solicitation->status !== SolicitationStatusEnum::RESOLVED;
     }
 }

@@ -22,7 +22,8 @@ abstract class RolesAndPermissions
                 'update',
                 'delete',
                 'like',
-                'add images'
+                'add images',
+                'update status',
             ],
 
             'dashboard' => [
