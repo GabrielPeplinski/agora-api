@@ -23,6 +23,7 @@ Route::put('address', [AddressController::class, 'createOrUpdate']);
 
 Route::post('my-solicitations/{mySolicitation}/add-image', AddSolicitationImageController::class);
 Route::put('my-solicitations/{mySolicitation}/status', UpdateSolicitationStatusController::class);
-Route::apiResource('my-solicitations', MySolicitationsController::class);
+Route::apiResource('my-solicitations', MySolicitationsController::class)
+    ->except('show');
 
 Route::post('solicitations/like', LikeSolicitationController::class);

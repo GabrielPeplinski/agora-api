@@ -11,15 +11,7 @@ class SolicitationPolicy
     /**
      * Determine whether the user can view any of its solicitations.
      */
-    public function viewAny(User $user): bool
-    {
-        return $user->can('solicitations view any');
-    }
-
-    /**
-     * Determine whether the user can view any of its solicitations.
-     */
-    public function view(User $user, Solicitation $solicitation): bool
+    public function view(User $user): bool
     {
         return $user->can('solicitations view');
     }

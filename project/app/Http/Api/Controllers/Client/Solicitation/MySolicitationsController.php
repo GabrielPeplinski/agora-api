@@ -91,7 +91,7 @@ class MySolicitationsController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', Solicitation::class);
+        $this->authorize('view', Solicitation::class);
 
         $mySolicitations = app(Solicitation::class)
             ->whereHas('userSolicitations', function ($query) {
@@ -106,73 +106,6 @@ class MySolicitationsController extends Controller
             ->allowedSorts(['created_at', 'updated_at'])
             ->defaultSort('-created_at')
             ->resource(SolicitationResource::class);
-    }
-
-    /**
-     * @OA\Get(
-     *     path="/api/client/my-solicitations/{mySolicitationId}",
-     *     operationId="Show a Solicitation Data",
-     *     tags={"My Solicitations"},
-     *     summary="Show the data of a solicitation",
-     *     description="Show the data of a solicitation that belongs to the current user",
-     *     security={{"sanctum":{}}},
-     *
-     *     @OA\Parameter(
-     *         name="mySolicitationId",
-     *         in="path",
-     *         description="The id of the solicitation",
-     *         required=true,
-     *
-     *         @OA\Schema(type="integer")
-     *     ),
-     *
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successfully retrieve a solicitation data",
-     *
-     *         @OA\JsonContent(ref="#/components/schemas/ShowSolicitationResponse")
-     *     ),
-     *
-     *     @OA\Response(
-     *         response=400,
-     *         description="Bad request",
-     *
-     *         @OA\JsonContent(
-     *
-     *             @OA\Property(property="message", type="string", example="Bad request")
-     *         )
-     *     ),
-     *
-     *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
-     *
-     *         @OA\JsonContent(
-     *
-     *             @OA\Property(property="message", type="string", example="Unauthorized")
-     *         )
-     *     ),
-     *
-     *     @OA\Response(
-     *         response=403,
-     *         description="Forbidden",
-     *
-     *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
-     *     ),
-     *
-     *     @OA\Response(
-     *         response=404,
-     *         description="Solicitation not found",
-     *     )
-     * )
-     */
-    public function show(Solicitation $mySolicitation)
-    {
-        $this->authorize('view', $mySolicitation);
-
-        $mySolicitation->loadMissing('category');
-
-        return SolicitationResource::make($mySolicitation);
     }
 
     /**

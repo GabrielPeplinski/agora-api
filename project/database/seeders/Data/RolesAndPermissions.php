@@ -17,7 +17,6 @@ abstract class RolesAndPermissions
 
             'solicitations' => [
                 'create',
-                'view any',
                 'view',
                 'update',
                 'delete',
