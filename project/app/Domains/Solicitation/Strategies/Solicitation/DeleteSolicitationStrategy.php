@@ -14,9 +14,9 @@ class DeleteSolicitationStrategy
     public function execute(Solicitation $solicitation): void
     {
         try {
-            $this->checkIfSolicitationCanBeDeleted($solicitation);
-
             DB::beginTransaction();
+
+            $this->checkIfSolicitationCanBeDeleted($solicitation);
 
             $this->deleteSolicitationImages($solicitation);
 

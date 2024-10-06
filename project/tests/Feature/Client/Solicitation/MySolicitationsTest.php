@@ -252,4 +252,50 @@ class MySolicitationsTest extends TestCaseFeature
 
         $this->assertEquals(2, $solicitation->userSolicitations()->count());
     }
+
+    public function test_should_delete_a_solicitation_when_it_belongs_to_the_current_user()
+    {
+        $solicitation = Solicitation::factory()
+            ->makeCurrentUserSolicitations()
+            ->create();
+
+        $this->deleteJson($this->controllerAction('destroy', $solicitation->id))
+            ->assertNoContent();
+
+        $this->assertDatabaseMissing(Solicitation::class, [
+            'id' => $solicitation->id,
+        ]);
+
+        $this->assertDatabaseMissing(UserSolicitation::class, [
+            'solicitation_id' => $solicitation->id,
+        ]);
+    }
+
+    public function test_should_not_delete_a_solicitation_when_its_status_is_already_updated_once()
+    {
+        $solicitation = Solicitation::factory()
+            ->makeCurrentUserSolicitations()
+            ->create();
+
+        UserSolicitation::create([
+            'solicitation_id' => $solicitation->id,
+            'user_id' => current_user()->id,
+            'status' => SolicitationStatusEnum::IN_PROGRESS,
+            'action_description' => SolicitationActionDescriptionEnum::STATUS_UPDATED,
+        ]);
+
+        $this->deleteJson($this->controllerAction('destroy', $solicitation->id))
+            ->assertStatus(422)
+            ->assertJson([
+                'message' => __('custom.cannot_delete_solicitation'),
+            ]);
+
+        $this->assertDatabaseHas(Solicitation::class, [
+            'id' => $solicitation->id,
+        ]);
+
+        $this->assertDatabaseHas(UserSolicitation::class, [
+            'solicitation_id' => $solicitation->id,
+        ]);
+    }
 }
