@@ -2,10 +2,12 @@
 
 namespace App\Http\Api\Controllers\Shared;
 
+use App\Domains\Solicitation\Filters\SolicitationStatusFilter;
 use App\Domains\Solicitation\Models\Solicitation;
 use App\Http\Api\Resources\Shared\Solicitation\ShowSolicitationResource;
 use App\Http\Api\Resources\Shared\Solicitation\SolicitationResource;
 use App\Support\PaginationBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class SolicitationController
 {
@@ -14,7 +16,7 @@ class SolicitationController
      *     path="/api/solicitations",
      *     operationId="List all solicitations",
      *     tags={"Solicitations"},
-     *     summary="Show a solicitation data",
+     *     summary="Show all solicitations data",
      *     description="Get a paginated list with all solicitations",
      *
      *     @OA\Parameter(
@@ -37,6 +39,16 @@ class SolicitationController
      *     ),
      *
      *     @OA\Response(
+     *        response=400,
+     *        description="Bad request",
+     *
+     *        @OA\JsonContent(
+     *
+     *            @OA\Property(property="message", type="string", example="Bad request")
+     *        )
+     *    ),
+     *
+     *     @OA\Response(
      *         response=401,
      *         description="Unauthorized",
      *
@@ -45,16 +57,6 @@ class SolicitationController
      *             @OA\Property(property="message", type="string", example="Unauthorized")
      *         )
      *     ),
-     *
-     *     @OA\Response(
-     *         response=400,
-     *         description="Bad request",
-     *
-     *         @OA\JsonContent(
-     *
-     *             @OA\Property(property="message", type="string", example="Bad request")
-     *         )
-     *     )
      * )
      */
     public function index()
@@ -64,6 +66,10 @@ class SolicitationController
                 'media',
             ])
             ->allowedSorts(['created_at', 'updated_at'])
+            ->allowedFilters([
+                AllowedFilter::exact('solicitation_category_id'),
+                AllowedFilter::custom('status', new SolicitationStatusFilter),
+            ])
             ->defaultSort('-created_at')
             ->resource(SolicitationResource::class);
     }
@@ -71,7 +77,7 @@ class SolicitationController
     /**
      * @OA\Get(
      *     path="/api/solicitations/{solicitationId}",
-     *     operationId="Show the data of any Solicitation",
+     *     operationId="Show the data of any solicitation",
      *     tags={"Solicitations"},
      *     summary="Show the data of any solicitation",
      *     description="Show the data of a solicitation",
@@ -92,6 +98,16 @@ class SolicitationController
      *         @OA\JsonContent(ref="#/components/schemas/ShowSolicitationResponse")
      *     ),
      *
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad request",
+     *
+     *          @OA\JsonContent(
+     *
+     *           @OA\Property(property="message", type="string", example="Bad request")
+     *         )
+     *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthorized",
@@ -99,16 +115,6 @@ class SolicitationController
      *         @OA\JsonContent(
      *
      *             @OA\Property(property="message", type="string", example="Unauthorized")
-     *         )
-     *     ),
-     *
-     *     @OA\Response(
-     *         response=400,
-     *         description="Bad request",
-     *
-     *         @OA\JsonContent(
-     *
-     *             @OA\Property(property="message", type="string", example="Bad request")
      *         )
      *     ),
      *
