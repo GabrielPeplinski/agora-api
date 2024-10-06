@@ -20,6 +20,31 @@ class SolicitationController
      *     description="Get a paginated list with all solicitations",
      *
      *     @OA\Parameter(
+     *         name="filter[status]",
+     *         in="query",
+     *         description="Filter by status",
+     *         required=false,
+     *
+     *         @OA\Schema(
+     *             type="string",
+     *             enum={"open", "in_progress", "resolved"},
+     *             example="open"
+     *         )
+     *     ),
+     *
+     *     @OA\Parameter(
+     *         name="filter[solicitation_category_id]",
+     *         in="query",
+     *         description="Filter by the solicitation category ID",
+     *         required=false,
+     *
+     *         @OA\Schema(
+     *             type="integer",
+     *             example=1
+     *         )
+     *     ),
+     *
+     *     @OA\Parameter(
      *         name="page",
      *         in="query",
      *         description="Page number",
@@ -39,14 +64,14 @@ class SolicitationController
      *     ),
      *
      *     @OA\Response(
-     *        response=400,
-     *        description="Bad request",
+     *         response=400,
+     *         description="Bad request",
      *
-     *        @OA\JsonContent(
+     *         @OA\JsonContent(
      *
-     *            @OA\Property(property="message", type="string", example="Bad request")
-     *        )
-     *    ),
+     *             @OA\Property(property="message", type="string", example="Bad request")
+     *         )
+     *     ),
      *
      *     @OA\Response(
      *         response=401,
@@ -56,7 +81,7 @@ class SolicitationController
      *
      *             @OA\Property(property="message", type="string", example="Unauthorized")
      *         )
-     *     ),
+     *     )
      * )
      */
     public function index()

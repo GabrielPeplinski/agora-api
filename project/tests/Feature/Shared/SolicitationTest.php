@@ -25,6 +25,7 @@ class SolicitationTest extends TestCaseFeature
             'likesCount',
             'coverImage',
             'hasCurrentUserLike',
+            'status',
             'createdAt',
             'updatedAt',
         ];

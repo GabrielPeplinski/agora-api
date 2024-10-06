@@ -16,6 +16,7 @@ class SolicitationResource extends JsonResource
             'likesCount' => $this->likes_count,
             'coverImage' => $this->getFirstMediaUrl('coverImage'),
             'hasCurrentUserLike' => $this->checkCurrentUserLike(),
+            'status' => $this->current_status,
             'createdAt' => output_date_format($this->created_at),
             'updatedAt' => output_date_format($this->updated_at),
         ];

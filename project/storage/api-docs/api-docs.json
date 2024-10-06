@@ -1225,10 +1225,35 @@
                 "tags": [
                     "Solicitations"
                 ],
-                "summary": "Show a solicitation data",
+                "summary": "Show all solicitations data",
                 "description": "Get a paginated list with all solicitations",
                 "operationId": "List all solicitations",
                 "parameters": [
+                    {
+                        "name": "filter[status]",
+                        "in": "query",
+                        "description": "Filter by status",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "open",
+                                "in_progress",
+                                "resolved"
+                            ],
+                            "example": "open"
+                        }
+                    },
+                    {
+                        "name": "filter[solicitation_category_id]",
+                        "in": "query",
+                        "description": "Filter by the solicitation category ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
                     {
                         "name": "page",
                         "in": "query",
@@ -1251,22 +1276,6 @@
                             }
                         }
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Unauthorized"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
                     "400": {
                         "description": "Bad request",
                         "content": {
@@ -1276,6 +1285,22 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
                                         }
                                     },
                                     "type": "object"
@@ -1293,7 +1318,7 @@
                 ],
                 "summary": "Show the data of any solicitation",
                 "description": "Show the data of a solicitation",
-                "operationId": "Show the data of any Solicitation",
+                "operationId": "Show the data of any solicitation",
                 "parameters": [
                     {
                         "name": "solicitationId",
@@ -1316,22 +1341,6 @@
                             }
                         }
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Unauthorized"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
                     "400": {
                         "description": "Bad request",
                         "content": {
@@ -1341,6 +1350,22 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
                                         }
                                     },
                                     "type": "object"
