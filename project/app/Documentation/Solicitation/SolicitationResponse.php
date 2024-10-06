@@ -7,7 +7,7 @@ namespace App\Documentation\Solicitation;
  *      title="SolicitationResponse",
  *      description="Solicitation response with basic information",
  *      type="object",
- *      required={"id", "title", "likesCount", "createdAt", "updatedAt"}
+ *      required={"id", "title", "likesCount", "coverImage", "hasCurrentUserLike", "status", "createdAt", "updatedAt"}
  * )
  */
 class SolicitationResponse
@@ -44,6 +44,41 @@ class SolicitationResponse
      * )
      */
     public string $likesCount;
+
+    /**
+     * @OA\Property(
+     *     type="string",
+     *     title="coverImage",
+     *     description="The full URL link to the cover image",
+     *     example="https://example.com/image.jpg",
+     *     readOnly=true
+     * )
+     */
+    public string $coverImage;
+
+    /**
+     * @OA\Property(
+     *     type="boolean",
+     *     title="hasCurrentUserLike",
+     *     description="If the current user has liked the solicitation, when user not authenticated, return false",
+     *     example=false,
+     *     enum={"true", "false"},
+     *     readOnly=true
+     * )
+     */
+    public bool $hasCurrentUserLike;
+
+    /**
+     * @OA\Property(
+     *     type="string",
+     *     title="status",
+     *     description="The current status of the solicitation",
+     *     example="open",
+     *     enum={"open", "in_progress", "resolved"},
+     *     readOnly=true
+     * )
+     */
+    public string $status;
 
     /**
      * @OA\Property(

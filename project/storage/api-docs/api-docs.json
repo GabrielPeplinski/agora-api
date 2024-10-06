@@ -1741,6 +1741,9 @@
                     "id",
                     "title",
                     "likesCount",
+                    "coverImage",
+                    "hasCurrentUserLike",
+                    "status",
                     "createdAt",
                     "updatedAt"
                 ],
@@ -1765,6 +1768,36 @@
                         "type": "integer",
                         "readOnly": true,
                         "example": 100
+                    },
+                    "coverImage": {
+                        "title": "coverImage",
+                        "description": "The full URL link to the cover image",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "https://example.com/image.jpg"
+                    },
+                    "hasCurrentUserLike": {
+                        "title": "hasCurrentUserLike",
+                        "description": "If the current user has liked the solicitation, when user not authenticated, return false",
+                        "type": "boolean",
+                        "enum": [
+                            "true",
+                            "false"
+                        ],
+                        "readOnly": true,
+                        "example": false
+                    },
+                    "status": {
+                        "title": "status",
+                        "description": "The current status of the solicitation",
+                        "type": "string",
+                        "enum": [
+                            "open",
+                            "in_progress",
+                            "resolved"
+                        ],
+                        "readOnly": true,
+                        "example": "open"
                     },
                     "createdAt": {
                         "title": "createdAt",
