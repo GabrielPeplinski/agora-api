@@ -1593,6 +1593,7 @@
                     "likesCount",
                     "solicitationCategory",
                     "createdAt",
+                    "historic",
                     "updatedAt",
                     "updatedAt"
                 ],
@@ -1662,6 +1663,15 @@
                         "type": "string",
                         "readOnly": true,
                         "example": "2021-09-01T00:00:00.000000Z"
+                    },
+                    "historic": {
+                        "title": "historic",
+                        "description": "The solicitation history",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserSolicitationResponse"
+                        },
+                        "readOnly": true
                     }
                 },
                 "type": "object"
@@ -1845,6 +1855,66 @@
                         "type": "string",
                         "readOnly": true,
                         "example": "Compreende todos os problemas que envolvem a acessibilidade de pessoas com deficiência como rampas de acesso ou em calçadas, falta de piso tátil direcional, entre outros."
+                    }
+                },
+                "type": "object"
+            },
+            "UserSolicitationResponse": {
+                "title": "UserSolicitationResponse",
+                "description": "User solicitation response complete information",
+                "required": [
+                    "id",
+                    "status",
+                    "performedBy",
+                    "actionDescription",
+                    "createdAt"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "The user solicitation id",
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": 1
+                    },
+                    "status": {
+                        "title": "status",
+                        "description": "The user solicitation status when the action was performed",
+                        "type": "string",
+                        "enum": [
+                            "open",
+                            "in_progress",
+                            "resolved"
+                        ],
+                        "readOnly": true,
+                        "example": "open"
+                    },
+                    "performedBy": {
+                        "title": "performedBy",
+                        "description": "The user name who performed the action, with the first 7 characters visible to protect privacy",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "New Use*"
+                    },
+                    "actionDescription": {
+                        "title": "actionDescription",
+                        "description": "The user solicitation action description",
+                        "type": "string",
+                        "enum": [
+                            "created",
+                            "updated",
+                            "status_updated",
+                            "like"
+                        ],
+                        "readOnly": true,
+                        "example": "created"
+                    },
+                    "createdAt": {
+                        "title": "createdAt",
+                        "description": "Date of creation",
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "2021-09-01T00:00:00.000000Z"
                     }
                 },
                 "type": "object"

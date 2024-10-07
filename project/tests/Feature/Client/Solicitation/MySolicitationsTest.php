@@ -47,6 +47,15 @@ class MySolicitationsTest extends TestCaseFeature
             'coverImage',
             'images',
             'solicitationCategory',
+            'historic' => [
+                '*' => [
+                    'id',
+                    'status',
+                    'performedBy',
+                    'actionDescription',
+                    'createdAt',
+                ],
+            ],
             'createdAt',
             'updatedAt',
         ];
