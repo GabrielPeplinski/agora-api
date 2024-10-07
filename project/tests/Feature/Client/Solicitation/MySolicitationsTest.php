@@ -339,4 +339,27 @@ class MySolicitationsTest extends TestCaseFeature
                 'message' => __('custom.cannot_update_solicitation'),
             ]);
     }
+
+    public function test_should_not_manage_solicitations_that_belongs_to_other_users()
+    {
+        $solicitationCategory = SolicitationCategory::factory()
+            ->create();
+
+        $data = [
+            'title' => 'Solicitation title',
+            'solicitationCategoryId' => $solicitationCategory->id,
+            'description' => 'Solicitation description',
+            'latitudeCoordinates' => '-25.4294',
+            'longitudeCoordinates' => '-49.2719',
+        ];
+
+        $solicitation = Solicitation::factory()
+            ->create();
+
+        $this->putJson($this->controllerAction('update', $solicitation->id), $data)
+            ->assertForbidden();
+
+        $this->deleteJson($this->controllerAction('destroy', $solicitation->id))
+            ->assertForbidden();
+    }
 }

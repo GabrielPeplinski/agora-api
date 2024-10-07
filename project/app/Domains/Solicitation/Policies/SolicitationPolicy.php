@@ -3,11 +3,20 @@
 namespace App\Domains\Solicitation\Policies;
 
 use App\Domains\Account\Models\User;
+use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
 use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
 use App\Domains\Solicitation\Models\Solicitation;
 
 class SolicitationPolicy
 {
+    private function belongsToCurrentUser(User $user, Solicitation $solicitation): bool
+    {
+        return $solicitation->userSolicitations()
+            ->where('action_description', SolicitationActionDescriptionEnum::CREATED)
+            ->where('user_id', $user->id)
+            ->exists();
+    }
+
     /**
      * Determine whether the user can view any of its solicitations.
      */
@@ -29,7 +38,7 @@ class SolicitationPolicy
      */
     public function update(User $user, Solicitation $solicitation): bool
     {
-        return $user->can('solicitations update');
+        return $user->can('solicitations update') && $this->belongsToCurrentUser($user, $solicitation);
     }
 
     /**
@@ -37,7 +46,7 @@ class SolicitationPolicy
      */
     public function delete(User $user, Solicitation $solicitation): bool
     {
-        return $user->can('solicitations delete');
+        return $user->can('solicitations delete') && $this->belongsToCurrentUser($user, $solicitation);
     }
 
     /**
