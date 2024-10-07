@@ -16,6 +16,6 @@ class DeleteUserSolicitationActionTest extends TestCaseUnit
                 ->andReturn(true);
         });
 
-       (new DeleteUserSolicitationAction())->execute($userSolicitationMock);
+        (new DeleteUserSolicitationAction)->execute($userSolicitationMock);
     }
 }

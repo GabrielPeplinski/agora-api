@@ -8,13 +8,19 @@ use App\Domains\Solicitation\Dtos\UserSolicitationData;
 use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
 use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
 use App\Domains\Solicitation\Models\Solicitation;
+use Mockery\MockInterface;
 use Tests\Cases\TestCaseUnit;
 
 class LikeSolicitationActionTest extends TestCaseUnit
 {
     public function test_should_like_a_solicitation_and_increment_its_likes_count()
     {
-        $solicitationMock = $this->createMock(Solicitation::class);
+        $solicitationMock = $this->partialMock(Solicitation::class, function (MockInterface $mock) {
+            $mock->shouldAllowMockingProtectedMethods();
+            $mock->shouldReceive('increment')
+                ->once()
+                ->with('likes_count');
+        });
         $solicitationMock->id = 1;
         $solicitationMock->current_status = SolicitationStatusEnum::OPEN;
 
@@ -25,14 +31,12 @@ class LikeSolicitationActionTest extends TestCaseUnit
             'actionDescription' => SolicitationActionDescriptionEnum::LIKE,
         ]);
 
-        $this->mock(CreateUserSolicitationAction::class, function ($mock) use ($data, $solicitationMock) {
+        $this->mock(CreateUserSolicitationAction::class, function ($mock) use ($data) {
             $mock->shouldReceive('execute')
                 ->once()
                 ->with($data);
         });
 
-        (new LikeSolicitationAction())->execute(
-           $data, $solicitationMock
-        );
+        (new LikeSolicitationAction)->execute($data, $solicitationMock);
     }
 }
