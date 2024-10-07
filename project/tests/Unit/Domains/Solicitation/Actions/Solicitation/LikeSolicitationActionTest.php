@@ -9,6 +9,7 @@ use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
 use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
 use App\Domains\Solicitation\Models\Solicitation;
 use App\Domains\Solicitation\Models\UserSolicitation;
+use Illuminate\Support\Facades\DB;
 use Mockery\MockInterface;
 use Tests\Cases\TestCaseUnit;
 
@@ -38,6 +39,9 @@ class LikeSolicitationActionTest extends TestCaseUnit
                 ->with($data)
                 ->andReturn(new UserSolicitation);
         });
+
+        DB::shouldReceive('beginTransaction')->once()->andReturnSelf();
+        DB::shouldReceive('commit')->once()->andReturnSelf();
 
         (new LikeSolicitationAction)->execute($data, $solicitationMock);
     }
