@@ -8,6 +8,7 @@ use App\Domains\Solicitation\Dtos\UserSolicitationData;
 use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
 use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
 use App\Domains\Solicitation\Models\Solicitation;
+use App\Domains\Solicitation\Models\UserSolicitation;
 use Mockery\MockInterface;
 use Tests\Cases\TestCaseUnit;
 
@@ -34,7 +35,8 @@ class LikeSolicitationActionTest extends TestCaseUnit
         $this->mock(CreateUserSolicitationAction::class, function ($mock) use ($data) {
             $mock->shouldReceive('execute')
                 ->once()
-                ->with($data);
+                ->with($data)
+                ->andReturn(new UserSolicitation);
         });
 
         (new LikeSolicitationAction)->execute($data, $solicitationMock);
