@@ -308,4 +308,35 @@ class MySolicitationsTest extends TestCaseFeature
             'solicitation_id' => $solicitation->id,
         ]);
     }
+
+    public function test_should_not_update_a_solicitation_when_its_already_resolved()
+    {
+        $solicitation = Solicitation::factory()
+            ->makeCurrentUserSolicitations()
+            ->create();
+
+        $solicitation->userSolicitations()
+            ->create([
+                'user_id' => current_user()->id,
+                'action_description' => SolicitationActionDescriptionEnum::STATUS_UPDATED,
+                'status' => SolicitationStatusEnum::RESOLVED,
+            ]);
+        $solicitation->update([
+            'current_status' => SolicitationStatusEnum::RESOLVED,
+        ]);
+
+        $data = [
+            'title' => 'Solicitation title updated',
+            'solicitationCategoryId' => $solicitation->solicitation_category_id,
+            'description' => 'Solicitation description updated',
+            'latitudeCoordinates' => '-25.4294',
+            'longitudeCoordinates' => '-49.2719',
+        ];
+
+        $this->putJson($this->controllerAction('update', $solicitation->id), $data)
+            ->assertUnprocessable()
+            ->assertJson([
+                'message' => __('custom.cannot_update_solicitation'),
+            ]);
+    }
 }

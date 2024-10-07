@@ -6,6 +6,7 @@ use App\Domains\Solicitation\Dtos\SolicitationData;
 use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
 use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
 use App\Domains\Solicitation\Exceptions\CannotDeleteSolicitationException;
+use App\Domains\Solicitation\Exceptions\CannotUpdateSolicitationException;
 use App\Domains\Solicitation\Filters\SolicitationStatusFilter;
 use App\Domains\Solicitation\Models\Solicitation;
 use App\Domains\Solicitation\Strategies\Solicitation\CreateSolicitationStrategy;
@@ -268,21 +269,32 @@ class MySolicitationsController extends Controller
     {
         $this->authorize('update', $mySolicitation);
 
-        $data = SolicitationData::validateAndCreate([
-            ...$request->validated(),
-            'userSolicitationData' => [
-                'status' => $mySolicitation->current_status,
-                'likesAmount' => $mySolicitation->likes_amount,
-                'solicitationId' => $mySolicitation->id,
-                'userId' => current_user()->id,
-                'actionDescription' => SolicitationActionDescriptionEnum::UPDATED,
-            ],
-        ]);
+        try {
+            $data = SolicitationData::validateAndCreate([
+                ...$request->validated(),
+                'userSolicitationData' => [
+                    'status' => $mySolicitation->current_status,
+                    'likesAmount' => $mySolicitation->likes_amount,
+                    'solicitationId' => $mySolicitation->id,
+                    'userId' => current_user()->id,
+                    'actionDescription' => SolicitationActionDescriptionEnum::UPDATED,
+                ],
+            ]);
 
-        $mySolicitation = app(UpdateSolicitationStrategy::class)
-            ->execute($data, $mySolicitation);
+            $mySolicitation = app(UpdateSolicitationStrategy::class)
+                ->execute($data, $mySolicitation);
 
-        return $this->show($mySolicitation);
+            return $this->show($mySolicitation);
+        } catch (CannotUpdateSolicitationException $exception) {
+            throw ValidationException::withMessages([
+                $exception->getMessage(),
+            ]);
+        } catch (\Exception $exception) {
+            return response()
+                ->json([
+                    'message' => $exception->getMessage(),
+                ], 500);
+        }
     }
 
     /**
