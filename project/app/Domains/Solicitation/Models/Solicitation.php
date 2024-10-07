@@ -37,17 +37,6 @@ class Solicitation extends Model implements HasMedia
         return $this->hasMany(UserSolicitation::class);
     }
 
-    public function getStatusAttribute(): string
-    {
-        return $this->userSolicitations()
-            ->latest()
-            ->whereNot('action_description', [
-                SolicitationActionDescriptionEnum::LIKE,
-            ])
-            ->first()
-            ->status;
-    }
-
     protected static function newFactory(): SolicitationFactory
     {
         return SolicitationFactory::new();

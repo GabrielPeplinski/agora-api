@@ -271,7 +271,7 @@ class MySolicitationsController extends Controller
         $data = SolicitationData::validateAndCreate([
             ...$request->validated(),
             'userSolicitationData' => [
-                'status' => $mySolicitation->status,
+                'status' => $mySolicitation->current_status,
                 'likesAmount' => $mySolicitation->likes_amount,
                 'solicitationId' => $mySolicitation->id,
                 'userId' => current_user()->id,

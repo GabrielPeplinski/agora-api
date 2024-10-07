@@ -13,4 +13,5 @@ return [
     'user_does_not_have_an_address' => 'User does not have an address registered.',
     'error_create_or_update_address' => 'An error occurred while trying to create or update the address. Please try again later.',
     'cannot_delete_solicitation' => 'This solicitation cannot be deleted. Because its status has already been updated.',
+    'cannot_update_solicitation' => 'This solicitation cannot be updated. Because it is already resolved.',
 ];

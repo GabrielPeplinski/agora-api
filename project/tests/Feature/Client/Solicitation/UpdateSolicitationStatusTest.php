@@ -42,7 +42,7 @@ class UpdateSolicitationStatusTest extends TestCaseFeature
             'action_description' => SolicitationActionDescriptionEnum::STATUS_UPDATED,
         ]);
 
-        $this->assertEquals(SolicitationStatusEnum::IN_PROGRESS, $solicitation->refresh()->status);
+        $this->assertEquals(SolicitationStatusEnum::IN_PROGRESS, $solicitation->refresh()->current_status);
     }
 
     public function test_should_not_update_a_solicitation_status_when_it_is_already_resolved()
@@ -59,17 +59,23 @@ class UpdateSolicitationStatusTest extends TestCaseFeature
             'action_description' => SolicitationActionDescriptionEnum::STATUS_UPDATED,
             'status' => SolicitationStatusEnum::RESOLVED,
         ]);
+        $solicitation->update([
+            'current_status' => SolicitationStatusEnum::RESOLVED,
+        ]);
 
         $data = [
             'status' => SolicitationStatusEnum::IN_PROGRESS,
         ];
 
         $this->putJson($this->controllerAction(null, $solicitation->id), $data)
-            ->assertForbidden();
+            ->assertUnprocessable()
+            ->assertJson([
+                'message' => __('custom.cannot_update_solicitation'),
+            ]);
 
         $this->refreshDatabase();
 
-        $this->assertEquals(SolicitationStatusEnum::RESOLVED, $solicitation->refresh()->status);
+        $this->assertEquals(SolicitationStatusEnum::RESOLVED, $solicitation->refresh()->current_status);
     }
 
     public function test_should_not_update_a_solicitation_status_when_the_status_its_not_valid()
@@ -94,6 +100,6 @@ class UpdateSolicitationStatusTest extends TestCaseFeature
             'action_description' => SolicitationActionDescriptionEnum::STATUS_UPDATED,
         ]);
 
-        $this->assertNotEquals('invalid_status', $solicitation->refresh()->status);
+        $this->assertNotEquals('invalid_status', $solicitation->refresh()->current_status);
     }
 }

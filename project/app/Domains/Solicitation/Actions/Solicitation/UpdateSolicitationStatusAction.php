@@ -10,7 +10,7 @@ class UpdateSolicitationStatusAction
     public function execute(UserSolicitationData $data, Solicitation $solicitation): Solicitation
     {
         $solicitation->update([
-            'status' => $data->status,
+            'current_status' => $data->status,
         ]);
 
         return $solicitation;

@@ -76,7 +76,7 @@ class LikeSolicitationController extends Controller
             ->findOrFail($data['solicitationId']);
 
         $data = UserSolicitationData::validateAndCreate([
-            'status' => $solicitation->status,
+            'status' => $solicitation->current_status,
             'solicitationId' => $solicitation->id,
             'userId' => current_user()->id,
             'actionDescription' => SolicitationActionDescriptionEnum::LIKE,
