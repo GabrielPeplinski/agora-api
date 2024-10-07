@@ -4,7 +4,6 @@ namespace App\Domains\Solicitation\Policies;
 
 use App\Domains\Account\Models\User;
 use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
-use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
 use App\Domains\Solicitation\Models\Solicitation;
 
 class SolicitationPolicy
@@ -70,7 +69,6 @@ class SolicitationPolicy
      */
     public function updateStatus(User $user, Solicitation $solicitation): bool
     {
-        return $user->can('solicitations update status') &&
-            $solicitation->status !== SolicitationStatusEnum::RESOLVED;
+        return $user->can('solicitations update status');
     }
 }
