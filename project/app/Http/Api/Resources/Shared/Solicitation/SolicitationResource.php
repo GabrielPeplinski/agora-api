@@ -17,6 +17,8 @@ class SolicitationResource extends JsonResource
             'coverImage' => $this->getFirstMediaUrl('coverImage'),
             'hasCurrentUserLike' => $this->checkCurrentUserLike(),
             'status' => $this->current_status,
+            'latitudeCoordinates' => $this->latitude_coordinates,
+            'longitudeCoordinates' => $this->longitude_coordinates,
             'createdAt' => output_date_format($this->created_at),
             'updatedAt' => output_date_format($this->updated_at),
         ];
