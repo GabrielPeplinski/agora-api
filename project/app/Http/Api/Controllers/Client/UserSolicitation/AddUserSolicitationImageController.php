@@ -6,8 +6,8 @@ use App\Domains\Solicitation\Actions\UserSolicitation\AddUserSolicitationImageAc
 use App\Domains\Solicitation\Exceptions\CannotAddUserSolicitationImageException;
 use App\Domains\Solicitation\Models\UserSolicitation;
 use App\Http\Shared\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\File;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -22,7 +22,7 @@ class AddUserSolicitationImageController extends Controller
 
             $uuid = Str::uuid();
             $fileContent = $request->getContent();
-            $tempFilePath = sys_get_temp_dir() . "/solicitation-$mySolicitation->id-$uuid";
+            $tempFilePath = sys_get_temp_dir()."/solicitation-$mySolicitation->id-$uuid";
 
             file_put_contents($tempFilePath, $fileContent);
 
@@ -39,7 +39,7 @@ class AddUserSolicitationImageController extends Controller
         } catch (\Exception $exception) {
             return response()
                 ->json([
-                    'message' => $exception->getMessage()
+                    'message' => $exception->getMessage(),
                 ], 500);
         }
     }

@@ -14,7 +14,7 @@ class AddUserSolicitationImageAction
     {
         try {
             if ($userSolicitation->action_description !== SolicitationActionDescriptionEnum::STATUS_UPDATED) {
-                throw new CannotAddUserSolicitationImageException();
+                throw new CannotAddUserSolicitationImageException;
             }
 
             DB::beginTransaction();
