@@ -8,6 +8,7 @@ use App\Domains\Solicitation\Exceptions\CannotUpdateSolicitationException;
 use App\Domains\Solicitation\Models\Solicitation;
 use App\Domains\Solicitation\Strategies\Solicitation\UpdateSolicitationStatusStrategy;
 use App\Http\Api\Request\Client\Solicitation\UpdateSolicitationStatusRequest;
+use App\Http\Api\Resources\Shared\Solicitation\UserSolicitationResource;
 use App\Http\Shared\Controllers\Controller;
 use Illuminate\Validation\ValidationException;
 
@@ -27,9 +28,10 @@ class UpdateSolicitationStatusController extends Controller
                 'actionDescription' => SolicitationActionDescriptionEnum::STATUS_UPDATED,
             ]);
 
-            app(UpdateSolicitationStatusStrategy::class)
+            $userSolicitation = app(UpdateSolicitationStatusStrategy::class)
                 ->execute($data, $mySolicitation);
 
+            return UserSolicitationResource::make($userSolicitation);
         } catch (CannotUpdateSolicitationException $exception) {
             throw ValidationException::withMessages([
                 $exception->getMessage(),
