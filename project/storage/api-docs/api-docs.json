@@ -1220,6 +1220,104 @@
                 ]
             }
         },
+        "/api/client/my-user-solicitations/{myUserSolicitationId}/add-image": {
+            "post": {
+                "tags": [
+                    "My User Solicitations"
+                ],
+                "summary": "Add a Image to an User Solicitation",
+                "description": "Add a Image to an User Solicitation. Used for adding an image to a solicitation after updating its status",
+                "operationId": "Add a Image to an User Solicitation",
+                "parameters": [
+                    {
+                        "name": "myUserSolicitationId",
+                        "in": "path",
+                        "description": "The id of the user solicitation",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Image to add to the user solicitation",
+                    "required": true,
+                    "content": {
+                        "application/octet-stream": {
+                            "schema": {
+                                "type": "string",
+                                "format": "binary"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully added an image to an user solicitation"
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenResponseExample"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Solicitation not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnprocessableEntityResponseExample"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/solicitations": {
             "get": {
                 "tags": [
@@ -1945,6 +2043,10 @@
         {
             "name": "Solicitations",
             "description": "Solicitations"
+        },
+        {
+            "name": "My User Solicitations",
+            "description": "My User Solicitations"
         },
         {
             "name": "Selects",

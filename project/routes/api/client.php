@@ -27,6 +27,6 @@ Route::put('my-solicitations/{mySolicitation}/status', UpdateSolicitationStatusC
 Route::apiResource('my-solicitations', MySolicitationsController::class)
     ->except('show');
 
-Route::post('user-solicitations/{userSolicitation}/add-image', AddUserSolicitationImageController::class);
+Route::post('my-user-solicitations/{myUserSolicitation}/add-image', AddUserSolicitationImageController::class);
 
 Route::post('solicitations/like', LikeSolicitationController::class);
