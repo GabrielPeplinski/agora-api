@@ -46,7 +46,6 @@ class AddUserSolicitationImageController extends Controller
      *         response=200,
      *         description="Successfully added an image to an user solicitation",
      *     ),
-     *
      *     @OA\Response(
      *         response=400,
      *         description="Bad request",
@@ -78,7 +77,6 @@ class AddUserSolicitationImageController extends Controller
      *         response=404,
      *         description="Solicitation not found",
      *     ),
-     *
      *     @OA\Response(
      *         response=422,
      *         description="Unprocessable Entity",
@@ -96,7 +94,7 @@ class AddUserSolicitationImageController extends Controller
 
             $uuid = Str::uuid();
             $fileContent = $request->getContent();
-            $tempFilePath = sys_get_temp_dir() . "/solicitation-$mySolicitation->id-$uuid";
+            $tempFilePath = sys_get_temp_dir()."/solicitation-$mySolicitation->id-$uuid";
 
             file_put_contents($tempFilePath, $fileContent);
 
