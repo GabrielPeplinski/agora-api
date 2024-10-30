@@ -14,4 +14,5 @@ return [
     'error_create_or_update_address' => 'Ocorreu um erro ao tentar criar ou atualizar o endereço. Por favor, tente novamente mais tarde.',
     'cannot_delete_solicitation' => 'Esta solicitação não pode ser excluída. Pois seu status já foi atualizado.',
     'cannot_update_solicitation' => 'Esta solicitação não pode ser atualizada. Pois já está resolvida.',
+    'invalid_action_description_to_add_image' => 'Descrição de ação inválida para adicionar imagem. A única descrição de ação válida é "status_updated".',
 ];

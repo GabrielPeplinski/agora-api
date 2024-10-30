@@ -14,4 +14,5 @@ return [
     'error_create_or_update_address' => 'An error occurred while trying to create or update the address. Please try again later.',
     'cannot_delete_solicitation' => 'This solicitation cannot be deleted. Because its status has already been updated.',
     'cannot_update_solicitation' => 'This solicitation cannot be updated. Because it is already resolved.',
+    'invalid_action_description_to_add_image' => 'Invalid action description to add image. The only valid action description is "status_updated".',
 ];

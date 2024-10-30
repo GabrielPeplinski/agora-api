@@ -32,7 +32,7 @@ class UpdateSolicitationStatusTest extends TestCaseFeature
         sleep(1);
 
         $this->putJson($this->controllerAction(null, $solicitation->id), $data)
-            ->assertOk();
+            ->assertCreated();
 
         $this->refreshDatabase();
 
