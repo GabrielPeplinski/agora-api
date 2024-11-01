@@ -1443,6 +1443,16 @@
                         }
                     },
                     {
+                        "name": "filter[current_location]",
+                        "in": "query",
+                        "description": "User current location to filter solicitations within 300 meters radius",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "-23.5505199,-46.6333094"
+                        }
+                    },
+                    {
                         "name": "filter[solicitation_category_id]",
                         "in": "query",
                         "description": "Filter by the solicitation category ID",

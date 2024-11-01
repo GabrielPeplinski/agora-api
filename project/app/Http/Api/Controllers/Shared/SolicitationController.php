@@ -34,6 +34,18 @@ class SolicitationController
      *     ),
      *
      *     @OA\Parameter(
+     *          name="filter[current_location]",
+     *          in="query",
+     *          description="User current location to filter solicitations within 300 meters radius",
+     *          required=false,
+     *
+     *          @OA\Schema(
+     *              type="string",
+     *              example="-23.5505199,-46.6333094"
+     *          )
+     *      ),
+     *
+     *     @OA\Parameter(
      *         name="filter[solicitation_category_id]",
      *         in="query",
      *         description="Filter by the solicitation category ID",

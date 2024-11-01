@@ -39,7 +39,7 @@ class SolicitationPayload
      *     type="string",
      *     title="latitudeCoordinates",
      *     description="Latitude coordinate of the solicitation",
-     *     example="-25.430",
+     *     example="-23.5505199",
      *     readOnly=false
      * )
      */
@@ -50,7 +50,7 @@ class SolicitationPayload
      *     type="string",
      *     title="longitudeCoordinates",
      *     description="Longitude coordinate of the solicitation",
-     *     example="-49.271",
+     *     example="-46.6333094",
      *     readOnly=false
      * )
      */
