@@ -169,4 +169,37 @@ class SolicitationTest extends TestCaseFeature
 
         $this->assertCount(3, Solicitation::all());
     }
+
+    public function test_should_return_solicitations_and_filter_by_user_current_location_in_300_meters_radius()
+    {
+        // Solicitation inside the 300 meters radius
+        $nearbySolicitation = Solicitation::factory()
+            ->create([
+                'latitude_coordinates' => '-23.5505199',
+                'longitude_coordinates' => '-46.6333094',
+            ]);
+
+        // Solicitation outside the 300 meters radius
+        $outsideSolicitation = Solicitation::factory()
+            ->create([
+                'latitude_coordinates' => '-23.5535199',
+                'longitude_coordinates' => '-46.6363094',
+            ]);
+
+        // Solicitation too far to be included
+        $distantSolicitation = Solicitation::factory()
+            ->create([
+                'latitude_coordinates' => '-23.5605199',
+                'longitude_coordinates' => '-46.6433094',
+            ]);
+
+        $this->getJson($this->controllerAction('index', ['filter[current_location]' => '-23.5505199,-46.6333094']))
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonStructure([
+                'data' => ['*' => $this->getSolicitationResourceData()],
+            ]);
+
+        $this->assertCount(3, Solicitation::all());
+    }
 }
