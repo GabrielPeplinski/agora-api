@@ -2,6 +2,7 @@
 
 namespace App\Http\Api\Controllers\Shared;
 
+use App\Domains\Shared\Filters\Solicitation300MetersRadiusFilter;
 use App\Domains\Solicitation\Filters\SolicitationStatusFilter;
 use App\Domains\Solicitation\Models\Solicitation;
 use App\Http\Api\Resources\Shared\Solicitation\ShowSolicitationResource;
@@ -94,6 +95,7 @@ class SolicitationController
             ->allowedFilters([
                 AllowedFilter::exact('solicitation_category_id'),
                 AllowedFilter::custom('status', new SolicitationStatusFilter),
+                AllowedFilter::custom('current_location', new Solicitation300MetersRadiusFilter),
             ])
             ->defaultSort('-created_at')
             ->resource(SolicitationResource::class);
