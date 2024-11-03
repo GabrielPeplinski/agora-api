@@ -6,7 +6,7 @@ use App\Domains\Solicitation\Dtos\UserSolicitationData;
 use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
 use App\Domains\Solicitation\Models\Solicitation;
 use App\Domains\Solicitation\Strategies\Solicitation\ToggleSolicitationLikeStrategy;
-use App\Http\Api\Request\Client\LikeSolicitationRequest;
+use App\Http\Api\Request\Client\Solicitation\LikeSolicitationRequest;
 use App\Http\Shared\Controllers\Controller;
 
 class LikeSolicitationController extends Controller
@@ -76,7 +76,7 @@ class LikeSolicitationController extends Controller
             ->findOrFail($data['solicitationId']);
 
         $data = UserSolicitationData::validateAndCreate([
-            'status' => $solicitation->status,
+            'status' => $solicitation->current_status,
             'solicitationId' => $solicitation->id,
             'userId' => current_user()->id,
             'actionDescription' => SolicitationActionDescriptionEnum::LIKE,

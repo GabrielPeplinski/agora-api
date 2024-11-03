@@ -7,7 +7,7 @@ namespace App\Documentation\Solicitation;
  *      title="ShowSolicitationResponse",
  *      description="Solicitation response complete information",
  *      type="object",
- *      required={"id", "title", "description", "status", "latitudeCoordinates", "longitudeCoordinates", "likesCount", "solicitationCategory", "createdAt", "updatedAt", "updatedAt"}
+ *      required={"id", "title", "description", "status", "latitudeCoordinates", "longitudeCoordinates", "likesCount", "solicitationCategory", "createdAt", "historic", "updatedAt", "updatedAt"}
  * )
  */
 class ShowSolicitationResponse
@@ -98,7 +98,7 @@ class ShowSolicitationResponse
      *     readOnly=true
      * )
      */
-    public string $solicitationCategory;
+    public object $solicitationCategory;
 
     /**
      * @OA\Property(
@@ -121,4 +121,18 @@ class ShowSolicitationResponse
      * )
      */
     public string $updateAt;
+
+    /**
+     * @OA\Property(
+     *     type="array",
+     *     title="historic",
+     *     description="The solicitation history",
+     *
+     *     @OA\Items(
+     *         ref="#/components/schemas/UserSolicitationResponse"
+     *     ),
+     *     readOnly=true
+     * )
+     */
+    public array $historic;
 }

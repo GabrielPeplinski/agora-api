@@ -24,6 +24,7 @@ class Solicitation extends Model implements HasMedia
         'latitude_coordinates',
         'longitude_coordinates',
         'likes_count',
+        'current_status',
     ];
 
     public function category(): BelongsTo
@@ -34,17 +35,6 @@ class Solicitation extends Model implements HasMedia
     public function userSolicitations(): HasMany
     {
         return $this->hasMany(UserSolicitation::class);
-    }
-
-    public function getStatusAttribute(): string
-    {
-        return $this->userSolicitations()
-            ->latest()
-            ->whereNot('action_description', [
-                SolicitationActionDescriptionEnum::LIKE,
-            ])
-            ->first()
-            ->status;
     }
 
     protected static function newFactory(): SolicitationFactory
@@ -68,16 +58,4 @@ class Solicitation extends Model implements HasMedia
 
         $this->addMediaCollection('images');
     }
-
-    //    public function images(): HasMany
-    //    {
-    //        return $this->hasMany(SolicitationImage::class);
-    //    }
-    //
-    //    public function coverImage(): ?BelongsTo
-    //    {
-    //        return $this->belongsTo(SolicitationImage::class, 'id', 'solicitation_id')
-    //            ->where('is_cover_image', true)
-    //            ->first();
-    //    }
 }

@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Api\Request\Client;
+namespace App\Http\Api\Request\Client\Solicitation;
 
+use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class SolicitationRequest extends FormRequest
+class UpdateSolicitationStatusRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +25,11 @@ class SolicitationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|min:5|max:255',
-            'description' => 'required|string|min:5|max:1000',
-            'latitudeCoordinates' => 'required|string',
-            'longitudeCoordinates' => 'required|string',
-            'solicitationCategoryId' => 'required|exists:solicitation_categories,id',
+            'status' => [
+                'required',
+                'string',
+                Rule::in(SolicitationStatusEnum::OPEN, SolicitationStatusEnum::IN_PROGRESS, SolicitationStatusEnum::RESOLVED),
+            ],
         ];
     }
 }

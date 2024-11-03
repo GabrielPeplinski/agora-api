@@ -6,12 +6,14 @@ use App\Domains\Solicitation\Dtos\SolicitationData;
 use App\Domains\Solicitation\Enums\SolicitationActionDescriptionEnum;
 use App\Domains\Solicitation\Enums\SolicitationStatusEnum;
 use App\Domains\Solicitation\Exceptions\CannotDeleteSolicitationException;
+use App\Domains\Solicitation\Exceptions\CannotUpdateSolicitationException;
 use App\Domains\Solicitation\Filters\SolicitationStatusFilter;
 use App\Domains\Solicitation\Models\Solicitation;
 use App\Domains\Solicitation\Strategies\Solicitation\CreateSolicitationStrategy;
 use App\Domains\Solicitation\Strategies\Solicitation\DeleteSolicitationStrategy;
 use App\Domains\Solicitation\Strategies\Solicitation\UpdateSolicitationStrategy;
-use App\Http\Api\Request\Client\SolicitationRequest;
+use App\Http\Api\Request\Client\Solicitation\SolicitationRequest;
+use App\Http\Api\Resources\Shared\Solicitation\ShowSolicitationResource;
 use App\Http\Api\Resources\Shared\Solicitation\SolicitationResource;
 use App\Http\Shared\Controllers\Controller;
 use App\Support\PaginationBuilder;
@@ -91,7 +93,7 @@ class MySolicitationsController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', Solicitation::class);
+        $this->authorize('view', Solicitation::class);
 
         $mySolicitations = app(Solicitation::class)
             ->whereHas('userSolicitations', function ($query) {
@@ -108,71 +110,14 @@ class MySolicitationsController extends Controller
             ->resource(SolicitationResource::class);
     }
 
-    /**
-     * @OA\Get(
-     *     path="/api/client/my-solicitations/{mySolicitationId}",
-     *     operationId="Show a Solicitation Data",
-     *     tags={"My Solicitations"},
-     *     summary="Show the data of a solicitation",
-     *     description="Show the data of a solicitation that belongs to the current user",
-     *     security={{"sanctum":{}}},
-     *
-     *     @OA\Parameter(
-     *         name="mySolicitationId",
-     *         in="path",
-     *         description="The id of the solicitation",
-     *         required=true,
-     *
-     *         @OA\Schema(type="integer")
-     *     ),
-     *
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successfully retrieve a solicitation data",
-     *
-     *         @OA\JsonContent(ref="#/components/schemas/ShowSolicitationResponse")
-     *     ),
-     *
-     *     @OA\Response(
-     *         response=400,
-     *         description="Bad request",
-     *
-     *         @OA\JsonContent(
-     *
-     *             @OA\Property(property="message", type="string", example="Bad request")
-     *         )
-     *     ),
-     *
-     *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
-     *
-     *         @OA\JsonContent(
-     *
-     *             @OA\Property(property="message", type="string", example="Unauthorized")
-     *         )
-     *     ),
-     *
-     *     @OA\Response(
-     *         response=403,
-     *         description="Forbidden",
-     *
-     *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
-     *     ),
-     *
-     *     @OA\Response(
-     *         response=404,
-     *         description="Solicitation not found",
-     *     )
-     * )
-     */
-    public function show(Solicitation $mySolicitation)
+    private function show(Solicitation $solicitation): ShowSolicitationResource
     {
-        $this->authorize('view', $mySolicitation);
+        $solicitation->loadMissing([
+            'media',
+            'category',
+        ]);
 
-        $mySolicitation->loadMissing('category');
-
-        return SolicitationResource::make($mySolicitation);
+        return ShowSolicitationResource::make($solicitation);
     }
 
     /**
@@ -237,6 +182,7 @@ class MySolicitationsController extends Controller
 
         $data = SolicitationData::validateAndCreate([
             ...$request->validated(),
+            'currentStatus' => SolicitationStatusEnum::OPEN,
             'userSolicitationData' => [
                 'status' => SolicitationStatusEnum::OPEN,
                 'userId' => current_user()->id,
@@ -323,21 +269,32 @@ class MySolicitationsController extends Controller
     {
         $this->authorize('update', $mySolicitation);
 
-        $data = SolicitationData::validateAndCreate([
-            ...$request->validated(),
-            'userSolicitationData' => [
-                'status' => $mySolicitation->status,
-                'likesAmount' => $mySolicitation->likes_amount,
-                'solicitationId' => $mySolicitation->id,
-                'userId' => current_user()->id,
-                'actionDescription' => SolicitationActionDescriptionEnum::UPDATED,
-            ],
-        ]);
+        try {
+            $data = SolicitationData::validateAndCreate([
+                ...$request->validated(),
+                'userSolicitationData' => [
+                    'status' => $mySolicitation->current_status,
+                    'likesAmount' => $mySolicitation->likes_amount,
+                    'solicitationId' => $mySolicitation->id,
+                    'userId' => current_user()->id,
+                    'actionDescription' => SolicitationActionDescriptionEnum::UPDATED,
+                ],
+            ]);
 
-        $mySolicitation = app(UpdateSolicitationStrategy::class)
-            ->execute($data, $mySolicitation);
+            $mySolicitation = app(UpdateSolicitationStrategy::class)
+                ->execute($data, $mySolicitation);
 
-        return $this->show($mySolicitation);
+            return $this->show($mySolicitation);
+        } catch (CannotUpdateSolicitationException $exception) {
+            throw ValidationException::withMessages([
+                $exception->getMessage(),
+            ]);
+        } catch (\Exception $exception) {
+            return response()
+                ->json([
+                    'message' => $exception->getMessage(),
+                ], 500);
+        }
     }
 
     /**

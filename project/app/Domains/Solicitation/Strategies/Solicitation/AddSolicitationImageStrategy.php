@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Solicitation\Strategies\SolicitationImage;
+namespace App\Domains\Solicitation\Strategies\Solicitation;
 
 use App\Domains\Solicitation\Models\Solicitation;
 use Illuminate\Http\File;

@@ -17,12 +17,12 @@ abstract class RolesAndPermissions
 
             'solicitations' => [
                 'create',
-                'view any',
                 'view',
                 'update',
                 'delete',
                 'like',
-                'add images'
+                'add images',
+                'update status',
             ],
 
             'dashboard' => [

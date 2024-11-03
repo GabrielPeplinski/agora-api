@@ -46,9 +46,8 @@ class LikeSolicitationTest extends TestCaseFeature
                 'likes_count' => 0,
             ]);
 
-        $this->postJson($this->controllerAction(), [
-            'solicitationId' => $solicitation->id,
-        ])->assertOk();
+        $this->postJson($this->controllerAction(), ['solicitationId' => $solicitation->id])
+            ->assertOk();
 
         $this->refreshDatabase();
 
