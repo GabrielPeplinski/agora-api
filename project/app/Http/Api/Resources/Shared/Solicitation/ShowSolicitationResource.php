@@ -35,7 +35,7 @@ class ShowSolicitationResource extends JsonResource
     {
         return $this->userSolicitations()
             ->where('action_description', '!=', SolicitationActionDescriptionEnum::LIKE)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at')
             ->get()
             ->map(function ($historic) {
                 return UserSolicitationResource::make($historic);

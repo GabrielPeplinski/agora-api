@@ -26,8 +26,8 @@ class SolicitationResource extends JsonResource
 
     private function checkCurrentUserLike(): bool
     {
-        if (current_user()) {
-            return current_user()
+        if ($currentUser = current_user()) {
+            return $currentUser
                 ->userSolicitations()
                 ->where('action_description', SolicitationActionDescriptionEnum::LIKE)
                 ->where('solicitation_id', $this->id)
