@@ -24,19 +24,23 @@ class RemoveSolicitationImageController extends Controller
      *         in="path",
      *         description="The id of the solicitation",
      *         required=true,
+     *
      *         @OA\Schema(type="integer")
      *     ),
      *
      *     @OA\RequestBody(
      *         description="Array of image full URLs to remove from the solicitation",
      *         required=true,
+     *
      *         @OA\JsonContent(
      *             type="object",
      *             required={"imageUrls"},
+     *
      *             @OA\Property(
      *                 property="imageUrls",
      *                 type="array",
      *                 example={"https://example.com/image1.jpg", "https://example.com/image2.jpg"},
+     *
      *                 @OA\Items(
      *                     type="string",
      *                     format="url"
@@ -52,22 +56,30 @@ class RemoveSolicitationImageController extends Controller
      *     @OA\Response(
      *         response=400,
      *         description="Bad request",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Bad request")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthorized",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Unauthorized")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=403,
      *         description="Forbidden",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/ForbiddenResponseExample")
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Solicitation not found",
