@@ -16,6 +16,7 @@ class UserSolicitationResource extends JsonResource
             'performedBy' => $this->censorName($this->user->name),
             'status' => $this->status,
             'actionDescription' => $this->action_description,
+            'image' => $this->getFirstMediaUrl('image'),
             'createdAt' => output_date_format($this->created_at),
         ];
     }
