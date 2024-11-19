@@ -3,6 +3,8 @@
  * This file contains all the helper functions used in the application
  */
 
+use Illuminate\Support\Facades\Auth;
+
 if (! function_exists('output_date_format')) {
 
     function output_date_format($date): string
@@ -13,13 +15,13 @@ if (! function_exists('output_date_format')) {
 
 if (! function_exists('current_user')) {
     /**
-     * Returns the current user
+     * Retorna o usuário atual se estiver autenticado.
      *
      * @return \App\Domains\Account\Models\User|\Illuminate\Contracts\Auth\Authenticatable|null
      */
     function current_user(): ?App\Domains\Account\Models\User
     {
-        return auth()->user();
+        return Auth::guard('sanctum')->user();
     }
 }
 

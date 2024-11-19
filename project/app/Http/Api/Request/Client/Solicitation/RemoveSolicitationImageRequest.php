@@ -5,7 +5,7 @@ namespace App\Http\Api\Request\Client\Solicitation;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddSolicitationImageRequest extends FormRequest
+class RemoveSolicitationImageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,8 @@ class AddSolicitationImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'imageUri' => 'required|string',
+            'imageUrls' => 'required|array',
+            'imageUrls.*' => 'required|string',
         ];
     }
 }

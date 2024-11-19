@@ -17,8 +17,8 @@ class Solicitation300MetersRadiusFilter implements Filter
         $radius = 300;
 
         return $query->whereRaw(
-            '(6371000 * acos(cos(radians(?)) * cos(radians(latitude_coordinates::float)) * cos(radians(longitude_coordinates::float) - radians(?)) + sin(radians(?)) * sin(radians(latitude_coordinates::float)))) < ?',
-            [$latitude, $longitude, $latitude, $radius]
+            '(6371000 * 2 * ASIN(SQRT(POWER(SIN(RADIANS(? - latitude_coordinates::float) / 2), 2) + COS(RADIANS(?)) * COS(RADIANS(latitude_coordinates::float)) * POWER(SIN(RADIANS(? - longitude_coordinates::float) / 2), 2)))) < ?',
+            [$latitude, $latitude, $longitude, $radius]
         );
     }
 }
