@@ -1,11 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Àgora API",
-        "description": "Àgora API",
-        "contact": {
-            "email": "contact@yourdomain.com"
-        },
+        "title": "Ágora API",
+        "description": "Ágora API",
         "version": "1.0.0"
     },
     "paths": {

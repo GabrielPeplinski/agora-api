@@ -1,8 +1,7 @@
-# Àgora - API
+# Ágora - API
 
 ## Introdução
-Este projeto consiste em uma API, desenvolvida com o framework PHP Laravel, para o sistema Àgora.
-
+Este projeto consiste em uma API, desenvolvida com o framework PHP Laravel, para o sistema Ágora.
 
 ## Ferramentas Necessárias:
 Para instalar o projeto serão necessários ter instalado em sua máquina, as seguintes ferramentas:

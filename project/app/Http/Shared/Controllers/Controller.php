@@ -9,12 +9,8 @@ use Illuminate\Routing\Controller as BaseController;
 /**
  * @OA\Info(
  *      version="1.0.0",
- *      title="Àgora API",
- *      description="Àgora API",
- *
- *      @OA\Contact(
- *          email="contact@yourdomain.com"
- *      ),
+ *      title="Ágora API",
+ *      description="Ágora API",
  * )
  */
 class Controller extends BaseController

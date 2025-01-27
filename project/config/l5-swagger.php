@@ -5,7 +5,7 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-                'title' => 'Àgora API',
+                'title' => 'Ágora API',
             ],
 
             'routes' => [
