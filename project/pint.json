@@ -1,0 +1,6 @@
+{
+    "exclude": [
+        "database/seeders",
+        "database/migrations"
+    ]
+}

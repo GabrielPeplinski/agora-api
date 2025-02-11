@@ -1,4 +1,4 @@
-## Descrição
+## Descrição da Tarefa Realizada:
 
 - [ ] to do list do que foi feito
 
@@ -9,6 +9,6 @@
 ```
 
 ## TODOs
-- [ ] Implementar testes unitários
-- [ ] Implementar testes de integração
-- [ ] Atualizar documentação
+- [ ] Implementar testes unitários.
+- [ ] Implementar testes de integração.
+- [ ] Atualizar documentação Swagger.

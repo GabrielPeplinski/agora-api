@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Domains\Shared\Enums\RolesEnum;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -31,7 +32,15 @@ class RouteServiceProvider extends ServiceProvider
         $this->routes(function () {
             Route::middleware('api')
                 ->prefix('api')
-                ->group(base_path('routes/api.php'));
+                ->group(base_path('routes/api/api.php'));
+
+            Route::middleware('api')
+                ->prefix('api/auth')
+                ->group(base_path('routes/api/auth.php'));
+
+            Route::middleware(['api', 'auth:sanctum', 'check-user-role:'.RolesEnum::CLIENT])
+                ->prefix('api/client')
+                ->group(base_path('routes/api/client.php'));
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
