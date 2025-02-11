@@ -76,7 +76,7 @@ jobs:
           REDIS_PORT: ${{ job.services.redis.ports[6379] }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: Logs
